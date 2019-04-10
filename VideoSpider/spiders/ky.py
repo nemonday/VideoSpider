@@ -60,11 +60,16 @@ class KySpider(scrapy.Spider):
                 osskey = item['osskey'][0]
                 item['osskey'] = osskey
 
+                print(item)
                 result = check(item['from'], item['id'])
 
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
                     match_type = jieba_ping(item)
                     item['match_type'] = match_type
+                    filename = download(item['osskey'], item['download_url'], False)
+                    img_filename = download_img(item['thumbnails'], item['osskey'])
+
+                    oss_upload(item['osskey'], filename, img_filename)
 
                     yield item
 
@@ -78,6 +83,7 @@ class KySpider(scrapy.Spider):
             proxies = {
                 'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
+            print(page)
             yield scrapy.Request(json_data['nextPageUrl'], headers=openeye_headers,
                                  callback=self.parse, meta={'proxy': ''.format(proxies['https']),
                                                             'item': deepcopy(item)}, dont_filter=True)

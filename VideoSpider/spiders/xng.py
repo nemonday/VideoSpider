@@ -105,9 +105,9 @@ class XngSpider(scrapy.Spider):
                         deeimg_filename = item['osskey'] + '.mp4'
                         is_ture = deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
                         if is_ture is True:
-                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
-                            if os.path.exists(video_size[2]):
-                                os.remove(video_size[2])
+                            oss_upload(item['osskey'], deeimg_filename, img_filename)
+                            if os.path.exists(img_filename):
+                                os.remove(img_filename)
 
                             if os.path.exists(filename):
                                 os.remove(filename)

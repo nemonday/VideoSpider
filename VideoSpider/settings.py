@@ -308,27 +308,27 @@ openeye_headers = {
 }
 ky_spider_dict = {
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1022&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['11', 5000, 50, openeye_headers, 102],
+   :['11', 500, 50, openeye_headers, 102],
    # 'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1019&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   # :['17', 5000, 50, openeye_headers, ],
+   # :['17', 500, 50, openeye_headers, ],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1025&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['6', 5000, 50, openeye_headers, 101],
+   :['6', 500, 50, openeye_headers, 101],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=24&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['5', 5000, 50, openeye_headers, 115],
+   :['5', 500, 50, openeye_headers, 115],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1024&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['4', 5000, 50, openeye_headers, 105],
+   :['4', 500, 50, openeye_headers, 105],
    'http://baobab.kaiyanapp.co+m/api/v1/tag/videos?start=10&num=10&strategy=date&id=1018&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['2', 5000, 50, openeye_headers, 103],
+   :['2', 500, 50, openeye_headers, 103],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1020&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['13', 5000, 50, openeye_headers, 106],
+   :['13', 500, 50, openeye_headers, 106],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1023&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['18', 5000, 50, openeye_headers, 112],
+   :['18', 500, 50, openeye_headers, 112],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=140&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['1', 5000, 50, openeye_headers, 107],
+   :['1', 500, 50, openeye_headers, 107],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=28&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['9', 5000, 50, openeye_headers, 111],
+   :['9', 500, 50, openeye_headers, 111],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=666&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['4', 5000, 50, openeye_headers, 105],
+   :['4', 500, 50, openeye_headers, 105],
 
 }
 

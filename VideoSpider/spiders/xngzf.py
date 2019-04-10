@@ -13,7 +13,7 @@ import requests
 import scrapy
 from random import choice
 from VideoSpider.settings import *
-from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload
+from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg, deep_img_video
 
 
 class XngzfSpider(scrapy.Spider):
@@ -93,10 +93,35 @@ class XngzfSpider(scrapy.Spider):
                     item['match_type'] = match_type
                     filename = download(item['osskey'], item['download_url'], True)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
-                    if filename and img_filename:
-                        oss_upload(item['osskey'], filename, img_filename)
+                    video_size = deeimg(item['download_url'])
+                    if not video_size is False and (video_size[0] < video_size[1]):
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 70, 100, 50, 120,
+                                                 filename, deeimg_filename)
+                        if is_ture is True:
+                            oss_upload(item['osskey'], deeimg_filename, img_filename)
+                            if os.path.exists(img_filename):
+                                os.remove(img_filename)
 
-                    yield item
+                            if os.path.exists(filename):
+                                os.remove(filename)
+
+                            yield item
+                        else:
+                            print('去水印失败')
+                    else:
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
+                                                 filename, deeimg_filename)
+                        if is_ture is True:
+                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
+
+                            if os.path.exists(filename):
+                                os.remove(filename)
+
+                            yield item
         except Exception as f:
             print(f)
             pass
