@@ -67,7 +67,6 @@ class KySpider(scrapy.Spider):
                     match_type = jieba_ping(item)
                     item['match_type'] = match_type
 
-
                     yield item
 
         except Exception as f:

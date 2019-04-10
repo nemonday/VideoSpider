@@ -12,6 +12,7 @@ from VideoSpider.spiders.ky import KySpider
 from VideoSpider.spiders.ppx import PpxSpider
 from VideoSpider.spiders.td import TdSpider
 from VideoSpider.spiders.uc import UcSpider
+from VideoSpider.spiders.xg import XgSpider
 from VideoSpider.spiders.xng import XngSpider
 from VideoSpider.spiders.xngzf import XngzfSpider
 
@@ -77,7 +78,7 @@ class VideospiderPipeline(object):
         if spider.name == HkSpider.name or spider.name == XngSpider.name or spider.name == XngzfSpider.name or spider.name == TdSpider.name or spider.name == PpxSpider.name :
             self.insert_mysql_downlad(item)
 
-        elif spider.name == UcSpider.name or KySpider.name:
+        elif spider.name == UcSpider.name or spider.name == XgSpider or KySpider.name:
             self.insert_mysql_waitdownlad(item)
 
 
