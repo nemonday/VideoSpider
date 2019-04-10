@@ -157,7 +157,6 @@ def ky_download(osskey, download_url):
                     f.write(chunk)
                     n += 1
                 num = '\r下载视频: {}  '.format(osskey)
-                print(num, end='')
 
         return filename
 
