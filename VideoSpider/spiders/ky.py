@@ -66,12 +66,13 @@ class KySpider(scrapy.Spider):
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
                     match_type = jieba_ping(item)
                     item['match_type'] = match_type
-                    filename = download(item['osskey'], item['download_url'], False)
+                    filename = ky_download(item['osskey'], item['download_url'], False)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
+                    if not filename is False and img_filename:
 
-                    oss_upload(item['osskey'], filename, img_filename)
+                        oss_upload(item['osskey'], filename, img_filename)
 
-                    yield item
+                        yield item
 
         except Exception as f:
             print(f)

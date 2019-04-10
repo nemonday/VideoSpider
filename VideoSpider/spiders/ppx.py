@@ -60,7 +60,8 @@ class PpxSpider(scrapy.Spider):
                     filename = download(item['osskey'], item['download_url'], False)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
 
-                    oss_upload(item['osskey'], filename, img_filename)
+                    if filename and img_filename:
+                        oss_upload(item['osskey'], filename, img_filename)
 
                     yield item
 

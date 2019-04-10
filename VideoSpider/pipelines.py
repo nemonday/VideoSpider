@@ -74,10 +74,10 @@ class VideospiderPipeline(object):
         cursor.close()
 
     def process_item(self, item, spider):
-        if spider.name == HkSpider.name or spider.name == XngSpider.name or spider.name == XngzfSpider.name or spider.name == TdSpider.name or spider.name == PpxSpider.name or KySpider.name:
+        if spider.name == HkSpider.name or spider.name == XngSpider.name or spider.name == XngzfSpider.name or spider.name == TdSpider.name or spider.name == PpxSpider.name :
             self.insert_mysql_downlad(item)
 
-        elif spider.name == UcSpider.name :
+        elif spider.name == UcSpider.name or KySpider.name:
             self.insert_mysql_waitdownlad(item)
 
 
