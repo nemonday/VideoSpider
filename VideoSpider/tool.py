@@ -128,17 +128,15 @@ def download(osskey, download_url, is_deepimg=False):
             content_size = int(r.headers['content-length'])
 
             if is_deepimg is False:
-                filename = 'stockpile/' + osskey + '.mp4'
+                filename = '../VideoSpider/stockpile/' + osskey + '.mp4'
             elif is_deepimg is True:
-                filename = 'stockpile/' + osskey + 'copy' + '.mp4'
+                filename = '../VideoSpider/stockpile/' + osskey + 'copy' + '.mp4'
 
             with open(filename, "wb") as f:
                 n = 1
                 for chunk in r.iter_content(chunk_size=chunk_size):
                     loaded = n * 1024.0 / content_size
                     f.write(chunk)
-                    num = '\r下载视频: {} ,{}% '.format(osskey, int(loaded) * 100)
-                    print(num, end='')
                     n += 1
         return filename
     except:
@@ -168,9 +166,14 @@ def ky_download(osskey, download_url):
 
 def download_img(img_url, oss):
     # 传入图片地址, oss名称
-    IMAGE_URL = img_url
-    img_filename = 'stockpile/' + oss + '.png'
-    urlretrieve(IMAGE_URL, img_filename)
+    with closing(requests.get(img_url, stream=True)) as r:
+        chunk_size = 1024
+        img_filename = '../VideoSpider/stockpile/' + oss + '.png'
+        with open(img_filename, "wb") as f:
+            n = 1
+            for chunk in r.iter_content(chunk_size=chunk_size):
+                f.write(chunk)
+                n += 1
 
     return img_filename
 
@@ -233,5 +236,4 @@ def update_mysql(item):
     cursor.close()
 
 
-# ky_download('haha', 'http://ali.cdn.kaiyanapp.com/1550720244197_4adc8469.mp4?auth_key=1554261516-0-0-337c723a344e1b7441f8670ce0d8827a')
-
+# ky_download('haha', 'http://cdn-xalbum2-pk.xiaoniangao.cn/1982976818?OSSAccessKeyId=E0RxDv7MIOlE5f1V&Expires=1556640005&Signature=TU0WrU%2BipJM%2B06ccb4Z3dCVRd8E%3D')

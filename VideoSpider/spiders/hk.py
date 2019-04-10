@@ -2,6 +2,7 @@
 import base64
 import json
 import os
+import re
 from copy import deepcopy
 import requests
 import scrapy
@@ -33,7 +34,12 @@ class HkSpider(scrapy.Spider):
         item = response.meta['item']
         url = 'https://sv.baidu.com/haokan/api?cmd=feed&log=vhk&tn=1008550k&ctn=1008550k&imei=860288798124814&cuid=74549A5C9851705527AB79A13A5D41DC%7C950679401524948&bdboxcuid=&os=android&osbranch=a0&ua=720_1280_192&ut=OPPO%20R11%20Plus_5.1.1_22_OPPO&apiv=4.6.0.0&appv=412011&version=4.12.1.10&life=1553411253&clife=1553411253&hid=DF2C5C965F584CAEE70171B87FA55FC7&imsi=0&network=1&location=%7B%22prov%22:%22%E4%B8%8A%E6%B5%B7%E5%B8%82%22,%22city%22:%22%E4%B8%8A%E6%B5%B7%E5%B8%82%22,%22county%22:%22%E9%BB%84%E6%B5%A6%E5%8C%BA%22,%22city-code%22:%22289%22,%22street%22:%22%E9%BB%84%E6%B5%A6%E8%B7%AF%22,%22latitude%22:31.24764,%22longitude%22:121.497854%7D&sids=1927_3-1945_2-1967_2-2008_1-2042_4-2055_2-2099_2-2103_2-2105_2-1769_1-2118_1-2122_2-2138_1-2139_1-2144_2-2149_3-2158_4-2146_2-2162_2-2163_1'
 
+        PROXY_URL = 'http://dynamic.goubanjia.com/dynamic/get/822c219bc02c29fe940c1718ccdf89f3.html?sep=3'
+        # proxy = requests.get(PROXY_URL)
+        # proxies = {
+        #     'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
         res = requests.post(url, headers=hk_headers, data=item['data'])
+        print(res)
         json_data = json.loads(res.text)
         video_info = json_data['feed']['data']['list']
 

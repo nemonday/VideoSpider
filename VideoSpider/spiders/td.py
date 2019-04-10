@@ -118,15 +118,21 @@ class TdSpider(scrapy.Spider):
                                 if is_ture is True and filename:
                                     oss_upload(item['osskey'], deeimg_filename, video_size[2])
 
+                                    if os.path.exists(filename):
+                                        os.remove(filename)
+                                    yield item
+
                             elif not video_size is False and (video_size[0] < video_size[1]):
                                 is_ture = deep_img_video(video_size[0], video_size[1], 20, 100, 50, 118, filename, deeimg_filename)
                                 if is_ture is True and filename:
                                     oss_upload(item['osskey'], deeimg_filename, video_size[2])
+                                    if os.path.exists(filename):
+                                        os.remove(filename)
 
-                            if os.path.exists(video_size[2]):
-                                os.remove(video_size[2])
+                                    yield item
 
-                            yield item
+
+
 
         except Exception as f:
             pprint(f)
