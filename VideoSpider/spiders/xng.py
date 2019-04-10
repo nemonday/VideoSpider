@@ -116,14 +116,16 @@ class XngSpider(scrapy.Spider):
                         else:
                             print('去水印失败')
                     else:
-                        oss_upload(item['osskey'], filename, video_size[2])
-                        if os.path.exists(video_size[2]):
-                            os.remove(video_size[2])
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
+                                                 filename, deeimg_filename)
+                        if is_ture is True:
+                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
 
-                        if os.path.exists(filename):
-                            os.remove(filename)
-
-                        yield item
+                            if os.path.exists(filename):
+                                os.remove(filename)
 
         except Exception as f:
             pprint(f)
