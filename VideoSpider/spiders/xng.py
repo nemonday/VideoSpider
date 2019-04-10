@@ -113,8 +113,7 @@ class XngSpider(scrapy.Spider):
                                 os.remove(filename)
 
                             yield item
-                        else:
-                            print('去水印失败')
+
                     else:
                         deeimg_filename = item['osskey'] + '.mp4'
                         is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
@@ -126,6 +125,8 @@ class XngSpider(scrapy.Spider):
 
                             if os.path.exists(filename):
                                 os.remove(filename)
+
+                            yield item
 
         except Exception as f:
             pprint(f)

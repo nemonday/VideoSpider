@@ -35,7 +35,7 @@ class VideospiderPipeline(object):
 
         cursor = self.connection.cursor()
         try:
-            sql = "INSERT INTO tb_spider_video(vid, height, width, video_from, video_type, play_volume, " \
+            sql = "INSERT INTO tb_spider_video2(vid, height, width, video_from, video_type, play_volume, " \
                   "comment_volume, title, spidertime, osskey, url, img, share_volume, like_volume, match_type, status,video_oss_url, img_oss_url) " \
                   "VALUES (%s, %s, %s, '%s', '%s', %s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
                       item['id'], item['video_height'], item['video_width'], item['from'], item['category'],
@@ -56,7 +56,7 @@ class VideospiderPipeline(object):
     def insert_mysql_waitdownlad(self, item):
         cursor = self.connection.cursor()
         try:
-            sql = "INSERT INTO tb_spider_video(vid, height, width, video_from, video_type, play_volume, " \
+            sql = "INSERT INTO tb_spider_video2(vid, height, width, video_from, video_type, play_volume, " \
                   "comment_volume, title, spidertime, osskey, url, img, share_volume, like_volume, match_type) " \
                   "VALUES (%s, %s, %s, '%s', '%s', %s, %s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
                       item['id'], item['video_height'], item['video_width'], item['from'], item['category'],
