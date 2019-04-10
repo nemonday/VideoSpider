@@ -14,7 +14,7 @@ import scrapy
 
 from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
     xng_spider_dict, PROXY_URL, xng_headers
-from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg
+from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg, deep_img_video
 
 
 class XngSpider(scrapy.Spider):
@@ -97,12 +97,13 @@ class XngSpider(scrapy.Spider):
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']) :
                     match_type = jieba_ping(item)
                     item['match_type'] = match_type
-                    filename = download(item['osskey'], item['download_url'], False)
+
+                    filename = download(item['osskey'], item['download_url'], True)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
                     video_size = deeimg(item['download_url'])
-                    if not video_size is False and(video_size[0]<video_size[1]):
+                    if not video_size is False and(video_size[0] < video_size[1]):
                         deeimg_filename = item['osskey'] + '.mp4'
-                        is_ture = self.deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
+                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
                         if is_ture is True:
                             oss_upload(item['osskey'], deeimg_filename, video_size[2])
                             if os.path.exists(video_size[2]):
