@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 import hashlib
 import os
 from contextlib import closing
@@ -50,7 +52,7 @@ def deeimg(dowonload_url):
         sign_key = hashlib.md5(str(dowonload_url).encode('utf-8'))
         sign = sign_key.hexdigest()
 
-        size_filename = 'stockpile/' + sign + '.jpg'
+        size_filename = sign + '.jpg'
 
         cv2.imwrite(size_filename, frame)
         img = Image.open(size_filename)
@@ -128,9 +130,9 @@ def download(osskey, download_url, is_deepimg=False):
             content_size = int(r.headers['content-length'])
 
             if is_deepimg is False:
-                filename = '../VideoSpider/stockpile/' + osskey + '.mp4'
+                filename = osskey + '.mp4'
             elif is_deepimg is True:
-                filename = '../VideoSpider/stockpile/' + osskey + 'copy' + '.mp4'
+                filename = osskey + 'copy' + '.mp4'
 
             with open(filename, "wb") as f:
                 n = 1
@@ -168,7 +170,7 @@ def download_img(img_url, oss):
     # 传入图片地址, oss名称
     with closing(requests.get(img_url, stream=True)) as r:
         chunk_size = 1024
-        img_filename = '../VideoSpider/stockpile/' + oss + '.png'
+        img_filename = oss + '.png'
         with open(img_filename, "wb") as f:
             n = 1
             for chunk in r.iter_content(chunk_size=chunk_size):

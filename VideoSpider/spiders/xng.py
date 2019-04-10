@@ -99,24 +99,12 @@ class XngSpider(scrapy.Spider):
                     item['match_type'] = match_type
                     filename = download(item['osskey'], item['download_url'], False)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
-                    if filename and img_filename:
-                        video_size = deeimg(item['download_url'])
-                        if not video_size is False and(video_size[0]<video_size[1]):
-                            deeimg_filename = item['osskey'] + '.mp4'
-                            is_ture = self.deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
-                            if is_ture is True:
-                                oss_upload(item['osskey'], deeimg_filename, video_size[2])
-                                if os.path.exists(video_size[2]):
-                                    os.remove(video_size[2])
-
-                                if os.path.exists(filename):
-                                    os.remove(filename)
-
-                                yield item
-                            else:
-                                print('去水印失败')
-                        else:
-                            oss_upload(item['osskey'], filename, video_size[2])
+                    video_size = deeimg(item['download_url'])
+                    if not video_size is False and(video_size[0]<video_size[1]):
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        is_ture = self.deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
+                        if is_ture is True:
+                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
                             if os.path.exists(video_size[2]):
                                 os.remove(video_size[2])
 
@@ -124,6 +112,17 @@ class XngSpider(scrapy.Spider):
                                 os.remove(filename)
 
                             yield item
+                        else:
+                            print('去水印失败')
+                    else:
+                        oss_upload(item['osskey'], filename, video_size[2])
+                        if os.path.exists(video_size[2]):
+                            os.remove(video_size[2])
+
+                        if os.path.exists(filename):
+                            os.remove(filename)
+
+                        yield item
 
         except Exception as f:
             pprint(f)

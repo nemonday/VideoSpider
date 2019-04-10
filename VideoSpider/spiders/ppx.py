@@ -7,7 +7,7 @@ import re
 from copy import deepcopy
 import requests
 import scrapy
-from VideoSpider.tool import check, jieba_ping
+from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, deep_img_video, oss_upload
 from VideoSpider.settings import *
 
 
@@ -57,6 +57,10 @@ class PpxSpider(scrapy.Spider):
                     item['match_type'] = match_type
                     osskey = item['osskey'][0]
                     item['osskey'] = osskey
+                    filename = download(item['osskey'], item['download_url'], False)
+                    img_filename = download_img(item['thumbnails'], item['osskey'])
+
+                    oss_upload(item['osskey'], filename, img_filename)
 
                     yield item
 
