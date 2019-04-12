@@ -105,9 +105,9 @@ def download(osskey, download_url, is_deepimg=False):
             content_size = int(r.headers['content-length'])
 
             if is_deepimg is False:
-                filename =  osskey + '.mp4'
+                filename =  'VideoSpider/stockpile' + osskey + '.mp4'
             elif is_deepimg is True:
-                filename =  osskey + 'copy' + '.mp4'
+                filename =  'VideoSpider/stockpile' + osskey + 'copy' + '.mp4'
 
             with open(filename, "wb") as f:
                 n = 1
