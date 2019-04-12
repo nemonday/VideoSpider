@@ -2,17 +2,17 @@ import hashlib
 import os
 from contextlib import closing
 from urllib.request import urlretrieve
-
 import cv2
 import jieba
 import pymysql
 import requests
-# from moviepy.video.io.VideoFileClip import VideoFileClip
 from PIL import Image
 from oss2 import SizedFileAdapter, determine_part_size
 from oss2.models import PartInfo
 import oss2
-from VideoSpider.settings import *
+
+from settings import ACCESSKEYID, ACCESSKEYSECRET, ENDPOINT, BUCKETNAME, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, \
+    MYSQL_PASSWORK, MYSQL_DATABASE, UPLOADPATH, UPLOADPATH2
 
 connection = pymysql.connect(
             host=MYSQL_HOST,
@@ -22,18 +22,6 @@ connection = pymysql.connect(
             db=MYSQL_DATABASE,
             charset='utf8'
         )
-
-
-def jieba_ping(item):
-    # 传入爬虫item
-    seg = jieba.lcut_for_search(item['title'], HMM=True)
-    for type_num, keyword in keyword_dict.items():
-        is_ping = [i for i in keyword[0] if i in seg]
-        if len(is_ping) != 0:
-            return type_num
-
-        elif len(is_ping) == 0:
-            return item['match_from']
 
 
 def deeimg(dowonload_url):
@@ -50,7 +38,7 @@ def deeimg(dowonload_url):
         sign_key = hashlib.md5(str(dowonload_url).encode('utf-8'))
         sign = sign_key.hexdigest()
 
-        size_filename = sign + '.jpg'
+        size_filename = 'stockpile/' + sign + '.jpg'
 
         cv2.imwrite(size_filename, frame)
         img = Image.open(size_filename)
@@ -108,17 +96,6 @@ def deep_img_video(width, height, y, w, h, excursion, filename, deepcopy_filenam
     except:
         return False
 
-
-def cut_video(filename, end_second):
-
-    outvideo = '1' + filename
-    try:
-        os.system('''C:\\Users\\nemo\\Desktop\\Vspider\\VideoSpider\\deeimg2\\bin\\ffmpeg.exe -i {} -ss 0 -c copy -t {} {}'''.format(filename, end_second, outvideo))
-        return outvideo
-    except:
-        return False
-
-
 def download(osskey, download_url, is_deepimg=False):
     # 传入oss名称, 下载地址
     try:
@@ -128,15 +105,17 @@ def download(osskey, download_url, is_deepimg=False):
             content_size = int(r.headers['content-length'])
 
             if is_deepimg is False:
-                filename = osskey + '.mp4'
+                filename =  osskey + '.mp4'
             elif is_deepimg is True:
-                filename = osskey + 'copy' + '.mp4'
+                filename =  osskey + 'copy' + '.mp4'
 
             with open(filename, "wb") as f:
                 n = 1
                 for chunk in r.iter_content(chunk_size=chunk_size):
                     loaded = n * 1024.0 / content_size
                     f.write(chunk)
+                    num = '\r下载视频: {} ,{}% '.format(osskey, int(loaded) * 100)
+                    print(num, end='')
                     n += 1
         return filename
     except:
@@ -144,7 +123,6 @@ def download(osskey, download_url, is_deepimg=False):
 
 
 def ky_download(osskey, download_url):
-    try:
         # 视频下载
         with closing(requests.get(download_url, stream=True)) as r:
             chunk_size = 1024
@@ -159,21 +137,14 @@ def ky_download(osskey, download_url):
 
         return filename
 
-    except Exception as f:
-        print(f)
-        return False
+
 
 
 def download_img(img_url, oss):
     # 传入图片地址, oss名称
-    with closing(requests.get(img_url, stream=True)) as r:
-        chunk_size = 1024
-        img_filename = oss + '.png'
-        with open(img_filename, "wb") as f:
-            n = 1
-            for chunk in r.iter_content(chunk_size=chunk_size):
-                f.write(chunk)
-                n += 1
+    IMAGE_URL = img_url
+    img_filename = oss + '.png'
+    urlretrieve(IMAGE_URL, img_filename)
 
     return img_filename
 
@@ -236,4 +207,5 @@ def update_mysql(item):
     cursor.close()
 
 
-# ky_download('haha', 'http://cdn-xalbum2-pk.xiaoniangao.cn/1982976818?OSSAccessKeyId=E0RxDv7MIOlE5f1V&Expires=1556640005&Signature=TU0WrU%2BipJM%2B06ccb4Z3dCVRd8E%3D')
+# ky_download('haha', 'http://ali.cdn.kaiyanapp.com/1550720244197_4adc8469.mp4?auth_key=1554261516-0-0-337c723a344e1b7441f8670ce0d8827a')
+
