@@ -64,7 +64,11 @@ class PpxSpider(scrapy.Spider):
 
                     if filename and img_filename:
                         oss_upload(item['osskey'], filename, img_filename)
+                        if os.path.exists(filename):
+                            os.remove(filename)
 
+                        if os.path.exists(img_filename):
+                            os.remove(img_filename)
                     yield item
 
         except Exception as f:

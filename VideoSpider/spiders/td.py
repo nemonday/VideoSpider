@@ -111,7 +111,7 @@ class TdSpider(scrapy.Spider):
                         else:
                             item['match_type'] = match_type
                         filename = download(item['osskey'], item['download_url'], True)
-                        # img_filename = download_img(item['thumbnails'], item['osskey'])
+                        img_filename = download_img(item['thumbnails'], item['osskey'])
                         if filename :
                             video_size = deeimg(item['download_url'])
                             deeimg_filename = 'stockpile/' + item['osskey'] + '.mp4'
@@ -122,6 +122,12 @@ class TdSpider(scrapy.Spider):
 
                                     if os.path.exists(filename):
                                         os.remove(filename)
+
+                                    if os.path.exists(img_filename):
+                                        os.remove(img_filename)
+
+                                    if os.path.exists(video_size[2]):
+                                        os.remove(video_size[2])
                                     yield item
 
                             elif not video_size is False and (video_size[0] < video_size[1]):
@@ -130,6 +136,13 @@ class TdSpider(scrapy.Spider):
                                     oss_upload(item['osskey'], deeimg_filename, video_size[2])
                                     if os.path.exists(filename):
                                         os.remove(filename)
+
+                                    if os.path.exists(img_filename):
+                                        os.remove(img_filename)
+
+                                    if os.path.exists(video_size[2]):
+                                        os.remove(video_size[2])
+
 
                                     yield item
 

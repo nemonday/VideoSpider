@@ -114,6 +114,9 @@ class XngSpider(scrapy.Spider):
                         if os.path.exists(filename):
                             os.remove(filename)
 
+                        if os.path.exists(video_size[2]):
+                            os.remove(video_size[2])
+
                         yield item
 
                 else:
@@ -125,8 +128,8 @@ class XngSpider(scrapy.Spider):
                         if os.path.exists(video_size[2]):
                             os.remove(video_size[2])
 
-                        if os.path.exists(filename):
-                            os.remove(filename)
+                        if os.path.exists(video_size[2]):
+                            os.remove(video_size[2])
 
                         yield item
 

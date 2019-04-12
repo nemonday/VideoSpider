@@ -107,6 +107,8 @@ class XngzfSpider(scrapy.Spider):
                             if os.path.exists(filename):
                                 os.remove(filename)
 
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
                             yield item
                         else:
                             print('去水印失败')
@@ -121,6 +123,9 @@ class XngzfSpider(scrapy.Spider):
 
                             if os.path.exists(filename):
                                 os.remove(filename)
+
+                            if os.path.exists(img_filename):
+                                os.remove(img_filename)
 
                             yield item
 
