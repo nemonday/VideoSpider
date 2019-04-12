@@ -26,16 +26,31 @@ connection = pymysql.connect(
         )
 
 
+# def jieba_ping(item):
+#     # 传入爬虫item
+#     seg = jieba.lcut_for_search(item['title'], HMM=True)
+#     for type_num, keyword in keyword_dict.items():
+#         is_ping = [i for i in keyword[0] if i in seg]
+#         if len(is_ping) != 0:
+#             return type_num
+#
+#         elif len(is_ping) == 0:
+#             return item['match_from']
+
+
 def jieba_ping(item):
     # 传入爬虫item
+    cursor = connection.cursor()
     seg = jieba.lcut_for_search(item['title'], HMM=True)
-    for type_num, keyword in keyword_dict.items():
-        is_ping = [i for i in keyword[0] if i in seg]
+    sql = 'select small_type, match_works from tb_spider_user'
+    cursor.execute(sql)
+    for infos in cursor.fetchall():
+        is_ping = [info for info in infos[1].split(',') if info in seg]
         if len(is_ping) != 0:
-            return type_num
+            return infos[0]
 
         elif len(is_ping) == 0:
-            return item['match_from']
+            return None
 
 
 def deeimg(dowonload_url):
@@ -156,7 +171,6 @@ def ky_download(osskey, download_url):
                 for chunk in r.iter_content(chunk_size=chunk_size):
                     f.write(chunk)
                     n += 1
-                num = '\r下载视频: {}  '.format(osskey)
 
         return filename
 
@@ -237,4 +251,4 @@ def update_mysql(item):
     cursor.close()
 
 
-# ky_download('haha', 'http://cdn-xalbum2-pk.xiaoniangao.cn/1982976818?OSSAccessKeyId=E0RxDv7MIOlE5f1V&Expires=1556640005&Signature=TU0WrU%2BipJM%2B06ccb4Z3dCVRd8E%3D')
+# ky_download('haha', 'http://ali.cdn.kaiyanapp.com/1554089005554_8f14e45f_1280x720_854x480.mp4?auth_key=1554899293-0-0-d0a3c2d2b83a567f9b8eb8c3f68bacf0')

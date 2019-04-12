@@ -23,7 +23,6 @@ class HkSpider(scrapy.Spider):
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]
             item['data'] = video_url
-            item['match_from'] = video_type[4]
 
             url = 'https://www.baidu.com/'
 
@@ -39,7 +38,6 @@ class HkSpider(scrapy.Spider):
         # proxies = {
         #     'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
         res = requests.post(url, headers=hk_headers, data=item['data'])
-        print(res)
         json_data = json.loads(res.text)
         video_info = json_data['feed']['data']['list']
 
@@ -66,7 +64,11 @@ class HkSpider(scrapy.Spider):
                 cmt_cnt = item['cmt_cnt']
                 if (result is None) and (int(view_cnt) >= item['view_cnt_compare'] or int(cmt_cnt) >= item['cmt_cnt_compare']):
                     match_type = jieba_ping(item)
-                    item['match_type'] = match_type
+                    if not match_type is None:
+                        item['match_type'] = item['category']
+                    else:
+                        item['match_type'] = match_type
+
                     item['osskey'] = item['osskey'][0]
                     filename = download(item['osskey'], item['download_url'], True)
                     # img_filename = download_img(item['thumbnails'], item['osskey'])

@@ -20,7 +20,6 @@ class XngzfSpider(scrapy.Spider):
     name = 'xngzf'
 
     def start_requests(self):
-        while True:
             connection = pymysql.connect(
                 host=MYSQL_HOST,
                 port=MYSQL_PORT,
@@ -49,7 +48,6 @@ class XngzfSpider(scrapy.Spider):
                 item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
                 item['category'] = video_type[0]
                 item['data'] = video_url % (item['uid'], item['token'])
-                item['match_from'] = video_type[4]
 
                 url = 'https://www.baidu.com/'
 
@@ -90,7 +88,10 @@ class XngzfSpider(scrapy.Spider):
 
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']):
                     match_type = jieba_ping(item)
-                    item['match_type'] = match_type
+                    if not match_type is None:
+                        item['match_type'] = item['category']
+                    else:
+                        item['match_type'] = match_type
                     filename = download(item['osskey'], item['download_url'], True)
                     img_filename = download_img(item['thumbnails'], item['osskey'])
                     video_size = deeimg(item['download_url'])
@@ -122,6 +123,7 @@ class XngzfSpider(scrapy.Spider):
                                 os.remove(filename)
 
                             yield item
+
         except Exception as f:
             print(f)
             pass

@@ -96,7 +96,10 @@ class XngSpider(scrapy.Spider):
 
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']) :
                     match_type = jieba_ping(item)
-                    item['match_type'] = match_type
+                    if not match_type is None:
+                        item['match_type'] = item['category']
+                    else:
+                        item['match_type'] = match_type
 
                     filename = download(item['osskey'], item['download_url'], True)
                     img_filename = download_img(item['thumbnails'], item['osskey'])

@@ -27,7 +27,6 @@ class TdSpider(scrapy.Spider):
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]
-            item['match_from'] = video_type[4]
 
             yield scrapy.Request(video_url, headers=video_type[3],
                                  callback=self.parse, meta={'proxy': ''.format(proxies['https']),
@@ -107,7 +106,10 @@ class TdSpider(scrapy.Spider):
                     result = check(item['from'], item['id'])
                     if (result is None):
                         match_type = jieba_ping(item)
-                        item['match_type'] = match_type
+                        if not match_type is None:
+                            item['match_type'] = item['category']
+                        else:
+                            item['match_type'] = match_type
                         filename = download(item['osskey'], item['download_url'], True)
                         # img_filename = download_img(item['thumbnails'], item['osskey'])
                         if filename :

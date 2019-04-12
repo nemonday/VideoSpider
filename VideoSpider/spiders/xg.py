@@ -27,7 +27,6 @@ class XgSpider(scrapy.Spider):
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]
-            item['match_from'] = video_type[4]
 
             yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
@@ -40,7 +39,6 @@ class XgSpider(scrapy.Spider):
 
             for video in video_info[2:]:
                 video = json.loads(video['content'])
-
                 item['url'] = video['display_url']
                 item['download_url'] = video['display_url']
                 item['like_cnt'] = video['video_like_count']
@@ -60,7 +58,11 @@ class XgSpider(scrapy.Spider):
                 result = check(item['from'], item['id'])
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
                     match_type = jieba_ping(item)
-                    item['match_type'] = match_type
+                    if not match_type is None:
+                        item['match_type'] = item['category']
+                    else:
+                        item['match_type'] = match_type
+
                     yield item
 
         except Exception as f:
