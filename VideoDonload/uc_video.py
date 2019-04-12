@@ -13,13 +13,13 @@ from tool import download, download_img, deeimg, deep_img_video, oss_upload
 class UcDownload(object):
     def __init__(self):
         self.opt = webdriver.ChromeOptions()
-        # self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=0&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=')
+        self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=0&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=110000,320000,350000,440000,500000')
         # self.proxy = requests.get('http://ip.11jsq.com/index.php/api/entry?method=proxyServer.generate_api_url&packid=7&fa=20&fetch_key=&qty=1&time=1&pro=&city=&port=1&format=txt&ss=1&css=&dt=1&specialTxt=3&specialJson=')
-        # self.opt.add_argument('--proxy-server=http://{}'.format(self.proxy.text))
+        self.opt.add_argument('--proxy-server=http://{}'.format(self.proxy.text))
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.opt.add_experimental_option("prefs", self.prefs)
-        self.opt.set_headless()
+        # self.opt.set_headless()
 
         self.broser = webdriver.Chrome(options=self.opt)
         self.connection = pymysql.connect(
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     while True:
         obj = UcDownload()
         obj.run()
-        time.sleep(1200)
+        time.sleep(600)
 
 
 

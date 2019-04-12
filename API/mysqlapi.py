@@ -11,12 +11,11 @@ api = Api(app)
 
 
 connection = pymysql.connect(
-        host='rm-bp12bzgmvo85rflhio.mysql.rds.aliyuncs.com',
-        port=3306,
-        user='migration_test',
-        password='migrationTest*',
-        db='db_nt_video',
-        charset='utf8'
+    MYSQL_HOST='127.0.0.1',
+    MYSQL_PORT = 3306,
+    MYSQL_USERNAME = 'splider',
+    MYSQL_PASSWORK = 'gz_#@splider@2019',
+    MYSQL_DATABASE = 'db_nt_video'
     )
 
 
