@@ -13,16 +13,18 @@ class KySpider(scrapy.Spider):
     name = 'ky'
 
     def start_requests(self):
-        item = {}
-        for video_url, video_type in ky_spider_dict.items():
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
-            item['view_cnt_compare'] = video_type[1]
-            item['cmt_cnt_compare'] = video_type[2]
-            item['category'] = video_type[0]
+        while True:
+            time.sleep(120)
+            item = {}
+            for video_url, video_type in ky_spider_dict.items():
+                proxy = requests.get(PROXY_URL)
+                proxies = {
+                    'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+                item['view_cnt_compare'] = video_type[1]
+                item['cmt_cnt_compare'] = video_type[2]
+                item['category'] = video_type[0]
 
-            yield scrapy.Request(video_url, headers=video_type[3],
+                yield scrapy.Request(video_url, headers=video_type[3],
                                  callback=self.parse, meta={'proxy': ''.format(proxies['https']),
                                                             'item': deepcopy(item)}, dont_filter=True)
 

@@ -18,17 +18,19 @@ class XgSpider(scrapy.Spider):
     name = 'xg'
 
     def start_requests(self):
-        item = {}
-        proxy = requests.get(PROXY_URL)
-        proxies = {
-            'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+        while True:
+            time.sleep(120)
+            item = {}
+            proxy = requests.get(PROXY_URL)
+            proxies = {
+                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-        for video_url, video_type in xg_spider_dict.items():
-            item['view_cnt_compare'] = video_type[1]
-            item['cmt_cnt_compare'] = video_type[2]
-            item['category'] = video_type[0]
+            for video_url, video_type in xg_spider_dict.items():
+                item['view_cnt_compare'] = video_type[1]
+                item['cmt_cnt_compare'] = video_type[2]
+                item['category'] = video_type[0]
 
-            yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+                yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         try:

@@ -14,17 +14,20 @@ from VideoSpider.settings import *
 class PpxSpider(scrapy.Spider):
     name = 'ppx'
 
-    def start_requests(self):
-        item = {}
-        for video_url, video_type in ppx_spider_dict.items():
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
-            item['view_cnt_compare'] = video_type[1]
-            item['cmt_cnt_compare'] = video_type[2]
-            item['category'] = video_type[0]
 
-            yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+    def start_requests(self):
+        while True:
+            time.sleep(120)
+            item = {}
+            for video_url, video_type in ppx_spider_dict.items():
+                proxy = requests.get(PROXY_URL)
+                proxies = {
+                    'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+                item['view_cnt_compare'] = video_type[1]
+                item['cmt_cnt_compare'] = video_type[2]
+                item['category'] = video_type[0]
+
+                yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
