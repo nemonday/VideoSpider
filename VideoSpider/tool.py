@@ -120,7 +120,7 @@ def oss(key, filename, uploadpath):
 
 def deep_img_video(width, height, y, w, h, excursion, filename, deepcopy_filename):
     try:
-        os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.format(filename, int(width) - excursion,y, w, h, deepcopy_filename))
+        os.system('''ffmpeg -i {} -strict -2 -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.format(filename, int(width) - excursion,y, w, h, deepcopy_filename))
         return True
     except:
         return False

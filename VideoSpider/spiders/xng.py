@@ -49,7 +49,6 @@ class XngSpider(scrapy.Spider):
             item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
             item['category'] = video_type[0]
             item['data'] = video_url % (item['token'], item['uid'])
-            item['match_from'] = video_type[4]
 
             url = 'https://www.baidu.com/'
 
