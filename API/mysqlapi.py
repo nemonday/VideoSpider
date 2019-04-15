@@ -5,7 +5,6 @@ from flask import request
 
 from flask_restful import reqparse, abort, Api, Resource
 
-from API.setting import *
 
 app = Flask(__name__)
 
@@ -19,11 +18,11 @@ api = Api(app)
 # MYSQL_DATABASE = 'db_nt_video'
 
 connection = pymysql.connect(
-    host=MYSQL_HOST,
-    port=MYSQL_PORT,
-    user=MYSQL_USERNAME,
-    password=MYSQL_PASSWORK,
-    db=MYSQL_DATABASE,
+    host='127.0.0.1',
+    port=3306,
+    user='splider',
+    password='gz_#@splider@2019',
+    db='db_nt_video',
     charset='utf8'
 )
 
