@@ -60,7 +60,7 @@ def match_mysql_notkeyword(video):
     return True
 
 
-def add_works(user_id, user_name, add_num):
+def add_workss(user_id, user_name, add_num):
     user_cursor = connection.cursor()
     try:
         for i in range(0, add_num):
@@ -90,7 +90,7 @@ class MysqlApi(object):
 
     @app.route("/python/videos/uid=<int:user_id>&uname=<user_name>&addnum=<int:add_num>", methods=['GET'])
     def add_works(user_id, user_name, add_num):
-        is_ture = add_works(user_id, user_name, add_num)
+        is_ture = add_workss(user_id, user_name, add_num)
 
         if is_ture is True:
             return json.dumps({'status': 1})
