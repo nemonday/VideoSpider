@@ -1,6 +1,7 @@
 import os
 import time
 from random import choice
+from pyvirtualdisplay import Display
 
 import pymysql
 import requests
@@ -13,13 +14,15 @@ class XgDownload(object):
     def __init__(self):
         self.opt = webdriver.ChromeOptions()
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
-        # self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=0&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=110000,320000,350000,440000,500000')
-        # self.proxy = requests.get('http://ip.11jsq.com/index.php/api/entry?method=proxyServer.generate_api_url&packid=7&fa=20&fetch_key=&qty=1&time=1&pro=&city=&port=1&format=txt&ss=1&css=&dt=1&specialTxt=3&specialJson=')
+        self.opt.add_argument('--disable-dev-shm-usage')
+        self.opt.add_argument('--no-sandbox')
+        display = Display(visible=0, size=(800, 600))
+        display.start()
+        # self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=0&city=0&yys=0&port=1&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=')
         # self.opt.add_argument('--proxy-server=http://{}'.format(self.proxy.text))
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.opt.add_experimental_option("prefs", self.prefs)
         # self.opt.set_headless
-        # self.opt.add_argument('--proxy-server=http://{}'.format(requests.get(proxy_url).text))
         self.broser = webdriver.Chrome(options=self.opt)
         self.connection = pymysql.connect(
             host=MYSQL_HOST,
@@ -29,15 +32,13 @@ class XgDownload(object):
             db=MYSQL_DATABASE,
             charset='utf8'
         )
-
     def get_info(self):
         urls = []
         cursor = self.connection.cursor()
-        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from= "西瓜视频" limit 10'
+        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from="西瓜视频" or  video_from="UC浏览器" limit 30'
         cursor.execute(sql)
         for video in cursor.fetchall():
             urls.append([video[0], video[1], video[2], video[3], video[4], video[5], video[6], video[7], video[8]])
-
         cursor.close()
         return urls
 
@@ -74,22 +75,24 @@ class XgDownload(object):
             if video_infos:
                 for video_info in video_infos:
                     self.broser.get(video_info[0])
-                    time.sleep(5)
-                    url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    filename = download(video_info[1], url, True)
+                    time.sleep(10)
+                    try:
+                        url = self.broser.find_element_by_xpath('//video').get_attribute("src")
+                    except Exception as f:
+                        print(f)
+                        cursor = self.connection.cursor()
+                        try:
+                            sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
+                                video_info[2], video_info[1])
+                            cursor.execute(sql)
+                            self.connection.commit()
+                        except:
+                            self.connection.rollback()
+
+                    filename = download(video_info[1], url, False)
                     img_dowonload_info = download_img(video_info[3], video_info[1])
                     if filename and img_dowonload_info:
-                        video_size = deeimg(url)
-                        if not video_size is False and (video_size[0] > video_size[1]):
-                            deeimg_filename = video_info[1] + '.mp4'
-                            is_ture = deep_img_video(video_size[0], video_size[1], 20, 200, 55, 204, filename, deeimg_filename)
-                            if is_ture is True:
-                                oss_upload(video_info[1], deeimg_filename, img_dowonload_info)
-                        else:
-                            oss_upload(video_info[1], filename, img_dowonload_info)
-
-                        if os.path.exists(video_size[2]):
-                            os.remove(video_size[2])
+                        oss_upload(video_info[1], filename, img_dowonload_info)
 
                         if os.path.exists(filename):
                             os.remove(filename)
@@ -118,7 +121,6 @@ if __name__ == '__main__':
     while True:
         obj = XgDownload()
         obj.run()
-        time.sleep(1200)
 
 
 

@@ -44,7 +44,7 @@ def deeimg(dowonload_url):
         img = Image.open(size_filename)
         width = img.size[0]
         height = img.size[1]
-
+        print([width, height, size_filename])
         return [width, height, size_filename]
     except:
         return False
@@ -91,7 +91,7 @@ def oss(key, filename, uploadpath):
 
 def deep_img_video(width, height, y, w, h, excursion, filename, deepcopy_filename):
     try:
-        os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}" show=0 {}'''.format(filename, int(width) - excursion,y, w, h, deepcopy_filename))
+        os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.format(filename, int(width) - excursion,y, w, h, deepcopy_filename))
         return True
     except:
         return False
@@ -107,7 +107,7 @@ def download(osskey, download_url, is_deepimg=False):
             if is_deepimg is False:
                 filename =  osskey + '.mp4'
             elif is_deepimg is True:
-                filename =   osskey + 'copy' + '.mp4'
+                filename =  osskey + 'copy' + '.mp4'
 
             with open(filename, "wb") as f:
                 n = 1
@@ -123,6 +123,7 @@ def download(osskey, download_url, is_deepimg=False):
 
 
 def ky_download(osskey, download_url):
+    try:
         # 视频下载
         with closing(requests.get(download_url, stream=True)) as r:
             chunk_size = 1024
@@ -137,7 +138,9 @@ def ky_download(osskey, download_url):
 
         return filename
 
-
+    except Exception as f:
+        print(f)
+        return False
 
 
 def download_img(img_url, oss):

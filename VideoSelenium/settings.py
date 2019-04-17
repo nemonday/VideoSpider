@@ -5,7 +5,6 @@
 # MYSQL_PASSWORK = 'migrationTest*'
 # MYSQL_DATABASE = 'db_nt_video'
 
-
 MYSQL_HOST = '127.0.0.1'
 MYSQL_PORT = 3306
 MYSQL_USERNAME = 'splider'
@@ -54,8 +53,5 @@ User_Agent_list = [
             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; The World)',
             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Trident/4.0; SE 2.X MetaSr 1.0; SE 2.X MetaSr 1.0; .NET CLR 2.0.50727; SE 2.X MetaSr 1.0)',
             'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)'
-
-            # 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; en-us) AppleWebKit/534.50 (KHTML, like Gecko) Version/5.1 Safari/534.50'
-
 
         ]

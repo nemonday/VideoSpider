@@ -75,68 +75,68 @@ class XngSpider(scrapy.Spider):
         res = requests.post(url, headers=xng_headers, data=item['data'], timeout=30)
         json_data = json.loads(res.text)
         video_datas = json_data['data']['list']
-        # try:
-        for video in video_datas:
-            item['url'] = video['v_url']
-            item['download_url'] = video['v_url']
-            item['like_cnt'] = video['favor']['total']
-            item['cmt_cnt'] = 0
-            item['sha_cnt'] = 0
-            item['view_cnt'] = video['views']
-            item['thumbnails'] = video['url']
-            item['title'] = video['title']
-            item['id'] = video['album_id']
-            item['video_height'] = 0
-            item['video_width'] = 0
-            item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
-            item['from'] = '小年糕'
-            item['category'] = item['category']
-            item['osskey'] = base64.b64encode((str(video['album_id']) + 'xng').encode('utf-8')).decode('utf-8')
+        try:
+            for video in video_datas:
+                item['url'] = video['v_url']
+                item['download_url'] = video['v_url']
+                item['like_cnt'] = video['favor']['total']
+                item['cmt_cnt'] = 0
+                item['sha_cnt'] = 0
+                item['view_cnt'] = video['views']
+                item['thumbnails'] = video['url']
+                item['title'] = video['title']
+                item['id'] = video['album_id']
+                item['video_height'] = 0
+                item['video_width'] = 0
+                item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
+                item['from'] = '小年糕'
+                item['category'] = item['category']
+                item['osskey'] = base64.b64encode((str(video['album_id']) + 'xng').encode('utf-8')).decode('utf-8')
 
-            result = check(item['from'], item['id'])
+                result = check(item['from'], item['id'])
 
-            if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']) :
-                match_type = jieba_ping(item)
-                if not match_type is None:
-                    item['match_type'] = item['category']
-                else:
-                    item['match_type'] = match_type
+                if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']) :
+                    match_type = jieba_ping(item)
+                    if not match_type is None:
+                        item['match_type'] = item['category']
+                    else:
+                        item['match_type'] = match_type
 
-                filename = download(item['osskey'], item['download_url'], True)
-                img_filename = download_img(item['thumbnails'], item['osskey'])
-                video_size = deeimg(item['download_url'])
-                if not video_size is False and(video_size[0] < video_size[1]):
-                    deeimg_filename = item['osskey'] + '.mp4'
-                    deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
-                    if deeimg_filename:
-                        oss_upload(item['osskey'], deeimg_filename, img_filename)
-                        if os.path.exists(img_filename):
-                            os.remove(img_filename)
+                    filename = download(item['osskey'], item['download_url'], True)
+                    img_filename = download_img(item['thumbnails'], item['osskey'])
+                    video_size = deeimg(item['download_url'])
+                    if not video_size is False and(video_size[0] < video_size[1]):
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
+                        if deeimg_filename:
+                            oss_upload(item['osskey'], deeimg_filename, img_filename)
+                            if os.path.exists(img_filename):
+                                os.remove(img_filename)
 
-                        if os.path.exists(filename):
-                            os.remove(filename)
+                            if os.path.exists(filename):
+                                os.remove(filename)
 
-                        if os.path.exists(video_size[2]):
-                            os.remove(video_size[2])
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
 
-                        yield item
+                            yield item
 
-                else:
-                    deeimg_filename = item['osskey'] + '.mp4'
-                    is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
-                                             filename, deeimg_filename)
-                    if deeimg_filename:
-                        oss_upload(item['osskey'], deeimg_filename, video_size[2])
-                        if os.path.exists(video_size[2]):
-                            os.remove(video_size[2])
+                    else:
+                        deeimg_filename = item['osskey'] + '.mp4'
+                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
+                                                 filename, deeimg_filename)
+                        if deeimg_filename:
+                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
 
-                        if os.path.exists(video_size[2]):
-                            os.remove(video_size[2])
+                            if os.path.exists(video_size[2]):
+                                os.remove(video_size[2])
 
-                        yield item
+                            yield item
 
-        # except Exception as f:
-        #     pprint(f)
-        #     pass
+        except Exception as f:
+            pprint(f)
+            pass
 
 
