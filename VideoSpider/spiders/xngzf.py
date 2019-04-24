@@ -21,41 +21,42 @@ class XngzfSpider(scrapy.Spider):
     name = 'xngzf'
 
     def start_requests(self):
+        while True:
+            time.sleep(120)
+            connection = pymysql.connect(
+                host=MYSQL_HOST,
+                port=MYSQL_PORT,
+                user=MYSQL_USERNAME,
+                password=MYSQL_PASSWORK,
+                db=MYSQL_DATABASE,
+                charset='utf8'
+            )
 
-        connection = pymysql.connect(
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
-            user=MYSQL_USERNAME,
-            password=MYSQL_PASSWORK,
-            db=MYSQL_DATABASE,
-            charset='utf8'
-        )
+            item = {}
+            cursor = connection.cursor()
+            try:
+                sql = """select token,uid from video_token where name='小年糕祝福'"""
+                cursor.execute(sql)
+                for video in cursor.fetchall():
+                    item['token'] = video[0]
+                    item['uid'] = video[1]
 
-        item = {}
-        cursor = connection.cursor()
-        try:
-            sql = """select token,uid from video_token where name='小年糕祝福'"""
-            cursor.execute(sql)
-            for video in cursor.fetchall():
-                item['token'] = video[0]
-                item['uid'] = video[1]
+            except Exception as f:
+                connection.rollback()
 
-        except Exception as f:
-            connection.rollback()
+            cursor.close()
+            for video_url, video_type in xng_zf_spider_dict.items():
+                choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+                item['view_cnt_compare'] = int(5000 * choice(choice_list))
+                item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
+                item['category'] = video_type[0]
+                item['old_type'] = video_type[4]
 
-        cursor.close()
-        for video_url, video_type in xng_zf_spider_dict.items():
-            choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
-            item['view_cnt_compare'] = int(5000 * choice(choice_list))
-            item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
-            item['category'] = video_type[0]
-            item['old_type'] = video_type[4]
+                item['data'] = video_url % (item['uid'], item['token'])
 
-            item['data'] = video_url % (item['uid'], item['token'])
+                url = 'https://www.baidu.com/'
 
-            url = 'https://www.baidu.com/'
-
-            yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
+                yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
