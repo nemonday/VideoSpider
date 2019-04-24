@@ -8,7 +8,7 @@ import redis
 from aliyunsdkcore import client
 from aliyunsdkmts.request.v20140618 import QueryJobListRequest
 
-from Transcoding.settings import ACCESS_KEY, SECRET_KEY, REGION_ID, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, \
+from settings import ACCESS_KEY, SECRET_KEY, REGION_ID, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, \
     MYSQL_PASSWORK, MYSQL_DATABASE, REDIS_HOST, REDIS_PORT
 
 

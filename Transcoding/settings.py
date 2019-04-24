@@ -12,7 +12,7 @@ REGION_ID = 'cn-hangzhou'
 # MYSQL_PASSWORK = 'migrationTest*'
 # MYSQL_DATABASE = 'db_nt_video'
 #
-MYSQL_HOST = '127.0.0.1'
+MYSQL_HOST = '10.0.0.92'
 MYSQL_PORT = 3306
 MYSQL_USERNAME = 'splider'
 MYSQL_PASSWORK = 'gz_#@splider@2019'
