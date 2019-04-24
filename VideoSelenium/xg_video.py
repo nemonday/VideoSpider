@@ -9,7 +9,7 @@ from selenium import webdriver
 
 from settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
     User_Agent_list
-from tool import download, download_img, oss_upload, submit_ranscoding, deeimg, deep_img_video
+from tool import download, download_img, oss_upload, submit_ranscoding, deep_img_video, deeimg
 
 
 class XgDownload(object):
@@ -79,7 +79,7 @@ class XgDownload(object):
 
                 filename = download(video_info[1], url, True)
                 img_dowonload_info = download_img(video_info[3], video_info[1])
-                video_size = deeimg(url)
+                video_size = deeimg(video_info[3])
                 video_size_img = video_size[2]
 
                 # 横屏视频执行：
