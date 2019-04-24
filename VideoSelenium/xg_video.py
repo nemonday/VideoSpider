@@ -79,41 +79,41 @@ class XgDownload(object):
 
                 filename = download(video_info[1], url, True)
                 img_dowonload_info = download_img(video_info[3], video_info[1])
-                video_size = deeimg(video_info[3])
-                video_size_img = video_size[2]
+                # video_size = deeimg(video_info[3])
+                # video_size_img = video_size[2]
+                #
+                # # 横屏视频执行：
+                # if video_size[0] > video_size[1]:
+                #     # 定义遮挡水印的新文件名字
+                #     deeimg_filename = video_info[1] + '.mp4'
+                #     # 遮挡水印
+                #     deep_img_video(video_size[0], video_size[1], 20, 200, 50, 204, filename, deeimg_filename)
+                #
+                #     os.rename(deeimg_filename, video_info[1])
+                #     oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                #     code_list = submit_ranscoding(video_info[1])
+                #     if code_list[0] is True:
+                #         if os.path.exists(filename):
+                #             os.remove(filename)
+                #         self.update_mysql(video_info, code_list[1])
+                #
+                # elif video_size[0] < video_size[1]:
+                os.rename(filename, video_info[1])
+                oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                code_list = submit_ranscoding(video_info[1])
+                #     if code_list[0] is True:
+                #         if os.path.exists(filename):
+                #             os.remove(filename)
+                self.update_mysql(video_info, code_list[1])
 
-                # 横屏视频执行：
-                if video_size[0] > video_size[1]:
-                    # 定义遮挡水印的新文件名字
-                    deeimg_filename = video_info[1] + '.mp4'
-                    # 遮挡水印
-                    deep_img_video(video_size[0], video_size[1], 20, 200, 50, 204, filename, deeimg_filename)
-
-                    os.rename(deeimg_filename, video_info[1])
-                    oss_upload(video_info[1], video_info[1], img_dowonload_info)
-                    code_list = submit_ranscoding(video_info[1])
-                    if code_list[0] is True:
-                        if os.path.exists(filename):
-                            os.remove(filename)
-                        self.update_mysql(video_info, code_list[1])
-
-                elif video_size[0] < video_size[1]:
-                    os.rename(filename, video_info[1])
-                    oss_upload(video_info[1], video_info[1], img_dowonload_info)
-                    code_list = submit_ranscoding(video_info[1])
-                    if code_list[0] is True:
-                        if os.path.exists(filename):
-                            os.remove(filename)
-                        self.update_mysql(video_info, code_list[1])
-
-                if os.path.exists(img_dowonload_info):
-                    os.remove(img_dowonload_info)
-
-                if os.path.exists(filename):
-                    os.remove(filename)
-
-                if os.path.exists(video_size_img):
-                    os.remove(video_size_img)
+                # if os.path.exists(img_dowonload_info):
+                #     os.remove(img_dowonload_info)
+                #
+                # if os.path.exists(filename):
+                #     os.remove(filename)
+                #
+                # if os.path.exists(video_size_img):
+                #     os.remove(video_size_img)
 
                 if os.path.exists(video_info[1]):
                     os.remove(video_info[1])
