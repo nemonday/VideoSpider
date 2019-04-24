@@ -58,80 +58,80 @@ class XgDownload(object):
         cursor.close()
 
     def run(self):
-        try:
-            video_infos = self.get_info()
-            if video_infos:
-                for video_info in video_infos:
-                    self.broser.get(video_info[0])
-                    time.sleep(10)
+        # try:
+        video_infos = self.get_info()
+        if video_infos:
+            for video_info in video_infos:
+                self.broser.get(video_info[0])
+                time.sleep(10)
+                try:
+                    url = self.broser.find_element_by_xpath('//video').get_attribute("src")
+                except Exception as f:
+                    print(f)
+                    cursor = self.connection.cursor()
                     try:
-                        url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    except Exception as f:
-                        print(f)
-                        cursor = self.connection.cursor()
-                        try:
-                            sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
-                                video_info[2], video_info[1])
-                            cursor.execute(sql)
-                            self.connection.commit()
-                        except:
-                            self.connection.rollback()
+                        sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
+                            video_info[2], video_info[1])
+                        cursor.execute(sql)
+                        self.connection.commit()
+                    except:
+                        self.connection.rollback()
 
-                    filename = download(video_info[1], url, True)
-                    img_dowonload_info = download_img(video_info[3], video_info[1])
-                    video_size = deeimg(url)
-                    video_size_img = video_size[2]
+                filename = download(video_info[1], url, True)
+                img_dowonload_info = download_img(video_info[3], video_info[1])
+                video_size = deeimg(url)
+                video_size_img = video_size[2]
 
-                    # 横屏视频执行：
-                    if video_size[0] > video_size[1]:
-                        # 定义遮挡水印的新文件名字
-                        deeimg_filename = video_info[1] + '.mp4'
-                        # 遮挡水印
-                        deep_img_video(video_size[0], video_size[1], 20, 200, 50, 204, filename, deeimg_filename)
+                # 横屏视频执行：
+                if video_size[0] > video_size[1]:
+                    # 定义遮挡水印的新文件名字
+                    deeimg_filename = video_info[1] + '.mp4'
+                    # 遮挡水印
+                    deep_img_video(video_size[0], video_size[1], 20, 200, 50, 204, filename, deeimg_filename)
 
-                        os.rename(deeimg_filename, video_info[1])
-                        oss_upload(video_info[1], video_info[1], img_dowonload_info)
-                        code_list = submit_ranscoding(video_info[1])
-                        if code_list[0] is True:
-                            if os.path.exists(filename):
-                                os.remove(filename)
-                            self.update_mysql(video_info, code_list[1])
+                    os.rename(deeimg_filename, video_info[1])
+                    oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                    code_list = submit_ranscoding(video_info[1])
+                    if code_list[0] is True:
+                        if os.path.exists(filename):
+                            os.remove(filename)
+                        self.update_mysql(video_info, code_list[1])
 
-                    elif video_size[0] < video_size[1]:
-                        os.rename(filename, video_info[1])
-                        oss_upload(video_info[1], video_info[1], img_dowonload_info)
-                        code_list = submit_ranscoding(video_info[1])
-                        if code_list[0] is True:
-                            if os.path.exists(filename):
-                                os.remove(filename)
-                            self.update_mysql(video_info, code_list[1])
+                elif video_size[0] < video_size[1]:
+                    os.rename(filename, video_info[1])
+                    oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                    code_list = submit_ranscoding(video_info[1])
+                    if code_list[0] is True:
+                        if os.path.exists(filename):
+                            os.remove(filename)
+                        self.update_mysql(video_info, code_list[1])
 
-                    if os.path.exists(img_dowonload_info):
-                        os.remove(img_dowonload_info)
+                if os.path.exists(img_dowonload_info):
+                    os.remove(img_dowonload_info)
 
-                    if os.path.exists(filename):
-                        os.remove(filename)
+                if os.path.exists(filename):
+                    os.remove(filename)
 
-                    if os.path.exists(video_size_img):
-                        os.remove(video_size_img)
+                if os.path.exists(video_size_img):
+                    os.remove(video_size_img)
 
-                    if os.path.exists(video_info[1]):
-                        os.remove(video_info[1])
+                if os.path.exists(video_info[1]):
+                    os.remove(video_info[1])
 
-                self.broser.quit()
-
-        except Exception as f:
-            print(f)
-            cursor = self.connection.cursor()
-            try:
-                sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
-                    video_info[2], video_info[1])
-                cursor.execute(sql)
-                self.connection.commit()
-            except:
-                self.connection.rollback()
-            cursor.close()
             self.broser.quit()
+
+        # except Exception as f:
+        #     print(f)
+        #     cursor = self.connection.cursor()
+        #     try:
+        #         sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
+        #             video_info[2], video_info[1])
+        #         cursor.execute(sql)
+        #         self.connection.commit()
+        #     except:
+        #         self.connection.rollback()
+        #     cursor.close()
+        #     self.broser.quit()
 
 
 if __name__ == '__main__':
