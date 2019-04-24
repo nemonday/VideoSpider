@@ -13,7 +13,7 @@ from oss2 import SizedFileAdapter, determine_part_size
 from oss2.models import PartInfo
 import oss2
 
-from .settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, ACCESSKEYID, \
+from settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, ACCESSKEYID, \
     ACCESSKEYSECRET, ENDPOINT, BUCKETNAME, UPLOADPATH, UPLOADPATH2
 
 from urllib.parse import quote
