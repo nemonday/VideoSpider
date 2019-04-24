@@ -7,9 +7,9 @@ import pymysql
 import requests
 from selenium import webdriver
 
-from VideoSelenium.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
+from .settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
     User_Agent_list
-from VideoSelenium.tool import download, download_img, oss_upload, submit_ranscoding, deeimg, deep_img_video
+from .tool import download, download_img, oss_upload, submit_ranscoding, deeimg, deep_img_video
 
 
 class XgDownload(object):
