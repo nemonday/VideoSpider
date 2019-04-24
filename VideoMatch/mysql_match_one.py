@@ -66,9 +66,5 @@ def match_mysql_notkeyword(video):
         video_cursor4.close()
 
 
-schedule.every().day.at("07:30").do(match_mysql)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+match_mysql()
 

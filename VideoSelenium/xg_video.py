@@ -108,9 +108,10 @@ class XgDownload(object):
                             os.remove(filename)
                         if os.path.exists(video_info[1]):
                             os.remove(video_info[1])
-
+                    self.broser.delete_all_cookies()
                     self.broser.quit()
             else:
+                self.broser.delete_all_cookies()
                 self.broser.quit()
 
         except Exception as f:
