@@ -21,10 +21,10 @@ MYSQL_DATABASE = 'db_nt_video'
 
 
 # redis 数据库
-REDIS_HOST = '127.0.0.1'
-REDIS_PORT = 6379
-
-# REDIS_HOST = 'r-bp1ed2141f8213d4.redis.rds.aliyuncs.com'
+# REDIS_HOST = '127.0.0.1'
 # REDIS_PORT = 6379
-# REDIS_PASSWORD = 'flrjovlOJEROIJ324'
-# DB = 3
+
+REDIS_HOST = 'r-bp1ed2141f8213d4.redis.rds.aliyuncs.com'
+REDIS_PORT = 6379
+REDIS_PASSWORD = 'flrjovlOJEROIJ324'
+DB = 3

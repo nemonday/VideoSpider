@@ -14,9 +14,9 @@ from Transcoding.settings import ACCESS_KEY, SECRET_KEY, REGION_ID, MYSQL_HOST, 
 
 def transcoding():
 
-    redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, decode_responses=True)
+    # redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, decode_responses=True)
 
-    # redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, password='flrjovlOJEROIJ324', decode_responses=True)
+    redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, password='flrjovlOJEROIJ324', decode_responses=True)
 
     connection = pymysql.connect(
         host=MYSQL_HOST,
@@ -116,10 +116,9 @@ def transcoding():
     cur.close()
 
 
-# schedule.every(10).minutes.do(transcoding)
-#
-# while True:
-#     schedule.run_pending()
-#     time.sleep(1)
+schedule.every(10).minutes.do(transcoding)
 
-transcoding()
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
