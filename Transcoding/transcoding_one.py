@@ -56,7 +56,7 @@ def transcoding():
                 # 转码中参数，已经转码成功就无视
                 transcoding = 1
                 # redis_key
-                redis_key = 'muk: {0}0'.format(info[1])
+                redis_key = 'muk:{0}0'.format(info[1])
                 # 转码后的地址
                 tcplayurl = 'https://cdn.img1.iduoliao.cn/video/{0}.m3u8'.format(info[1])
                 # 文件大小
