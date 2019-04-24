@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import base64
+import hashlib
 import json
 import random
 import re
@@ -18,19 +19,19 @@ class XgSpider(scrapy.Spider):
     name = 'xg'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            item = {}
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-            for video_url, video_type in xg_spider_dict.items():
-                item['view_cnt_compare'] = video_type[1]
-                item['cmt_cnt_compare'] = video_type[2]
-                item['category'] = video_type[0]
+        item = {}
+        proxy = requests.get(PROXY_URL)
+        proxies = {
+            'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-                yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+        for video_url, video_type in xg_spider_dict.items():
+            item['view_cnt_compare'] = video_type[1]
+            item['cmt_cnt_compare'] = video_type[2]
+            item['category'] = video_type[0]
+            item['old_type'] = video_type[4]
+
+            yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         try:
@@ -40,7 +41,10 @@ class XgSpider(scrapy.Spider):
             video_info = json_data['data']
 
             for video in video_info[2:]:
+                md = hashlib.md5()  # 构造一个md5
+
                 video = json.loads(video['content'])
+                item['id'] = video['group_id']
                 item['url'] = video['display_url']
                 item['download_url'] = video['display_url']
                 item['like_cnt'] = video['video_like_count']
@@ -49,18 +53,17 @@ class XgSpider(scrapy.Spider):
                 item['view_cnt'] = video['video_detail_info']['video_watch_count']
                 item['thumbnails'] = video['large_image_list'][0]['url']
                 item['title'] = video['title']
-                item['id'] = video['group_id']
                 item['video_height'] = json.loads(video['video_play_info'])['video_list']['video_1']['vheight']
                 item['video_width'] = json.loads(video['video_play_info'])['video_list']['video_1']['vwidth']
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
                 item['from'] = '西瓜视频'
                 item['category'] = item['category']
-                item['osskey'] = base64.b64encode((str(video['group_id']) + 'xg').encode('utf-8')).decode('utf-8')
-
+                md.update(str(item['url']).encode())
+                item['osskey'] = md.hexdigest()
                 result = check(item['from'], item['id'])
                 if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
                     match_type = jieba_ping(item)
-                    if not match_type is None:
+                    if match_type is None:
                         item['match_type'] = item['category']
                     else:
                         item['match_type'] = match_type

@@ -1,15 +1,15 @@
 # mysql 数据库
-# MYSQL_HOST = 'rm-bp12bzgmvo85rflhio.mysql.rds.aliyuncs.com'
-# MYSQL_PORT = 3306
-# MYSQL_USERNAME = 'migration_test'
-# MYSQL_PASSWORK = 'migrationTest*'
-# MYSQL_DATABASE = 'db_nt_video'
-
-MYSQL_HOST = '127.0.0.1'
+MYSQL_HOST = 'rm-bp12bzgmvo85rflhio.mysql.rds.aliyuncs.com'
 MYSQL_PORT = 3306
-MYSQL_USERNAME = 'splider'
-MYSQL_PASSWORK = 'gz_#@splider@2019'
+MYSQL_USERNAME = 'migration_test'
+MYSQL_PASSWORK = 'migrationTest*'
 MYSQL_DATABASE = 'db_nt_video'
+
+# MYSQL_HOST = '127.0.0.1'
+# MYSQL_PORT = 3306
+# MYSQL_USERNAME = 'splider'
+# MYSQL_PASSWORK = 'gz_#@splider@2019'
+# MYSQL_DATABASE = 'db_nt_video'
 
 DOWNLOAD_TIMEOUT = 300
 
@@ -19,8 +19,8 @@ BUCKETNAME = 'jiuban-image'
 ENDPOINT = 'oss-cn-hangzhou.aliyuncs.com'
 # 上传路径
 # UPLOADPATH = 'video_develop/test/'
-UPLOADPATH = 'video_spider/video/'
-UPLOADPATH2 = 'video_spider/img/'
+UPLOADPATH = 'video/'
+UPLOADPATH2 = 'img/'
 
 # 视频解析  iiiLab
 CLIENTSECRETKEY = 'a0e65f97eba3803d85122cdf2c44310a'

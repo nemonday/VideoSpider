@@ -14,55 +14,47 @@ import scrapy
 
 from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
     xng_spider_dict, PROXY_URL, xng_headers
-from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg, deep_img_video
+from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg, deep_img_video, \
+    get_md5_name, redis_check
 
 
 class XngSpider(scrapy.Spider):
     name = 'xng'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            connection = pymysql.connect(
-                host=MYSQL_HOST,
-                port=MYSQL_PORT,
-                user=MYSQL_USERNAME,
-                password=MYSQL_PASSWORK,
-                db=MYSQL_DATABASE,
-                charset='utf8'
-            )
 
-            item = {}
-            cursor = connection.cursor()
-            try:
-                sql = """select token,uid from video_token where name='小年糕'"""
-                cursor.execute(sql)
-                for video in cursor.fetchall():
-                    item['token'] = video[0]
-                    item['uid'] = video[1]
+        connection = pymysql.connect(
+            host=MYSQL_HOST,
+            port=MYSQL_PORT,
+            user=MYSQL_USERNAME,
+            password=MYSQL_PASSWORK,
+            db=MYSQL_DATABASE,
+            charset='utf8'
+        )
 
-            except Exception as f:
-                connection.rollback()
-
-            cursor.close()
-            for video_url, video_type in xng_spider_dict.items():
-                choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
-                item['view_cnt_compare'] = int(5000 * choice(choice_list))
-                item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
-                item['category'] = video_type[0]
-                item['data'] = video_url % (item['token'], item['uid'])
-
-                url = 'https://www.baidu.com/'
-
-                yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
-
-    def deep_img_video(self, width, height, y, w, h, excursion, filename, deepcopy_filename):
+        item = {}
+        cursor = connection.cursor()
         try:
-            os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.format(filename, int(
-                width) - excursion, y, w, h, deepcopy_filename))
-            return True
-        except:
-            return False
+            sql = """select token,uid from video_token where name='小年糕'"""
+            cursor.execute(sql)
+            for video in cursor.fetchall():
+                item['token'] = video[0]
+                item['uid'] = video[1]
+
+        except Exception as f:
+            connection.rollback()
+
+        cursor.close()
+        for video_url, video_type in xng_spider_dict.items():
+            choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+            item['view_cnt_compare'] = int(5000 * choice(choice_list))
+            item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
+            item['category'] = video_type[0]
+            item['data'] = video_url % (item['token'], item['uid'])
+            item['old_type'] = video_type[4]
+            url = 'https://www.baidu.com/'
+
+            yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -91,52 +83,73 @@ class XngSpider(scrapy.Spider):
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
                 item['from'] = '小年糕'
                 item['category'] = item['category']
-                item['osskey'] = base64.b64encode((str(video['album_id']) + 'xng').encode('utf-8')).decode('utf-8')
 
-                result = check(item['from'], item['id'])
+                # 筛选条件
+                if item['view_cnt'] >= item['view_cnt_compare']:
+                    img_filename = ''
+                    video_size_img = ''
+                    # 通过条件下载文件，提取视频一帧的图片的二进制生成md5名字用于判断视频是否存在
+                    filename = download(str(item['id']), item['download_url'], True)
+                    md5_name = get_md5_name(item['id'], filename)
+                    is_presence = redis_check(md5_name)
 
-                if (result is None) and (item['view_cnt'] >= item['view_cnt_compare']) :
-                    match_type = jieba_ping(item)
-                    if not match_type is None:
-                        item['match_type'] = item['category']
-                    else:
-                        item['match_type'] = match_type
+                    item['osskey'] = md5_name
 
-                    filename = download(item['osskey'], item['download_url'], True)
-                    img_filename = download_img(item['thumbnails'], item['osskey'])
-                    video_size = deeimg(item['download_url'])
-                    if not video_size is False and(video_size[0] < video_size[1]):
-                        deeimg_filename = item['osskey'] + '.mp4'
-                        deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
-                        if deeimg_filename:
-                            oss_upload(item['osskey'], deeimg_filename, img_filename)
-                            if os.path.exists(img_filename):
-                                os.remove(img_filename)
+                    # 视频不存在执行
+                    if is_presence is True:
 
-                            if os.path.exists(filename):
-                                os.remove(filename)
+                        # 匹配关键字获取视频类型
+                        match_type = jieba_ping(item)
+                        if match_type is None:
+                            item['match_type'] = item['category']
+                        else:
+                            item['match_type'] = match_type
 
-                            if os.path.exists(video_size[2]):
-                                os.remove(video_size[2])
+                        # 获取视频封面，已经视频的尺寸
+                        img_filename = download_img(item['thumbnails'], item['osskey'])
+                        video_size = deeimg(item['download_url'])
+                        video_size_img = video_size[2]
 
-                            yield item
+                        # 竖屏视频执行：
+                        if video_size[0] < video_size[1]:
+                            # 定义遮挡水印的新文件名字
+                            deeimg_filename = item['osskey'] + '.mp4'
+                            # 遮挡水印
+                            deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
+                            if deeimg_filename:
+                                # 转码成功后，去掉文件 .mp4后缀准备oss上传
+                                os.rename(deeimg_filename, item['osskey'])
+                                # oss上传
+                                oss_upload(item['osskey'], item['osskey'], img_filename)
 
-                    else:
-                        deeimg_filename = item['osskey'] + '.mp4'
-                        is_ture = deep_img_video(video_size[0], video_size[1], video_size[1] - 120, 130, 50, 140,
-                                                 filename, deeimg_filename)
-                        if deeimg_filename:
-                            oss_upload(item['osskey'], deeimg_filename, video_size[2])
-                            if os.path.exists(video_size[2]):
-                                os.remove(video_size[2])
+                                yield item
 
-                            if os.path.exists(video_size[2]):
-                                os.remove(video_size[2])
+                        else:
+                            # print('横屏转码')
+                            deeimg_filename = item['osskey'] + '.mp4'
+                            deep_img_video(video_size[0], video_size[1], video_size[1] - 68, 130, 50, 150, filename, deeimg_filename)
 
-                            yield item
+                            if deeimg_filename:
+                                os.rename(deeimg_filename, item['osskey'])
+                                oss_upload(item['osskey'], item['osskey'], img_filename)
+
+                                yield item
+
+                    # 上传完毕，删除文件
+                    if os.path.exists(img_filename):
+                        os.remove(img_filename)
+
+                    if os.path.exists(filename):
+                        os.remove(filename)
+
+                    if os.path.exists(item['osskey']):
+                        os.remove(item['osskey'])
+
+                    if os.path.exists(video_size_img):
+                        os.remove(video_size_img)
 
         except Exception as f:
-            pprint(f)
+            pprint('小年糕爬虫错误:{}'.format(f) )
             pass
 
 

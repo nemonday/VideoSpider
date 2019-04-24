@@ -2,7 +2,7 @@ import time
 
 import pymysql
 import schedule
-from settings import User_Agent_list, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE
+from VideoMatch.settings import User_Agent_list, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE
 
 connection = pymysql.connect(
             host=MYSQL_HOST,
@@ -34,8 +34,8 @@ def match_mysql():
             else:
                 match_mysql_notkeyword(video)
 
-        user_cursor.close()
-        video_cursor.close()
+    user_cursor.close()
+    video_cursor.close()
 
 
 def match_mysql_keyword(video, video_data):
@@ -48,6 +48,7 @@ def match_mysql_keyword(video, video_data):
     video_cursor3.execute(sql6)
     connection.commit()
     video_cursor3.close()
+
 
 def match_mysql_notkeyword(video):
     video_cursor4 = connection.cursor()
@@ -63,6 +64,7 @@ def match_mysql_notkeyword(video):
         video_cursor4.execute(sql6)
         connection.commit()
         video_cursor4.close()
+
 
 schedule.every().day.at("07:30").do(match_mysql)
 

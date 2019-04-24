@@ -72,6 +72,7 @@ def match_mysql_notkeyword( video):
     except:
         connection()
 
+
 def add(user_id, user_name, add_num):
     try:
         connection.ping()

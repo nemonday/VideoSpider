@@ -10,7 +10,8 @@ from pprint import pprint
 import requests
 import scrapy
 from VideoSpider.settings import *
-from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, deep_img_video, oss_upload, cut_video
+from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, deep_img_video, oss_upload, \
+    get_md5_name, redis_check
 
 
 class TdSpider(scrapy.Spider):
@@ -27,6 +28,7 @@ class TdSpider(scrapy.Spider):
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]
+            item['old_type'] = video_type[4]
 
             yield scrapy.Request(video_url, headers=video_type[3],
                                  callback=self.parse, meta={'proxy': ''.format(proxies['https']),
@@ -87,70 +89,88 @@ class TdSpider(scrapy.Spider):
         video_info = json_data['datas']['list']
         try:
             for video in video_info:
-                    item['url'] = 'http://aqiniu.tangdou.com/' + video['videourl'] + '-20.mp4'
-                    item['download_url'] = 'http://aqiniu.tangdou.com/' + video['videourl'] + '-20.mp4'
-                    item['like_cnt'] = 0
-                    item['cmt_cnt'] = 0
-                    item['sha_cnt'] = 0
-                    item['view_cnt'] = video['hits_total']
-                    item['thumbnails'] = 'https://aimg.tangdou.com' + video['pic']
-                    item['title'] = video['title']
-                    item['id'] = video['vid']
-                    item['video_height'] = 0
-                    item['video_width'] = 0
-                    item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
-                    item['from'] = '糖豆'
-                    item['category'] = item['category']
-                    item['osskey'] = base64.b64encode((str(video['vid']) + 'td').encode('utf-8')).decode('utf-8')
+                item['url'] = 'http://aqiniu.tangdou.com/' + video['videourl'] + '-20.mp4'
+                item['download_url'] = 'http://aqiniu.tangdou.com/' + video['videourl'] + '-20.mp4'
+                item['like_cnt'] = 0
+                item['cmt_cnt'] = 0
+                item['sha_cnt'] = 0
+                item['view_cnt'] = video['hits_total']
+                item['thumbnails'] = 'https://aimg.tangdou.com' + video['pic']
+                item['title'] = video['title']
+                item['id'] = video['vid']
+                item['video_height'] = 0
+                item['video_width'] = 0
+                item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
+                item['from'] = '糖豆'
+                item['category'] = item['category']
 
-                    result = check(item['from'], item['id'])
-                    if (result is None):
+                # 筛选条件
+                if item['view_cnt'] >= item['view_cnt_compare']:
+                    img_filename = ''
+                    video_size_img = ''
+                    # 通过条件下载文件，提取视频一帧的图片的二进制生成md5名字用于判断视频是否存在
+                    filename = download(str(item['id']), item['download_url'], True)
+                    md5_name = get_md5_name(item['id'], filename)
+                    is_presence = redis_check(md5_name)
+
+                    item['osskey'] = md5_name
+
+                    # 视频不存在执行
+                    if is_presence is True:
+
+                        # 匹配关键字获取视频类型
                         match_type = jieba_ping(item)
-                        if not match_type is None:
+                        if match_type is None:
                             item['match_type'] = item['category']
                         else:
                             item['match_type'] = match_type
-                        filename = download(item['osskey'], item['download_url'], True)
+
+                        # 获取视频封面，已经视频的尺寸
                         img_filename = download_img(item['thumbnails'], item['osskey'])
-                        if filename :
-                            video_size = deeimg(item['download_url'])
-                            deeimg_filename = 'stockpile/' + item['osskey'] + '.mp4'
-                            if not video_size is False and (video_size[0] > video_size[1]):
-                                is_ture = deep_img_video(video_size[0], video_size[1], 10, 100, 50, 110, filename, deeimg_filename)
-                                if is_ture is True and filename:
-                                    oss_upload(item['osskey'], deeimg_filename, video_size[2])
+                        video_size = deeimg(item['download_url'])
+                        video_size_img = video_size[2]
 
-                                    if os.path.exists(filename):
-                                        os.remove(filename)
+                        # 竖屏视频执行：
+                        if video_size[0] < video_size[1]:
+                            # 定义遮挡水印的新文件名字
+                            deeimg_filename = item['osskey'] + '.mp4'
+                            # 遮挡水印
+                            deep_img_video(video_size[0], video_size[1], 10, 100, 50, 110, filename, deeimg_filename)
+                            if deeimg_filename:
+                                # 转码成功后，去掉文件 .mp4后缀准备oss上传
+                                os.rename(deeimg_filename, item['osskey'])
+                                # oss上传
+                                oss_upload(item['osskey'], item['osskey'], img_filename)
 
-                                    if os.path.exists(img_filename):
-                                        os.remove(img_filename)
+                                yield item
 
-                                    if os.path.exists(video_size[2]):
-                                        os.remove(video_size[2])
-                                    yield item
+                        else:
+                            # print('横屏转码')
+                            deeimg_filename = item['osskey'] + '.mp4'
+                            deep_img_video(video_size[0], video_size[1], video_size[1] - 20, 100, 50, 118, filename,
+                                           deeimg_filename)
 
-                            elif not video_size is False and (video_size[0] < video_size[1]):
-                                is_ture = deep_img_video(video_size[0], video_size[1], 20, 100, 50, 118, filename, deeimg_filename)
-                                if is_ture is True and filename:
-                                    oss_upload(item['osskey'], deeimg_filename, video_size[2])
-                                    if os.path.exists(filename):
-                                        os.remove(filename)
+                            if deeimg_filename:
+                                os.rename(deeimg_filename, item['osskey'])
+                                oss_upload(item['osskey'], item['osskey'], img_filename)
 
-                                    if os.path.exists(img_filename):
-                                        os.remove(img_filename)
+                                yield item
 
-                                    if os.path.exists(video_size[2]):
-                                        os.remove(video_size[2])
+                    # 上传完毕，删除文件
+                    if os.path.exists(img_filename):
+                        os.remove(img_filename)
 
+                    if os.path.exists(filename):
+                        os.remove(filename)
 
-                                    yield item
+                    if os.path.exists(item['osskey']):
+                        os.remove(item['osskey'])
 
-
-
+                    if os.path.exists(video_size_img):
+                        os.remove(video_size_img)
 
         except Exception as f:
-            pprint(f)
+            pprint('糖豆爬虫错误:{}'.format(f))
             pass
 
 

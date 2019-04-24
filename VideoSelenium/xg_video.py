@@ -6,8 +6,10 @@ from pyvirtualdisplay import Display
 import pymysql
 import requests
 from selenium import webdriver
-from settings import User_Agent_list, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE
-from tool import download, download_img, deeimg, deep_img_video, oss_upload
+
+from VideoSelenium.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
+    User_Agent_list
+from VideoSelenium.tool import download, download_img, oss_upload, submit_ranscoding, deeimg, deep_img_video
 
 
 class XgDownload(object):
@@ -32,41 +34,27 @@ class XgDownload(object):
             db=MYSQL_DATABASE,
             charset='utf8'
         )
+
     def get_info(self):
         urls = []
         cursor = self.connection.cursor()
-        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from="西瓜视频" or  video_from="UC浏览器" limit 30'
+        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from="西瓜视频"  limit 30'
         cursor.execute(sql)
         for video in cursor.fetchall():
             urls.append([video[0], video[1], video[2], video[3], video[4], video[5], video[6], video[7], video[8]])
         cursor.close()
         return urls
 
-    def update_mysql(self, video_info):
-
+    def update_mysql(self, video_info, code_list):
         cursor = self.connection.cursor()
-        video_url = 'https://jiuban-image.oss-cn-hangzhou.aliyuncs.com/video_spider/video/'
-        img_url = 'https://jiuban-image.oss-cn-hangzhou.aliyuncs.com/video_spider/img/'
-
         try:
-            sql = 'UPDATE tb_spider_video SET status=3, video_oss_url= "%s", img_oss_url="%s" WHERE id="%s"' % (
-                video_url + video_info[1] + '.mp4', img_url + video_info[1]+ '.png', video_info[2]
-            )
-
-            # sql2 = 'UPDATE tb_spider_video SET status=4" WHERE video_type="%s"' % ('佳品')
-            print("""
-                上传成功，修改状态,
-                video地址: {}
-                img地址: {}
-            """.format(video_url + video_info[1] + '.mp4', img_url + video_info[1]+ '.png')
-                  )
-
+            sql = 'UPDATE tb_spider_video SET status=2, job_id="%s" WHERE id="%s"' % (code_list, video_info[2])
+            print('上传成功，修改状态')
             cursor.execute(sql)
             self.connection.commit()
         except Exception as f:
             print(f)
             self.connection.rollback()
-
         cursor.close()
 
     def run(self):
@@ -89,19 +77,49 @@ class XgDownload(object):
                         except:
                             self.connection.rollback()
 
-                    filename = download(video_info[1], url, False)
+                    filename = download(video_info[1], url, True)
                     img_dowonload_info = download_img(video_info[3], video_info[1])
-                    if filename and img_dowonload_info:
-                        oss_upload(video_info[1], filename, img_dowonload_info)
+                    video_size = deeimg(url)
+                    video_size_img = video_size[2]
 
-                        if os.path.exists(filename):
-                            os.remove(filename)
+                    # 横屏视频执行：
+                    if video_size[0] > video_size[1]:
+                        # 定义遮挡水印的新文件名字
+                        deeimg_filename = video_info[1] + '.mp4'
+                        # 遮挡水印
+                        deep_img_video(video_size[0], video_size[1], 20, 200, 50, 204, filename, deeimg_filename)
 
-                        self.update_mysql(video_info)
+                        os.rename(deeimg_filename, video_info[1])
+                        oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                        code_list = submit_ranscoding(video_info[1])
+                        if code_list[0] is True:
+                            if os.path.exists(filename):
+                                os.remove(filename)
+                            self.update_mysql(video_info, code_list[1])
+
+                    elif video_size[0] < video_size[1]:
+                        os.rename(filename, video_info[1])
+                        oss_upload(video_info[1], video_info[1], img_dowonload_info)
+                        code_list = submit_ranscoding(video_info[1])
+                        if code_list[0] is True:
+                            if os.path.exists(filename):
+                                os.remove(filename)
+                            self.update_mysql(video_info, code_list[1])
+
+                    if os.path.exists(img_dowonload_info):
+                        os.remove(img_dowonload_info)
+
+                    if os.path.exists(filename):
+                        os.remove(filename)
+
+                    if os.path.exists(video_size_img):
+                        os.remove(video_size_img)
+
+                    if os.path.exists(video_info[1]):
+                        os.remove(video_info[1])
+
                 self.broser.quit()
 
-            else:
-                pass
         except Exception as f:
             print(f)
             cursor = self.connection.cursor()
@@ -116,12 +134,9 @@ class XgDownload(object):
             self.broser.quit()
 
 
-
 if __name__ == '__main__':
-    while True:
-        obj = XgDownload()
-        obj.run()
-
+    obj = XgDownload()
+    obj.run()
 
 
 
