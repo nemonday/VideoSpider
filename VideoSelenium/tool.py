@@ -50,7 +50,6 @@ def deeimg(dowonload_url):
         img = Image.open(size_filename)
         width = img.size[0]
         height = img.size[1]
-        print([width, height, size_filename])
         return [width, height, size_filename]
     except:
         return False
