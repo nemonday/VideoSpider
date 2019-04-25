@@ -120,8 +120,8 @@ def download(osskey, download_url, is_deepimg=False):
             for chunk in r.iter_content(chunk_size=chunk_size):
                 loaded = n * 1024.0 / content_size
                 f.write(chunk)
-                num = '\r下载视频: {} ,{}% '.format(osskey, int(loaded) * 100)
-                print(num, end='')
+                # num = '\r下载视频: {} ,{}% '.format(osskey, int(loaded) * 100)
+                # print(num, end='')
                 n += 1
     return filename
     # except:
