@@ -50,7 +50,7 @@ class XgDownload(object):
         cursor = self.connection.cursor()
         try:
             sql = 'UPDATE tb_spider_video SET status=2, job_id="%s" WHERE id="%s"' % (code_list, video_info[2])
-            print('上传成功，修改状态')
+            print('上传成功，修改状态, id:{}'.format(video_info[2]))
             cursor.execute(sql)
             self.connection.commit()
         except Exception as f:
