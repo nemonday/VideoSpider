@@ -24,28 +24,7 @@ class XngSpider(scrapy.Spider):
     def start_requests(self):
         while True:
             time.sleep(120)
-            connection = pymysql.connect(
-                host=MYSQL_HOST,
-                port=MYSQL_PORT,
-                user=MYSQL_USERNAME,
-                password=MYSQL_PASSWORK,
-                db=MYSQL_DATABASE,
-                charset='utf8'
-            )
-
             item = {}
-            cursor = connection.cursor()
-            try:
-                sql = """select token,uid from video_token where name='小年糕'"""
-                cursor.execute(sql)
-                for video in cursor.fetchall():
-                    item['token'] = '7c357a432e43544fe974528fae5530ac'
-                    item['uid'] = '0c4071b6-5d54-4665-bdd3-364b79d8a496'
-
-            except Exception as f:
-                connection.rollback()
-
-            cursor.close()
             for video_url, video_type in xng_spider_dict.items():
                 choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
                 item['view_cnt_compare'] = int(5000 * choice(choice_list))
