@@ -39,7 +39,7 @@ class XgDownload(object):
     def get_info(self):
         urls = []
         cursor = self.connection.cursor()
-        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from="西瓜视频" or video_from="UC浏览器"  limit 20'
+        sql = 'select url, osskey, id, img , video_type, title, video_from, width, height from tb_spider_video where status=1 and video_from="西瓜视频" limit 20'
         cursor.execute(sql)
         for video in cursor.fetchall():
             urls.append([video[0], video[1], video[2], video[3], video[4], video[5], video[6], video[7], video[8]])
