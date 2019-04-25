@@ -26,10 +26,11 @@ headers = {
 }
 
 data = {
-    'head':'{"@type" :"type.googleapis.com/ja.common.proto.ReqHead","ver":1,"platform":2,"mbits":"3","lbits":"4"}',
-     'offset':0,
-     'count':10000,
-        'authorLabelType':11
+
+    'head':"{'@type' :'type.googleapis.com/ja.common.proto.ReqHead','ver':1,'platform':2,'mbits':'3','lbits':'4'}",
+     'offset':"0",
+     'count':"10000",
+        'authorLabelType':"11"
 
 
 }
