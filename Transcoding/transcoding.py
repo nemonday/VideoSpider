@@ -104,6 +104,8 @@ def transcoding():
                 sql2 = 'update tb_spider_video set status=3, video_oss_url="%s", img_oss_url="%s", duration="%s", width="%s", height="%s" where id="%s" and job_id="%s"' % (video_url, img_url, duration, width, height, info[2], info[0])
                 cur.execute(sql2)
                 connection.commit()
+                print('添加成功')
+
             else:
                 pass
         cur.close()
