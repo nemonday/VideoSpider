@@ -23,7 +23,6 @@ class XngSpider(scrapy.Spider):
 
     def start_requests(self):
         while True:
-            time.sleep(120)
 
             item = {}
 
