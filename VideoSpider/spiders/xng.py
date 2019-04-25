@@ -39,8 +39,8 @@ class XngSpider(scrapy.Spider):
                 sql = """select token,uid from video_token where name='小年糕'"""
                 cursor.execute(sql)
                 for video in cursor.fetchall():
-                    item['token'] = video[0]
-                    item['uid'] = video[1]
+                    item['token'] = '7c357a432e43544fe974528fae5530ac'
+                    item['uid'] = '0c4071b6-5d54-4665-bdd3-364b79d8a496'
 
             except Exception as f:
                 connection.rollback()
