@@ -22,29 +22,9 @@ class XngzfSpider(scrapy.Spider):
 
     def start_requests(self):
         while True:
-            time.sleep(120)
-            connection = pymysql.connect(
-                host=MYSQL_HOST,
-                port=MYSQL_PORT,
-                user=MYSQL_USERNAME,
-                password=MYSQL_PASSWORK,
-                db=MYSQL_DATABASE,
-                charset='utf8'
-            )
-
             item = {}
-            cursor = connection.cursor()
-            try:
-                sql = """select token,uid from video_token where name='小年糕祝福'"""
-                cursor.execute(sql)
-                for video in cursor.fetchall():
-                    item['token'] = video[0]
-                    item['uid'] = video[1]
-
-            except Exception as f:
-                connection.rollback()
-
-            cursor.close()
+            item['uid'] = '270bd624-46f5-483f-82ca-19aa07e1c374'
+            item['token'] = '658561f5cad5ace806ed73db84af0179'
             for video_url, video_type in xng_zf_spider_dict.items():
                 choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
                 item['view_cnt_compare'] = int(5000 * choice(choice_list))
