@@ -38,7 +38,7 @@ def transcoding():
 
     cur = connection.cursor()
     try:
-        sql = 'select job_id, osskey, id from tb_spider_video where status=2 and match_status=0 limit 100'
+        sql = 'select job_id, osskey, id from tb_spider_video where status=2 and match_status=0 '
         cur.execute(sql)
 
         for info in cur.fetchall():
