@@ -76,8 +76,6 @@ class XngzfSpider(scrapy.Spider):
                     filename = download(str(item['id']), item['download_url'], True)
                     md5_name = get_md5_name(item['id'], filename)
                     is_presence = redis_check(md5_name)
-
-                    print(md5_name)
                     item['osskey'] = md5_name
 
                     # 视频不存在执行
