@@ -18,11 +18,11 @@ class XgDownload(object):
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
         self.opt.add_argument('--disable-dev-shm-usage')
         self.opt.add_argument('--no-sandbox')
-        # display = Display(visible=0, size=(800, 600))
-        # display.start()
+        display = Display(visible=0, size=(800, 600))
+        display.start()
         # self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=0&city=0&yys=0&port=2&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=')
-        # self.proxy = requests.get('http://webapi.http.zhimacangku.com/getip?num=1&type=1&pro=440000&city=0&yys=0&port=2&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=')
-        # self.opt.add_argument('--proxy-server=https://{}'.format(self.proxy.text))
+        self.proxy = requests.get('http://http.tiqu.alicdns.com/getip3?num=1&type=1&pro=&city=0&yys=0&port=2&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions=')
+        self.opt.add_argument('--proxy-server=http://{}'.format(self.proxy.text))
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.opt.add_experimental_option("prefs", self.prefs)
         # self.opt.set_headless
@@ -116,16 +116,15 @@ class XgDownload(object):
                 self.broser.quit()
 
         except Exception as f:
-            pass
-            # cursor = self.connection.cursor()
-            # try:
-            #     sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
-            #         video_info[2], video_info[1])
-            #     cursor.execute(sql)
-            #     self.connection.commit()
-            # except:
-            #     self.connection.rollback()
-            # cursor.close()
+            cursor = self.connection.cursor()
+            try:
+                sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
+                    video_info[2], video_info[1])
+                cursor.execute(sql)
+                self.connection.commit()
+            except:
+                self.connection.rollback()
+            cursor.close()
             # self.broser.quit()
 
 
