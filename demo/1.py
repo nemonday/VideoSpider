@@ -34,5 +34,5 @@ data = {
 
 }
 res = requests.post(url, headers=headers, data=data)
-print(res)
+print(res.text)
 
