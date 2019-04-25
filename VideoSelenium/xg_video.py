@@ -116,16 +116,7 @@ class XgDownload(object):
                 self.broser.quit()
 
         except Exception as f:
-            cursor = self.connection.cursor()
-            try:
-                sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
-                    video_info[2], video_info[1])
-                cursor.execute(sql)
-                self.connection.commit()
-            except:
-                self.connection.rollback()
-            cursor.close()
-            # self.broser.quit()
+            pass
 
 
 if __name__ == '__main__':
