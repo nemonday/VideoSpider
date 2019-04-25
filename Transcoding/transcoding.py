@@ -117,7 +117,7 @@ def transcoding():
     cur.close()
 
 
-schedule.every(10).minutes.do(transcoding)
+schedule.every(1).minutes.do(transcoding)
 
 while True:
     schedule.run_pending()
