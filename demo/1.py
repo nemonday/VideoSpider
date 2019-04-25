@@ -14,5 +14,5 @@ data = {
 
 }
 res = requests.post(url, data=data)
-print(res.text)
+print(res)
 
