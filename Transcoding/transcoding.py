@@ -13,8 +13,7 @@ from settings import ACCESS_KEY, SECRET_KEY, REGION_ID, MYSQL_HOST, MYSQL_PORT, 
 
 
 def transcoding():
-
-    # redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, decode_responses=True)
+    # redis_db = redis.StrictRedis(host='127.0.0.1', port=6379, db=3, decode_responses=True)
 
     redis_db = redis.StrictRedis(host=REDIS_HOST, port=REDIS_PORT, db=3, password='flrjovlOJEROIJ324', decode_responses=True)
 
