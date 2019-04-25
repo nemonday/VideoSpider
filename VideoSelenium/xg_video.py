@@ -58,7 +58,7 @@ class XgDownload(object):
         cursor.close()
 
     def run(self):
-        # try:
+        try:
             video_infos = self.get_info()
             if video_infos:
                 for video_info in video_infos:
@@ -114,18 +114,18 @@ class XgDownload(object):
                 self.broser.delete_all_cookies()
                 self.broser.quit()
 
-        # except Exception as f:
-        #     print('未获取url地址')
-        #     cursor = self.connection.cursor()
-        #     try:
-        #         sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
-        #             video_info[2], video_info[1])
-        #         cursor.execute(sql)
-        #         self.connection.commit()
-        #     except:
-        #         self.connection.rollback()
-        #     cursor.close()
-        #     self.broser.quit()
+        except Exception as f:
+            print(f)
+            cursor = self.connection.cursor()
+            try:
+                sql = "DELETE FROM tb_spider_video WHERE id = '%s' and osskey = '%s'" % (
+                    video_info[2], video_info[1])
+                cursor.execute(sql)
+                self.connection.commit()
+            except:
+                self.connection.rollback()
+            cursor.close()
+            self.broser.quit()
 
 
 if __name__ == '__main__':
