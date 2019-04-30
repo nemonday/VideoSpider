@@ -9,7 +9,7 @@ from pprint import pprint
 import requests
 import scrapy
 
-from VideoSpider.tool import jieba_ping, check
+from VideoSpider.tool import jieba_ping, check, redis_check
 from VideoSpider.settings import *
 
 
@@ -17,41 +17,17 @@ class UcSpider(scrapy.Spider):
     name = 'uc'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            item ={}
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
-            for video_url, video_type in uc_spider_dict.items():
-                item['view_cnt_compare'] = video_type[1]
-                item['cmt_cnt_compare'] = video_type[2]
-                item['category'] = video_type[0]
+        item ={}
+        proxy = requests.get(PROXY_URL)
+        proxies = {
+            'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+        for video_url, video_type in uc_spider_dict.items():
+            item['view_cnt_compare'] = video_type[1]
+            item['cmt_cnt_compare'] = video_type[2]
+            item['old_type'] = video_type[4]
 
-                yield scrapy.Request(video_url, headers=video_type[3],
-                                     callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
-
-    def uc_category(self, gzh_cids):
-        if gzh_cids['category'] in uc_life_list:
-            return 30
-        elif gzh_cids['category'] in uc_chid_list:
-            return 41
-        elif gzh_cids['category'] in uc_funny_list:
-            return 23
-        elif gzh_cids['category'] in uc_music_list:
-            return 29
-        elif gzh_cids['category'] in uc_sport_list:
-            return 38
-        elif gzh_cids['category'] in uc_dance_list:
-            return 42
-        elif gzh_cids['category'] in uc_food_list:
-            return 33
-        elif gzh_cids['category'] in uc_movie_list:
-            return 25
-        elif gzh_cids['category'] in uc_variety_list:
-            return 27
-        else:
-            return None
+            yield scrapy.Request(video_url, headers=video_type[3],
+                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -93,12 +69,13 @@ class UcSpider(scrapy.Spider):
             item['video_datas'] = video_datas
 
             for gzh_cids in item['video_datas']:
-                result = check(gzh_cids['id'], gzh_cids['from'])
-                category = self.uc_category(gzh_cids)
-                if (result is None) and (not category is None):
-                    md = hashlib.md5()  # 构造一个md5
-                    gzh_cids['category'] = category
+                md = hashlib.md5()  # 构造一个md5
+                md.update(str(gzh_cids['url']).encode())
+                item['osskey'] = md.hexdigest()
 
+                # 判断视频是否存在
+                is_ture = redis_check(item['osskey'])
+                if is_ture is True:
                     item['url'] = gzh_cids['url']
                     item['download_url'] = gzh_cids['url']
                     item['like_cnt'] = ''
@@ -112,17 +89,9 @@ class UcSpider(scrapy.Spider):
                     item['video_width'] = gzh_cids['video_width']
                     item['spider_time'] = gzh_cids['spider_time']
                     item['from'] = 'UC浏览器'
-                    item['category'] = gzh_cids['category']
                     item['old_type'] = gzh_cids['old_type']
-                    md.update(str(item['url']).encode())
-                    item['osskey'] = md.hexdigest()
-                    match_type = jieba_ping(item)
-                    if match_type is None:
-                        item['match_type'] = item['category']
-                    else:
-                        item['match_type'] = match_type
 
-                    yield item
+                    # yield item
 
         except Exception as f:
             pprint('UC浏览器爬虫错误:{}'.format(f))

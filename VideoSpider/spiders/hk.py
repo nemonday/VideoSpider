@@ -15,10 +15,8 @@ class HkSpider(scrapy.Spider):
     name = 'hk'
 
     def start_requests(self):
-
         item = {}
         for video_url, video_type in hk_spider_dict.items():
-            choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]

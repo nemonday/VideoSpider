@@ -126,6 +126,7 @@ def oss(key, filename, uploadpath):
 
 
 def deep_img_video(width, height, y, w, h, excursion, filename, deepcopy_filename):
+    # 分别传入: 视频帧宽，帧高，水印位置定位的：y值，w值，h值，w偏移值，去水印视频，去水印后的视频文件名字
     try:
         os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.format(filename, int(width) - excursion,y, w, h, deepcopy_filename))
         return True
@@ -141,8 +142,11 @@ def download(osskey, download_url, is_deepimg=False):
             chunk_size = 1024
             content_size = int(r.headers['content-length'])
 
+            # 不需要遮挡水印文件地址
             if is_deepimg is False:
                 filename = osskey + '.mp4'
+
+            # 需要遮挡水印文件地址
             elif is_deepimg is True:
                 filename = osskey + 'copy' + '.mp4'
 
@@ -154,21 +158,25 @@ def download(osskey, download_url, is_deepimg=False):
                     num = '\r下载视频: {} ,{}% '.format(osskey, int(loaded) * 100)
                     print(num, end='')
                     n += 1
+
+        # 返回最终文件地址
         return filename
     except:
         return False
+
 
 def download_img(img_url, oss):
     # 传入图片地址, oss名称
     with closing(requests.get(img_url, stream=True)) as r:
         chunk_size = 1024
+        # 文件格式
         img_filename = oss + '.cover'
         with open(img_filename, "wb") as f:
             n = 1
             for chunk in r.iter_content(chunk_size=chunk_size):
                 f.write(chunk)
                 n += 1
-
+    # 返回文件路径
     return img_filename
 
 

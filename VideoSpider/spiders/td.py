@@ -18,23 +18,21 @@ class TdSpider(scrapy.Spider):
     name = 'td'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            item = {}
+        item = {}
 
-            for video_url, video_type in td_spider_dict.items():
-                proxy = requests.get(PROXY_URL)
-                proxies = {
-                    'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+        for video_url, video_type in td_spider_dict.items():
+            proxy = requests.get(PROXY_URL)
+            proxies = {
+                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-                item['view_cnt_compare'] = video_type[1]
-                item['cmt_cnt_compare'] = video_type[2]
-                item['category'] = video_type[0]
-                item['old_type'] = video_type[4]
+            item['view_cnt_compare'] = video_type[1]
+            item['cmt_cnt_compare'] = video_type[2]
+            item['category'] = video_type[0]
+            item['old_type'] = video_type[4]
 
-                yield scrapy.Request(video_url, headers=video_type[3],
-                                     callback=self.parse, meta={'proxy': ''.format(proxies['https']),
-                                                                'item': deepcopy(item)}, dont_filter=True)
+            yield scrapy.Request(video_url, headers=video_type[3],
+                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),
+                                                            'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'

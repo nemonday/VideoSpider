@@ -21,22 +21,20 @@ class XngzfSpider(scrapy.Spider):
     name = 'xngzf'
 
     def start_requests(self):
-        while True:
-            item = {}
-            item['uid'] = '270bd624-46f5-483f-82ca-19aa07e1c374'
-            item['token'] = '658561f5cad5ace806ed73db84af0179'
-            for video_url, video_type in xng_zf_spider_dict.items():
-                choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
-                item['view_cnt_compare'] = int(5000 * choice(choice_list))
-                item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
-                item['category'] = video_type[0]
-                item['old_type'] = video_type[4]
+        item = {}
+        item['uid'] = '270bd624-46f5-483f-82ca-19aa07e1c374'
+        item['token'] = '658561f5cad5ace806ed73db84af0179'
+        for video_url, video_type in xng_zf_spider_dict.items():
+            choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+            item['view_cnt_compare'] = int(5000 * choice(choice_list))
+            item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
+            item['old_type'] = video_type[4]
 
-                item['data'] = video_url % (item['uid'], item['token'])
+            item['data'] = video_url % (item['uid'], item['token'])
 
-                url = 'https://www.baidu.com/'
+            url = 'https://www.baidu.com/'
 
-                yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
+            yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -66,7 +64,6 @@ class XngzfSpider(scrapy.Spider):
                 item['video_width'] = video['w']
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
                 item['from'] = '小年糕祝福'
-                item['category'] = item['category']
 
                 # 筛选条件
                 if item['view_cnt'] >= item['view_cnt_compare']:
@@ -80,14 +77,6 @@ class XngzfSpider(scrapy.Spider):
 
                     # 视频不存在执行
                     if is_presence is True:
-
-                        # 匹配关键字获取视频类型
-                        match_type = jieba_ping(item)
-                        if match_type is None:
-                            item['match_type'] = item['category']
-                        else:
-                            item['match_type'] = match_type
-
                         # 获取视频封面，已经视频的尺寸
                         img_filename = download_img(item['thumbnails'], item['osskey'])
                         video_size = deeimg(item['download_url'])
@@ -132,6 +121,7 @@ class XngzfSpider(scrapy.Spider):
 
                     if os.path.exists(video_size_img):
                         os.remove(video_size_img)
+
         except Exception as f:
             pprint('小年糕祝福爬虫错误:{}'.format(f))
             pass

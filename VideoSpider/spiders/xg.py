@@ -10,7 +10,7 @@ import pymysql
 import requests
 import scrapy
 from selenium import webdriver
-from VideoSpider.tool import jieba_ping, deeimg, download, check
+from VideoSpider.tool import jieba_ping, deeimg, download, check, redis_check
 from VideoSpider.settings import *
 
 
@@ -19,20 +19,18 @@ class XgSpider(scrapy.Spider):
     name = 'xg'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            item = {}
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+        item = {}
+        proxy = requests.get(PROXY_URL)
+        proxies = {
+            'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-            for video_url, video_type in xg_spider_dict.items():
-                item['view_cnt_compare'] = video_type[1]
-                item['cmt_cnt_compare'] = video_type[2]
-                item['category'] = video_type[0]
-                item['old_type'] = video_type[4]
+        for video_url, video_type in xg_spider_dict.items():
+            item['view_cnt_compare'] = video_type[1]
+            item['cmt_cnt_compare'] = video_type[2]
+            item['category'] = video_type[0]
+            item['old_type'] = video_type[4]
 
-                yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+            yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         try:
@@ -61,15 +59,11 @@ class XgSpider(scrapy.Spider):
                 item['category'] = item['category']
                 md.update(str(item['url']).encode())
                 item['osskey'] = md.hexdigest()
-                result = check(item['from'], item['id'])
-                if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
-                    match_type = jieba_ping(item)
-                    if match_type is None:
-                        item['match_type'] = item['category']
-                    else:
-                        item['match_type'] = match_type
 
-                    yield item
+                if item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']:
+                    is_ture = redis_check(item['osskey'])
+                    if is_ture is True:
+                        yield item
 
         except Exception as f:
             print(f)

@@ -22,22 +22,19 @@ class XngSpider(scrapy.Spider):
     name = 'xng'
 
     def start_requests(self):
-        while True:
+        item = {}
+        item['token'] = '65431454eee2e3585b95e34210ccac43'
+        item['uid'] = '716a9609-af87-4dd0-bf73-8a3f19349ca5'
+        for video_url, video_type in xng_spider_dict.items():
+            choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
+            item['view_cnt_compare'] = int(5000 * choice(choice_list))
+            item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
+            item['category'] = video_type[0]
+            item['data'] = video_url % (item['token'], item['uid'])
+            item['old_type'] = video_type[4]
+            url = 'https://www.baidu.com/'
 
-            item = {}
-
-            item['token'] = '7c357a432e43544fe974528fae5530ac'
-            item['uid'] = '0c4071b6-5d54-4665-bdd3-364b79d8a496'
-            for video_url, video_type in xng_spider_dict.items():
-                choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
-                item['view_cnt_compare'] = int(5000 * choice(choice_list))
-                item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
-                item['category'] = video_type[0]
-                item['data'] = video_url % (item['token'], item['uid'])
-                item['old_type'] = video_type[4]
-                url = 'https://www.baidu.com/'
-
-                yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
+            yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -80,14 +77,6 @@ class XngSpider(scrapy.Spider):
 
                     # 视频不存在执行
                     if is_presence is True:
-
-                        # 匹配关键字获取视频类型
-                        match_type = jieba_ping(item)
-                        if match_type is None:
-                            item['match_type'] = item['category']
-                        else:
-                            item['match_type'] = match_type
-
                         # 获取视频封面，已经视频的尺寸
                         img_filename = download_img(item['thumbnails'], item['osskey'])
                         video_size = deeimg(item['download_url'])
