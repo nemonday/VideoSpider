@@ -1,20 +1,33 @@
 # -*- coding: utf-8 -*-
-import base64
 import hashlib
 import json
-import random
 import re
-import time
 from copy import deepcopy
-import pymysql
 import requests
 import scrapy
 from selenium import webdriver
-from VideoSpider.tool import jieba_ping, deeimg, download, check, redis_check
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+
+from VideoSpider.iduoliao import Print
+from VideoSpider.tool import redis_check
 from VideoSpider.settings import *
 
 
 class XgSpider(scrapy.Spider):
+    def __init__(self):
+        super(XgSpider, self).__init__()
+        self.opt = webdriver.ChromeOptions()
+        self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
+        # self.opt.add_argument('--disable-dev-shm-usage')
+        # self.opt.add_argument('--no-sandbox')
+
+        # display = Display(visible=0, size=(800, 600))
+        # display.start()
+
+        self.broser = webdriver.Chrome(options=self.opt)
+        self.wait = WebDriverWait(self.broser, 20, 0.5)
 
     name = 'xg'
 
@@ -61,10 +74,15 @@ class XgSpider(scrapy.Spider):
                 item['osskey'] = md.hexdigest()
 
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']:
-                    is_ture = redis_check(item['osskey'])
-                    if is_ture is True:
-                        yield item
+                    # is_ture = redis_check(item['osskey'])
+                    # if is_ture is True:
+                    self.broser.get(item['download_url'])
+                    time.sleep(5)
+                    url = self.broser.find_element_by_xpath('//video').get_attribute("src")
+
+                    print(url)
+                    # yield item
 
         except Exception as f:
-            print(f)
+            Print.error(f)
             pass

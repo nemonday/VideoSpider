@@ -88,41 +88,41 @@ def deeimg(dowonload_url):
 
 def oss(key, filename, uploadpath):
     # 传入osskey, 文件路径, oss路径
-        # 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
-        auth = oss2.Auth(ACCESSKEYID, ACCESSKEYSECRET)
-        # Endpoint以杭州为例，其它Region请按实际情况填写。
-        bucket = oss2.Bucket(auth, ENDPOINT, BUCKETNAME)
 
-        key = uploadpath + key
-        filename = filename
+    # 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
+    auth = oss2.Auth(ACCESSKEYID, ACCESSKEYSECRET)
+    # Endpoint以杭州为例，其它Region请按实际情况填写。
+    bucket = oss2.Bucket(auth, ENDPOINT, BUCKETNAME)
 
-        total_size = os.path.getsize(filename)
+    key = uploadpath + key
+    filename = filename
 
-        # determine_part_size方法用来确定分片大小。
-        part_size = determine_part_size(total_size, preferred_size=10240 * 1000)
+    total_size = os.path.getsize(filename)
 
-        # 初始化分片。
-        upload_id = bucket.init_multipart_upload(key).upload_id
-        parts = []
-        # 逐个上传分片。
-        with open(filename, 'rb') as fileobj:
-            part_number = 1
-            offset = 0
+    # determine_part_size方法用来确定分片大小。
+    part_size = determine_part_size(total_size, preferred_size=10240 * 1000)
 
-            while offset < total_size:
-                num_to_upload = min(part_size, total_size - offset)
-                # SizedFileAdapter(fileobj, size)方法会生成一个新的文件对象，重新计算起始追加位置。
-                result = bucket.upload_part(key, upload_id, part_number,
-                                            SizedFileAdapter(fileobj, num_to_upload, ),
-                                            )
-                parts.append(PartInfo(part_number, result.etag))
+    # 初始化分片。
+    upload_id = bucket.init_multipart_upload(key).upload_id
+    parts = []
+    # 逐个上传分片。
+    with open(filename, 'rb') as fileobj:
+        part_number = 1
+        offset = 0
 
-                offset += num_to_upload
-                part_number += 1
+        while offset < total_size:
+            num_to_upload = min(part_size, total_size - offset)
+            # SizedFileAdapter(fileobj, size)方法会生成一个新的文件对象，重新计算起始追加位置。
+            result = bucket.upload_part(key, upload_id, part_number,
+                                        SizedFileAdapter(fileobj, num_to_upload, ),
+                                        )
+            parts.append(PartInfo(part_number, result.etag))
 
+            offset += num_to_upload
+            part_number += 1
 
-            # 完成分片上传
-            bucket.complete_multipart_upload(key, upload_id, parts)
+        # 完成分片上传
+        bucket.complete_multipart_upload(key, upload_id, parts)
 
 
 def deep_img_video(width, height, y, w, h, excursion, filename, deepcopy_filename):
@@ -182,7 +182,6 @@ def download_img(img_url, oss):
 
 def check(vid, video_from):
     # 传入vid, 视频来源
-
     cursor = connection.cursor()
     try:
         sql = """select vid from tb_spider_video where vid = '%s' and video_from= '%s'""" % (vid, video_from)
@@ -321,8 +320,8 @@ def put_jobid():
 
 
 def submit_ranscoding(md5_name):
-    access_key_id = 'LTAIeSzXuA4O548o'
-    access_key_secret = 'gxQTVohHqcOm3SAIPI0NZIVD1iWSUq'
+    access_key_id = 'LTAI2aU1LjHOWKZf'
+    access_key_secret = 'fe1L3bkeucrrEFnaJbDC5woepupNAv'
     mps_region_id = 'cn-hangzhou'
     pipeline_id = '264990a3db2b4670812fed84e9d12256'
     template_id = 'fae77e4045aa4fa58185619fcf1d341e'
@@ -369,4 +368,10 @@ def submit_ranscoding(md5_name):
         return [False, response['JobResultList']['JobResult'][0]['Message']]
 
 
-
+# for i in range(11):
+#     md = hashlib.md5()  # 构造一个md5
+#     md.update(str(i).encode())
+#       # 加密结果
+#     mdname = md.hexdigest()
+#     print(mdname)
+#     oss('{}.mp4'.format(mdname), '/Users/nemo/PycharmProjects/VideoSpider/VideoSpider/pythontest2.mp4', 'video/')
