@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
-import base64
 import json
-import os
-import random
 import re
 from copy import deepcopy
 from pprint import pprint
 
 import requests
 import scrapy
-from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, deep_img_video, oss_upload, \
-    get_md5_name, redis_check
 from VideoSpider.settings import *
-from ..iduoliao import Iduoliao
 
 
 class PpxSpider(scrapy.Spider):

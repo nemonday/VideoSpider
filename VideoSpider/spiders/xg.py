@@ -6,13 +6,14 @@ from copy import deepcopy
 import requests
 import scrapy
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
+
+from VideoSpider.API.iduoliao import Iduoliao
+from VideoSpider.API.iduoliaotool import Print
+from VideoSpider.settings import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-
-from VideoSpider.iduoliao import Print
-from VideoSpider.tool import redis_check
-from VideoSpider.settings import *
+from selenium.webdriver.support.wait import WebDriverWait
+import selenium.webdriver.support.ui as ui
 
 
 class XgSpider(scrapy.Spider):
@@ -28,6 +29,17 @@ class XgSpider(scrapy.Spider):
 
         self.broser = webdriver.Chrome(options=self.opt)
         self.wait = WebDriverWait(self.broser, 20, 0.5)
+        self.login_url = 'https://miku.tools/tools/toutiao_video_downloader'
+        # 登陆获取链接的网站
+        self.broser.get(self.login_url)
+        # 判断弹窗是否存在
+        exists = self.is_visible('//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button')
+        # 如果弹窗存在， 就点击close
+        if exists is True:
+            self.broser.find_element_by_xpath(
+                '//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button').click()
+            self.url_box = self.wait.until(EC.presence_of_element_located(
+                (By.XPATH, '//input[@placeholder="http://www.365yg.com/a6660790867638373640"]')))
 
     name = 'xg'
 
@@ -44,6 +56,13 @@ class XgSpider(scrapy.Spider):
             item['old_type'] = video_type[4]
 
             yield scrapy.Request(video_url, headers=video_type[3], callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+
+    def is_visible(self, locator, timeout=10):
+        try:
+            ui.WebDriverWait(self.broser, timeout).until(EC.visibility_of_element_located((By.XPATH, locator)))
+            return True
+        except Exception as f:
+            return False
 
     def parse(self, response):
         try:
@@ -76,12 +95,20 @@ class XgSpider(scrapy.Spider):
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']:
                     # is_ture = redis_check(item['osskey'])
                     # if is_ture is True:
-                    self.broser.get(item['download_url'])
-                    time.sleep(5)
-                    url = self.broser.find_element_by_xpath('//video').get_attribute("src")
+                    # 输入要解析的地址
+                    self.url_box.send_keys(item['download_url'])
+                    # 点击解析
+                    click_button = self.broser.find_element_by_css_selector('[class="nya-btn"]')
+                    click_button.click()
 
-                    print(url)
-                    # yield item
+                    # 判断是否获取成功
+                    exists = self.is_visible('//*[@id="__layout"]/div/main/div[2]/section[2]/h2/span')
+                    if exists is True:
+                        url = self.broser.find_element_by_xpath(
+                            '//*[@id="__layout"]/div/main/div[2]/section[2]/div/p/a').get_attribute('href')
+                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频')
+                        print(item['osskey'])
+                        self.url_box.clear()
 
         except Exception as f:
             Print.error(f)

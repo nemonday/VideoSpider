@@ -12,7 +12,7 @@ from oss2.models import PartInfo
 import pymysql
 from contextlib import closing
 import requests
-from .settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, ACCESSKEYID, \
+from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, ACCESSKEYID, \
     ACCESSKEYSECRET, ENDPOINT, BUCKETNAME
 from urllib.parse import quote
 from aliyunsdkcore.client import AcsClient
@@ -46,7 +46,7 @@ class Print(object):
         return time.strftime("%Y_%m_%d-%H_%M_%S", local_time)
 
 
-class Iduoliao(object):
+class IduoliaoTool(object):
     def __int__(self):
         self.connection = pymysql.connect(
             host=MYSQL_HOST,
@@ -84,9 +84,9 @@ class Iduoliao(object):
                     Print.info('下载视频: {}'.format(filename))
 
             if os.path.exists(filename):
-                return True, filename
+                return filename
             else:
-                return False, filename
+                return None
 
         except Exception as f:
             Print.error(f)
@@ -104,6 +104,7 @@ class Iduoliao(object):
                     for chunk in r.iter_content(chunk_size=chunk_size):
                         f.write(chunk)
                         n += 1
+            return img_filename
 
         except Exception as f:
             Print.error(f)
@@ -112,29 +113,32 @@ class Iduoliao(object):
     def dewatermark(width, height, y, w, h, excursion, filename, dewatermarkname):
         try:
             # 分别传入: 视频帧宽，帧高，水印位置定位的：y值，w值，h值，w偏移值，去水印视频，去水印后的视频文件名字
+            dewatermarkname = dewatermarkname + '.mp4'
             os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.
                       format(filename, int(width) - excursion, y, w, h, dewatermarkname))
 
             if os.path.exists(dewatermarkname):
                 os.remove(filename)
-                return True
+                return dewatermarkname
             else:
-                return False
+                return None
 
         except Exception as f:
             Print.error(f)
 
     @staticmethod
-    def oss_upload(filename, uploadpath):
+    def oss_upload(osskey, filename, uploadpath, de_suffix=True):
         try:
-            # 传入osskey, 文件路径, oss路径
-            filename = re.match(r'\w', filename).group()
+            # 当 de_suffix 是Ture，使用正则把文件的后缀去掉
+            if de_suffix is True:
+                osskey = re.match(r'\w+', filename).group()
+
             # 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录 https://ram.console.aliyun.com 创建RAM账号。
             auth = oss2.Auth(ACCESSKEYID, ACCESSKEYSECRET)
             # Endpoint以杭州为例，其它Region请按实际情况填写。
             bucket = oss2.Bucket(auth, ENDPOINT, BUCKETNAME)
 
-            key = uploadpath + filename
+            key = uploadpath + osskey
             filename = filename
 
             total_size = os.path.getsize(filename)
@@ -207,7 +211,7 @@ class Iduoliao(object):
             width = img.size[0]
             height = img.size[1]
 
-            return True, width, height, size_filename
+            return size_filename, width, height
 
         except Exception as f:
             Print.error(f)
