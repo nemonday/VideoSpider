@@ -1,0 +1,140 @@
+2019_05_31-16_08_41  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_05_31-16_08_42  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_05_31-16_08_43  ERROR: 'group_id'
+2019_05_31-16_08_44  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_05_31-16_09_05  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_09_06  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_09_07  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_09_08  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_09_09  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_09_11  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_10_45  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_10_46  ERROR: 'XgSpider' object has no attribute 'broser'
+2019_05_31-16_11_09  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_10  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_13  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_14  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_16  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_17  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_20  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_21  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_22  ERROR: Message: unknown error: cannot determine loading status
+from disconnected: received Inspector.detached event
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_23  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_11_25  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_08  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_14  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//video"}
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_14  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_16  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_17  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_41  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_05_31-16_13_42  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_18_30  INFO: 下载视频: a7af6dd4477f828aa1f956c1678a0716dewatermark.mp4
+2019_06_01-17_22_04  INFO: 下载视频: 55a5e4cfd23d5dd34eaaf4416a8e8268dewatermark.mp4
+2019_06_01-17_24_16  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_17  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_18  ERROR: 'group_id'
+2019_06_01-17_24_19  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_21  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_22  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_23  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_24  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_26  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_27  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_28  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_29  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_32  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_01-17_24_33  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1084, 217). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=74.0.3729.169)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
