@@ -74,7 +74,7 @@ class IduoliaoTool(object):
 
                 # 需要遮挡水印文件地址
                 elif ifdewatermark is True:
-                    filename = 'Z:\\爬虫储存\\西瓜视频\\' + old_type + title + 'dewatermark' + '.mp4'
+                    filename = 'Z:\\爬虫储存\\西瓜视频\\{}\\{}'.format(old_type, title) + 'dewatermark' + '.mp4'
 
                 with open(filename, "wb") as f:
                     n = 1
@@ -115,7 +115,7 @@ class IduoliaoTool(object):
         try:
             # 分别传入: 视频帧宽，帧高，水印位置定位的：y值，w值，h值，w偏移值，去水印视频，去水印后的视频文件名字
             dewatermarkname = dewatermarkname + '.mp4'
-            os.system('''ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.
+            os.system('''C:\\Users\\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.
                       format(filename, int(width) - excursion, y, w, h, dewatermarkname))
 
             if os.path.exists(dewatermarkname):
