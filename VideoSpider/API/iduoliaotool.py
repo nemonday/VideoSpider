@@ -64,8 +64,11 @@ class IduoliaoTool(object):
         # 传入oss名称, 下载地址
         # 视频下载
         filename2 = 'Z:\\爬虫储存\\西瓜视频2\\{}'.format(old_type)
-        if not os.path.exists(filename2):
-            os.makedirs(filename2)
+        try:
+            f = open("{}".format(filename2), 'r')
+            f.close()
+        except IOError:
+            f = open("{}".format(filename2), 'w')
         try:
             with closing(requests.get(download_url, stream=True)) as r:
                 chunk_size = 1024
