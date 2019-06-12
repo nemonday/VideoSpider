@@ -374,4 +374,4 @@ def submit_ranscoding(md5_name):
 #       # 加密结果
 #     mdname = md.hexdigest()
 #     print(mdname)
-#     oss('{}.mp4'.format(mdname), '/Users/nemo/PycharmProjects/VideoSpider/VideoSpider/pythontest2.mp4', 'video/')
+# oss('videoaddtest3', '/Users/nemo/PycharmProjects/VideoSpider/VideoSpider/output.mp4', 'video/')

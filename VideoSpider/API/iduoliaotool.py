@@ -2,6 +2,8 @@ import json
 import os
 import re
 import time
+from pprint import pprint
+
 import oss2
 import redis
 import cv2
@@ -259,17 +261,16 @@ class IduoliaoTool(object):
         response_str = client.do_action_with_exception(request)
         response = json.loads(response_str)
         if response['JobResultList']['JobResult'][0]['Success']:
+            print(response['JobResultList']['JobResult'][0]['Job']['JobId'])
             return [True, response['JobResultList']['JobResult'][0]['Job']['JobId']]
         else:
+            print(response['JobResultList']['JobResult'][0]['Message'])
             return [False, response['JobResultList']['JobResult'][0]['Message']]
 
 
 
-
-
-
-
-
+# obj = IduoliaoTool()
+# obj.submit_ranscoding('videoaddtest3')
 
 
 

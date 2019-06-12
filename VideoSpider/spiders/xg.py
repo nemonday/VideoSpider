@@ -3,6 +3,8 @@ import hashlib
 import json
 import re
 from copy import deepcopy
+from pprint import pprint
+
 import requests
 import scrapy
 from selenium import webdriver
@@ -65,7 +67,7 @@ class XgSpider(scrapy.Spider):
             return False
 
     def parse(self, response):
-        try:
+        # try:
             isotimeformat = '%Y-%m-%d'
             item = response.meta['item']
             json_data = json.loads(response.text)
@@ -73,10 +75,9 @@ class XgSpider(scrapy.Spider):
 
             for video in video_info[2:]:
                 md = hashlib.md5()  # 构造一个md5
-
                 video = json.loads(video['content'])
                 item['id'] = video['group_id']
-                item['url'] = video['display_url']
+                url = video['display_url']
                 item['download_url'] = video['display_url']
                 item['like_cnt'] = video['video_like_count']
                 item['cmt_cnt'] = video['comment_count']
@@ -89,27 +90,40 @@ class XgSpider(scrapy.Spider):
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
                 item['from'] = '西瓜视频'
                 item['category'] = item['category']
-                md.update(str(item['url']).encode())
+                md.update(str(url).encode())
                 item['osskey'] = md.hexdigest()
+                rep = re.search(r'http://toutiao.com/group/(.*)/', url).group(1)
+                item['url'] = 'https://www.ixigua.com/i' + rep + '/'
 
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']:
                     # is_ture = redis_check(item['osskey'])
                     # if is_ture is True:
                     # 输入要解析的地址
-                    self.url_box.send_keys(item['download_url'])
+                    self.url_box.send_keys(item['url'])
                     # 点击解析
                     click_button = self.broser.find_element_by_css_selector('[class="nya-btn"]')
                     click_button.click()
+
+                    # 判断是否出现解析失败
+                    exists = self.is_visible('//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button')
+                    if exists is True:
+                        click_button = self.broser.find_element_by_css_selector('[class="vue-dialog-button"]')
+                        click_button.click()
+                        self.url_box.clear()
 
                     # 判断是否获取成功
                     exists = self.is_visible('//*[@id="__layout"]/div/main/div[2]/section[2]/h2/span')
                     if exists is True:
                         url = self.broser.find_element_by_xpath(
                             '//*[@id="__layout"]/div/main/div[2]/section[2]/div/p/a').get_attribute('href')
-                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频')
-                        print(item['osskey'])
+                        pprint(url)
+                        # 开始去水印上传
+                        # Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频')
+
                         self.url_box.clear()
 
-        except Exception as f:
-            Print.error(f)
-            pass
+
+
+        # except Exception as f:
+        #     Print.error(f)
+        #     pass

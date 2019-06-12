@@ -40,7 +40,6 @@ class PqSpider(scrapy.Spider):
         res = requests.post(url, headers=pq_headers, data=item['data'], proxies=proxies, timeout=30)
         try:
             videos = json.loads(res.text)['data']
-
             for video in videos:
                 item['url'] = re.match(r'https://.*.m3u8?', video['videoPath']).group()
                 item['download_url'] = ''
@@ -64,33 +63,34 @@ class PqSpider(scrapy.Spider):
                 md.update(str(item['url']).encode())
                 item['osskey'] = md.hexdigest()  # 加密结果
 
-                # 筛选视频是否合格
-                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
-                    is_ture = redis_check(item['osskey'])
-                    if is_ture is True:
-                        # 获取ffmpeg导出视频名字
-                        synthesis_filename = re.match(r'https://rescdn.yishihui.com/longvideo/(.*)/(.*)/(.*)/(.*)',item['url']).group(4)
-                        ffmpeg_filename = re.match(r'(.*)\.m3u8', synthesis_filename).group(1) + '.mp4'
-
-                        # 下载封面地址
-                        img_filename = download_img(item['thumbnails'], item['osskey'])
-                        # 下载视频
-                        os.system('ffmpeg -i {} {}'.format(item['url'], ffmpeg_filename))
-
-                        # 把视频的mp4格式去掉
-                        os.rename(ffmpeg_filename, item['osskey'])
-
-                        # oss上传视频和图片
-                        oss_upload(item['osskey'], item['osskey'], img_filename)
-
-                        # 上传完毕，删除文件
-                        if os.path.exists(img_filename):
-                            os.remove(img_filename)
-
-                        if os.path.exists(item['osskey']):
-                            os.remove(item['osskey'])
-
-                        yield item
+                pprint(item)
+                # # 筛选视频是否合格
+                # if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                #     is_ture = redis_check(item['osskey'])
+                #     if is_ture is True:
+                #         # 获取ffmpeg导出视频名字
+                #         synthesis_filename = re.match(r'https://rescdn.yishihui.com/longvideo/(.*)/(.*)/(.*)/(.*)',item['url']).group(4)
+                #         ffmpeg_filename = re.match(r'(.*)\.m3u8', synthesis_filename).group(1) + '.mp4'
+                #
+                #         # 下载封面地址
+                #         img_filename = download_img(item['thumbnails'], item['osskey'])
+                #         # 下载视频
+                #         os.system('ffmpeg -i {} {}'.format(item['url'], ffmpeg_filename))
+                #
+                #         # 把视频的mp4格式去掉
+                #         os.rename(ffmpeg_filename, item['osskey'])
+                #
+                #         # oss上传视频和图片
+                #         oss_upload(item['osskey'], item['osskey'], img_filename)
+                #
+                #         # 上传完毕，删除文件
+                #         if os.path.exists(img_filename):
+                #             os.remove(img_filename)
+                #
+                #         if os.path.exists(item['osskey']):
+                #             os.remove(item['osskey'])
+                #
+                #         yield item
 
         except Exception as f:
             traceback.print_exc()
