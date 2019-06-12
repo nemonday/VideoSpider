@@ -63,6 +63,9 @@ class IduoliaoTool(object):
     def video_download(filename, download_url, title, old_type, ifdewatermark=False,):
         # 传入oss名称, 下载地址
         # 视频下载
+        filename2 = 'Z:\\爬虫储存\\西瓜视频2\\{}'.format(old_type)
+        if not os.path.exists(filename2):
+            os.makedirs(filename2)
         try:
             with closing(requests.get(download_url, stream=True)) as r:
                 chunk_size = 1024
@@ -76,10 +79,6 @@ class IduoliaoTool(object):
 
                 elif ifdewatermark is True:
                     filename = 'Z:\\爬虫储存\\西瓜视频2\\{}\\{}'.format(old_type, title) + 'dewatermark' + '.mp4'
-                    filename2 = 'Z:\\爬虫储存\\西瓜视频2\\{}'.format(old_type)
-
-                if not os.path.exists(filename2):
-                    os.makedirs(filename2)
 
                 with open(filename, "wb") as f:
                     n = 1
