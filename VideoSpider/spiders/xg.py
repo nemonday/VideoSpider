@@ -8,7 +8,7 @@ from pprint import pprint
 import requests
 import scrapy
 from selenium import webdriver
-
+from contextlib import closing
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
@@ -116,9 +116,8 @@ class XgSpider(scrapy.Spider):
                     if exists is True:
                         url = self.broser.find_element_by_xpath(
                             '//*[@id="__layout"]/div/main/div[2]/section[2]/div/p/a').get_attribute('href')
-                        pprint(url)
                         # 开始去水印上传
-                        # Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频')
+                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频', item['title'], item['old_type'])
 
                         self.url_box.clear()
 

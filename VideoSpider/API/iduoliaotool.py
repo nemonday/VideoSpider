@@ -60,8 +60,7 @@ class IduoliaoTool(object):
         )
 
     @staticmethod
-    def video_download(filename, download_url, ifdewatermark=False):
-
+    def video_download(filename, download_url, title, old_type, ifdewatermark=False,):
         # 传入oss名称, 下载地址
         # 视频下载
         try:
@@ -71,11 +70,11 @@ class IduoliaoTool(object):
 
                 # 不需要遮挡水印文件地址
                 if ifdewatermark is False:
-                    filename = filename + '.mp4'
+                    filename = title + '.mp4'
 
                 # 需要遮挡水印文件地址
                 elif ifdewatermark is True:
-                    filename = filename + 'dewatermark' + '.mp4'
+                    filename = 'Z:\\爬虫储存\\西瓜视频\\' + old_type + title + 'dewatermark' + '.mp4'
 
                 with open(filename, "wb") as f:
                     n = 1
