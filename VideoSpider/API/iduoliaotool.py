@@ -73,8 +73,13 @@ class IduoliaoTool(object):
                     filename = title + '.mp4'
 
                 # 需要遮挡水印文件地址
+
                 elif ifdewatermark is True:
                     filename = 'Z:\\爬虫储存\\西瓜视频2\\{}\\{}'.format(old_type, title) + 'dewatermark' + '.mp4'
+                    filename2 = 'Z:\\爬虫储存\\西瓜视频2\\{}'.format(old_type)
+
+                if not os.path.exists(filename2):
+                    os.makedirs(filename2)
 
                 with open(filename, "wb") as f:
                     n = 1
