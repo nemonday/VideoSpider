@@ -73,7 +73,8 @@ class IduoliaoTool(object):
 
                 # 不需要遮挡水印文件地址
                 if ifdewatermark is False:
-                    filename = title + '.mp4'
+                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + '.mp4'
+
                 # 需要遮挡水印文件地址
                 elif ifdewatermark is True:
                     filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + 'dewatermark' + '.mp4'
