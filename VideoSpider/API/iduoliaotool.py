@@ -60,15 +60,12 @@ class IduoliaoTool(object):
         )
 
     @staticmethod
-    def video_download(filename, download_url, title, old_type, ifdewatermark=False,):
+    def video_download(filename, download_url, title, old_type, videofrom, ifdewatermark=False):
         # 传入oss名称, 下载地址
         # 视频下载
-        filename2 = 'Z:\\爬虫储存\\西瓜视频2\\{}'.format(old_type)
-        try:
-            f = open("{}".format(filename2), 'r')
-            f.close()
-        except IOError:
-            f = open("{}".format(filename2), 'w')
+        filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}'.format(videofrom, old_type)
+        if not os.path.exists(filename2):
+            os.makedirs(filename2)
         try:
             with closing(requests.get(download_url, stream=True)) as r:
                 chunk_size = 1024
@@ -77,11 +74,9 @@ class IduoliaoTool(object):
                 # 不需要遮挡水印文件地址
                 if ifdewatermark is False:
                     filename = title + '.mp4'
-
                 # 需要遮挡水印文件地址
-
                 elif ifdewatermark is True:
-                    filename = 'Z:\\爬虫储存\\西瓜视频2\\{}\\{}'.format(old_type, title) + 'dewatermark' + '.mp4'
+                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + 'dewatermark' + '.mp4'
 
                 with open(filename, "wb") as f:
                     n = 1
@@ -118,18 +113,18 @@ class IduoliaoTool(object):
             Print.error(f)
 
     @staticmethod
-    def dewatermark(width, height, y, w, h, excursion, filename, dewatermarkname):
+    def dewatermark(width, height, y, w, h, excursion, filename, dewatermarkname,  old_type):
         try:
             # 分别传入: 视频帧宽，帧高，水印位置定位的：y值，w值，h值，w偏移值，去水印视频，去水印后的视频文件名字
-            dewatermarkname = dewatermarkname + '.mp4'
+            dewatermarkname = 'Z:\\爬虫储存\\西瓜视频2\\{}\\{}'.format(old_type, dewatermarkname) + '.mp4'
             os.system('''C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.
                       format(filename, int(width) - excursion, y, w, h, dewatermarkname))
 
-            # if os.path.exists(dewatermarkname):
-            #     os.remove(filename)
-            return dewatermarkname
-            # else:
-            #     return None
+            if os.path.exists(dewatermarkname):
+                os.remove(filename)
+                return dewatermarkname
+            else:
+                return None
 
         except Exception as f:
             Print.error(f)
@@ -175,25 +170,6 @@ class IduoliaoTool(object):
 
                 # 完成分片上传
                 bucket.complete_multipart_upload(key, upload_id, parts)
-
-        except Exception as f:
-            Print.error(f)
-
-    @staticmethod
-    def redis_check(md5_name):
-        try:
-            redis_db = redis.Redis(host='127.0.0.1', port=6379, decode_responses=True)
-            is_presence = redis_db.zrank('spider', md5_name)
-            if is_presence is None:
-                mapping = {
-                    md5_name: 10
-                }
-                redis_db.zadd('spider', mapping)
-                Print.info('添加 {} 到redis当中'.format(md5_name))
-                return True
-
-            else:
-                return False
 
         except Exception as f:
             Print.error(f)
