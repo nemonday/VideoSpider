@@ -3,12 +3,9 @@ import hashlib
 import json
 import re
 from copy import deepcopy
-from pprint import pprint
-
 import requests
 import scrapy
 from selenium import webdriver
-from contextlib import closing
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *

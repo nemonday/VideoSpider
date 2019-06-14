@@ -61,6 +61,8 @@ class Iduoliao(object):
             # 下载视频
             os.system('C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} {}'.format(url, filename))
 
+        if videofrom == "UC浏览器":
+            IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=False)
 
     @staticmethod
     def redis_check(md5_name):

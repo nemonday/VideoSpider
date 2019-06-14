@@ -8,11 +8,29 @@ from copy import deepcopy
 from pprint import pprint
 import requests
 import scrapy
-
+from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.settings import *
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
+import selenium.webdriver.support.ui as ui
 
 
 class UcSpider(scrapy.Spider):
+    def __init__(self):
+        super(UcSpider, self).__init__()
+        self.opt = webdriver.ChromeOptions()
+        self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
+        self.opt.add_argument('--disable-dev-shm-usage')
+        self.opt.add_argument('--no-sandbox')
+
+        # display = Display(visible=0, size=(800, 600))
+        # display.start()
+
+        self.broser = webdriver.Chrome(options=self.opt)
+        self.wait = WebDriverWait(self.broser, 20, 0.5)
+
     name = 'uc'
 
     def start_requests(self):
@@ -73,7 +91,7 @@ class UcSpider(scrapy.Spider):
                 item['osskey'] = md.hexdigest()
 
                 # 判断视频是否存在
-                is_ture = redis_check(item['osskey'])
+                is_ture = Iduoliao.redis_check(item['osskey'])
                 if is_ture is True:
                     item['url'] = gzh_cids['url']
                     item['download_url'] = gzh_cids['url']
@@ -90,7 +108,14 @@ class UcSpider(scrapy.Spider):
                     item['from'] = 'UC浏览器'
                     item['old_type'] = gzh_cids['old_type']
 
-                    # yield item
+                    self.broser.get(item['url'])
+                    try:
+                        url = self.broser.find_element_by_xpath('//video').get_attribute("src")
+                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
+
+                    except Exception as f:
+                        print(f)
+                        pass
 
         except Exception as f:
             pprint('UC浏览器爬虫错误:{}'.format(f))
