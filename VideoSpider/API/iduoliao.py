@@ -1,4 +1,5 @@
 import os
+import re
 
 import pymysql
 import redis
@@ -45,6 +46,21 @@ class Iduoliao(object):
 
                 if os.path.exists(size_filename):
                     os.remove(size_filename)
+
+        if videofrom == "票圈长视频":
+            # 获取ffmpeg导出视频名字
+            synthesis_filename = re.match(r'https://rescdn.yishihui.com/longvideo/(.*)/(.*)/(.*)/(.*)', url).group(4)
+            ffmpeg_filename = re.match(r'(.*)\.m3u8', synthesis_filename).group(1) + '.mp4'
+
+            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}'.format(videofrom, old_type)
+            if not os.path.exists(filename2):
+                os.makedirs(filename2)
+
+            filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + '.mp4'
+
+            # 下载视频
+            os.system('C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} {}'.format(url, filename))
+
 
     @staticmethod
     def redis_check(md5_name):

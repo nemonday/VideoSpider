@@ -7,15 +7,14 @@
 
 import pymysql
 from VideoSpider.settings import *
-from VideoSpider.spiders.hk import HkSpider
-from VideoSpider.spiders.ky import KySpider
-from VideoSpider.spiders.ppx import PpxSpider
-from VideoSpider.spiders.td import TdSpider
-from VideoSpider.spiders.uc import UcSpider
+from VideoSpider.stockpile.hk import HkSpider
+from VideoSpider.stockpile.ky import KySpider
+from VideoSpider.stockpile.ppx import PpxSpider
+from VideoSpider.stockpile.td import TdSpider
+from VideoSpider.stockpile.uc import UcSpider
 from VideoSpider.spiders.xg import XgSpider
-from VideoSpider.spiders.xng import XngSpider
-from VideoSpider.spiders.xngzf import XngzfSpider
-from VideoSpider.tool import submit_ranscoding
+from VideoSpider.stockpile.xng import XngSpider
+from VideoSpider.stockpile.xngzf import XngzfSpider
 
 isotimeformat = '%Y-%m-%d'
 

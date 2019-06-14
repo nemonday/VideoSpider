@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 import hashlib
 import json
-import os
 import re
 import time
 from copy import deepcopy
-import random
-from pprint import pprint
 import traceback
 import requests
 import scrapy
-
+from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.settings import pq_spider_dict, pq_headers, PROXY_URL
-from VideoSpider.tool import redis_check, download_img, oss_upload
 
 
 class PqSpider(scrapy.Spider):
@@ -63,34 +59,12 @@ class PqSpider(scrapy.Spider):
                 md.update(str(item['url']).encode())
                 item['osskey'] = md.hexdigest()  # 加密结果
 
-                pprint(item)
-                # # 筛选视频是否合格
-                # if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
-                #     is_ture = redis_check(item['osskey'])
-                #     if is_ture is True:
-                #         # 获取ffmpeg导出视频名字
-                #         synthesis_filename = re.match(r'https://rescdn.yishihui.com/longvideo/(.*)/(.*)/(.*)/(.*)',item['url']).group(4)
-                #         ffmpeg_filename = re.match(r'(.*)\.m3u8', synthesis_filename).group(1) + '.mp4'
-                #
-                #         # 下载封面地址
-                #         img_filename = download_img(item['thumbnails'], item['osskey'])
-                #         # 下载视频
-                #         os.system('ffmpeg -i {} {}'.format(item['url'], ffmpeg_filename))
-                #
-                #         # 把视频的mp4格式去掉
-                #         os.rename(ffmpeg_filename, item['osskey'])
-                #
-                #         # oss上传视频和图片
-                #         oss_upload(item['osskey'], item['osskey'], img_filename)
-                #
-                #         # 上传完毕，删除文件
-                #         if os.path.exists(img_filename):
-                #             os.remove(img_filename)
-                #
-                #         if os.path.exists(item['osskey']):
-                #             os.remove(item['osskey'])
-                #
-                #         yield item
+                # 筛选视频是否合格
+                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                    is_ture = Iduoliao.redis_check(item['osskey'])
+                    if is_ture is True:
+                        # 开始去水印上传
+                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
 
         except Exception as f:
             traceback.print_exc()

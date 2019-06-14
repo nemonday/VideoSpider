@@ -6,7 +6,6 @@ from copy import deepcopy
 import requests
 import scrapy
 from VideoSpider.settings import *
-from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload
 
 
 class KySpider(scrapy.Spider):

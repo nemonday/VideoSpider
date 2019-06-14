@@ -2,36 +2,34 @@
 import base64
 import json
 import os
-import random
 import re
-from contextlib import closing
+import time
 from copy import deepcopy
 from pprint import pprint
+from random import choice
 
 import pymysql
 import requests
 import scrapy
-from random import choice
-from VideoSpider.settings import *
-from VideoSpider.tool import check, jieba_ping, download, download_img, oss_upload, deeimg, deep_img_video, \
-    get_md5_name, redis_check
+
+from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
+    xng_spider_dict, PROXY_URL, xng_headers
 
 
-class XngzfSpider(scrapy.Spider):
-    name = 'xngzf'
+class XngSpider(scrapy.Spider):
+    name = 'xng'
 
     def start_requests(self):
         item = {}
-        item['uid'] = '270bd624-46f5-483f-82ca-19aa07e1c374'
-        item['token'] = '658561f5cad5ace806ed73db84af0179'
-        for video_url, video_type in xng_zf_spider_dict.items():
+        item['token'] = '65431454eee2e3585b95e34210ccac43'
+        item['uid'] = '716a9609-af87-4dd0-bf73-8a3f19349ca5'
+        for video_url, video_type in xng_spider_dict.items():
             choice_list = [0.5, 0.6, 0.7, 0.8, 0.9, 1]
             item['view_cnt_compare'] = int(5000 * choice(choice_list))
             item['cmt_cnt_compare'] = int(5000 * choice(choice_list))
+            item['category'] = video_type[0]
+            item['data'] = video_url % (item['token'], item['uid'])
             item['old_type'] = video_type[4]
-
-            item['data'] = video_url % (item['uid'], item['token'])
-
             url = 'https://www.baidu.com/'
 
             yield scrapy.Request(url, callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
@@ -39,17 +37,15 @@ class XngzfSpider(scrapy.Spider):
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
+
         url = 'https://api.xiaoniangao.cn/trends/get_recommend_trends'
         proxy = requests.get(PROXY_URL)
         proxies = {
             'https': 'https://' + re.search(r'(.*)', proxy.text).group(1)}
-
+        res = requests.post(url, headers=xng_headers, data=item['data'], timeout=30)
+        json_data = json.loads(res.text)
+        video_datas = json_data['data']['list']
         try:
-            res = requests.post(url, headers=xng_zf_headers, data=item['data'], timeout=30)
-            json_data = json.loads(res.text)
-
-            video_datas = json_data['data']['list']
-
             for video in video_datas:
                 item['url'] = video['v_url']
                 item['download_url'] = video['v_url']
@@ -60,10 +56,11 @@ class XngzfSpider(scrapy.Spider):
                 item['thumbnails'] = video['url']
                 item['title'] = video['title']
                 item['id'] = video['album_id']
-                item['video_height'] = video['vw']
-                item['video_width'] = video['w']
+                item['video_height'] = 0
+                item['video_width'] = 0
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
-                item['from'] = '小年糕祝福'
+                item['from'] = '小年糕'
+                item['category'] = item['category']
 
                 # 筛选条件
                 if item['view_cnt'] >= item['view_cnt_compare']:
@@ -73,6 +70,7 @@ class XngzfSpider(scrapy.Spider):
                     filename = download(str(item['id']), item['download_url'], True)
                     md5_name = get_md5_name(item['id'], filename)
                     is_presence = redis_check(md5_name)
+
                     item['osskey'] = md5_name
 
                     # 视频不存在执行
@@ -87,8 +85,7 @@ class XngzfSpider(scrapy.Spider):
                             # 定义遮挡水印的新文件名字
                             deeimg_filename = item['osskey'] + '.mp4'
                             # 遮挡水印
-                            deep_img_video(video_size[0], video_size[1], video_size[1] - 70, 100, 50, 120, filename,
-                                           deeimg_filename)
+                            deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
                             if deeimg_filename:
                                 # 转码成功后，去掉文件 .mp4后缀准备oss上传
                                 os.rename(deeimg_filename, item['osskey'])
@@ -100,8 +97,7 @@ class XngzfSpider(scrapy.Spider):
                         else:
                             # print('横屏转码')
                             deeimg_filename = item['osskey'] + '.mp4'
-                            deep_img_video(video_size[0], video_size[1], video_size[1] - 68, 130, 50, 150, filename,
-                                           deeimg_filename)
+                            deep_img_video(video_size[0], video_size[1], video_size[1] - 68, 130, 50, 150, filename, deeimg_filename)
 
                             if deeimg_filename:
                                 os.rename(deeimg_filename, item['osskey'])
@@ -123,5 +119,7 @@ class XngzfSpider(scrapy.Spider):
                         os.remove(video_size_img)
 
         except Exception as f:
-            pprint('小年糕祝福爬虫错误:{}'.format(f))
+            pprint('小年糕爬虫错误:{}'.format(f) )
             pass
+
+

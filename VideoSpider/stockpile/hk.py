@@ -6,7 +6,6 @@ import re
 from copy import deepcopy
 import requests
 import scrapy
-from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, oss, deep_img_video, oss_upload
 from VideoSpider.settings import *
 from random import choice
 

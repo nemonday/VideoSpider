@@ -10,8 +10,7 @@ from pprint import pprint
 import requests
 import scrapy
 from VideoSpider.settings import *
-from VideoSpider.tool import check, jieba_ping, download, download_img, deeimg, deep_img_video, oss_upload, \
-    get_md5_name, redis_check
+
 
 
 class TdSpider(scrapy.Spider):

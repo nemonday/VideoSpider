@@ -172,3 +172,39 @@ from disconnected: received Inspector.detached event
 2019_06_12-14_38_44  ERROR: 'url'
 2019_06_12-14_38_45  ERROR: 'url'
 2019_06_12-14_43_03  INFO: 下载视频: dd00ddd3488e0041e458aee82b69698edewatermark.mp4
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_37_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_18  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_19  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_21  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_21  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_14-15_38_49  INFO: 添加 895a5b55bf49e7236f257aed011e283a 到redis当中
+2019_06_14-15_38_49  INFO: 添加 991501b53b61646690f72be127ec0042 到redis当中
+2019_06_14-15_38_50  INFO: 添加 47bd766a4ae9cf371cf1e9eefc9949c3 到redis当中
+2019_06_14-15_38_50  INFO: 添加 e93e5596996b68f30796963d1a586550 到redis当中
+2019_06_14-15_38_53  INFO: 添加 630595d480dbb213c7a71df07c6dac3a 到redis当中
+2019_06_14-15_38_53  INFO: 添加 c2c7cf40be1737ceef88d51d2f42ffca 到redis当中
+2019_06_14-15_38_55  INFO: 添加 74160c16c0a92a723fe84e413795700d 到redis当中
+2019_06_14-15_38_55  INFO: 添加 a6446f07fba349e4b14e81e7d5161adf 到redis当中
+2019_06_14-15_38_55  INFO: 添加 d7b13cf61ac1fd6a5116c30ec8345b4a 到redis当中
+2019_06_14-15_38_55  INFO: 添加 f9c5a7ac50c9de0354a8cb433e02167e 到redis当中
+2019_06_14-15_38_55  INFO: 添加 38662db3ad2b96cde0d19de2f85b0828 到redis当中
+2019_06_14-15_38_55  INFO: 添加 4f6f2405cb2a2e18cddaba976bfd66f9 到redis当中

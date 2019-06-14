@@ -9,7 +9,6 @@ from pprint import pprint
 import requests
 import scrapy
 
-from VideoSpider.tool import jieba_ping, check, redis_check
 from VideoSpider.settings import *
 
 
