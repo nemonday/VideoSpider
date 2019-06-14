@@ -117,6 +117,8 @@ class UcSpider(scrapy.Spider):
                         print(f)
                         pass
 
+            self.broser.quit()
+
         except Exception as f:
             pprint('UC浏览器爬虫错误:{}'.format(f))
             pass

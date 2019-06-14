@@ -10,7 +10,7 @@ from VideoSpider.settings import *
 from VideoSpider.stockpile.hk import HkSpider
 from VideoSpider.stockpile.ky import KySpider
 from VideoSpider.stockpile.ppx import PpxSpider
-from VideoSpider.stockpile.td import TdSpider
+from VideoSpider.spiders.td import TdSpider
 from VideoSpider.spiders.uc import UcSpider
 from VideoSpider.spiders.xg import XgSpider
 from VideoSpider.stockpile.xng import XngSpider

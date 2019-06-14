@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import base64
+import hashlib
 import json
 import os
 import re
@@ -9,8 +10,10 @@ from pprint import pprint
 # from moviepy.video.io.VideoFileClip import VideoFileClip
 import requests
 import scrapy
-from VideoSpider.settings import *
 
+from VideoSpider.API.iduoliao import Iduoliao
+from VideoSpider.API.iduoliaotool import Print
+from VideoSpider.settings import *
 
 
 class TdSpider(scrapy.Spider):
@@ -102,74 +105,19 @@ class TdSpider(scrapy.Spider):
                 item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
                 item['from'] = '糖豆'
                 item['category'] = item['category']
-
+                # 构造一个md5
+                md = hashlib.md5()
+                md.update(str(item['url']).encode())
+                item['osskey'] = md.hexdigest()  # 加密结果
                 # 筛选条件
                 if item['view_cnt'] >= item['view_cnt_compare']:
-                    img_filename = ''
-                    video_size_img = ''
-                    # 通过条件下载文件，提取视频一帧的图片的二进制生成md5名字用于判断视频是否存在
-                    filename = download(str(item['id']), item['download_url'], True)
-                    md5_name = get_md5_name(item['id'], filename)
-                    is_presence = redis_check(md5_name)
-
-                    item['osskey'] = md5_name
-
-                    # 视频不存在执行
-                    if is_presence is True:
-
-                        # 匹配关键字获取视频类型
-                        match_type = jieba_ping(item)
-                        if match_type is None:
-                            item['match_type'] = item['category']
-                        else:
-                            item['match_type'] = match_type
-
-                        # 获取视频封面，已经视频的尺寸
-                        img_filename = download_img(item['thumbnails'], item['osskey'])
-                        video_size = deeimg(item['download_url'])
-                        video_size_img = video_size[2]
-
-                        # 竖屏视频执行：
-                        if video_size[0] < video_size[1]:
-                            # 定义遮挡水印的新文件名字
-                            deeimg_filename = item['osskey'] + '.mp4'
-                            # 遮挡水印
-                            deep_img_video(video_size[0], video_size[1], 10, 100, 50, 110, filename, deeimg_filename)
-                            if deeimg_filename:
-                                # 转码成功后，去掉文件 .mp4后缀准备oss上传
-                                os.rename(deeimg_filename, item['osskey'])
-                                # oss上传
-                                oss_upload(item['osskey'], item['osskey'], img_filename)
-
-                                yield item
-
-                        else:
-                            # print('横屏转码')
-                            deeimg_filename = item['osskey'] + '.mp4'
-                            deep_img_video(video_size[0], video_size[1], video_size[1] - 20, 100, 50, 118, filename,
-                                           deeimg_filename)
-
-                            if deeimg_filename:
-                                os.rename(deeimg_filename, item['osskey'])
-                                oss_upload(item['osskey'], item['osskey'], img_filename)
-
-                                yield item
-
-                    # 上传完毕，删除文件
-                    if os.path.exists(img_filename):
-                        os.remove(img_filename)
-
-                    if os.path.exists(filename):
-                        os.remove(filename)
-
-                    if os.path.exists(item['osskey']):
-                        os.remove(item['osskey'])
-
-                    if os.path.exists(video_size_img):
-                        os.remove(video_size_img)
+                    is_ture = Iduoliao.redis_check(item['osskey'])
+                    if is_ture is True:
+                        # 开始去水印上传
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '糖豆', item['title'],item['old_type'])
 
         except Exception as f:
-            pprint('糖豆爬虫错误:{}'.format(f))
+            Print.error('糖豆爬虫错误:{}'.format(f))
             pass
 
 

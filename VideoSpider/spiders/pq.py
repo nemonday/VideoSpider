@@ -8,6 +8,7 @@ import traceback
 import requests
 import scrapy
 from VideoSpider.API.iduoliao import Iduoliao
+from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import pq_spider_dict, pq_headers, PROXY_URL
 
 
@@ -67,5 +68,5 @@ class PqSpider(scrapy.Spider):
                         Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
 
         except Exception as f:
-            traceback.print_exc()
+            Print.error(f)
             pass

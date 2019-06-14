@@ -118,6 +118,8 @@ class XgSpider(scrapy.Spider):
                             Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频', item['title'], item['old_type'])
                             self.url_box.clear()
 
+            self.broser.quit()
+
         except Exception as f:
             Print.error(f)
             # 判断是否出现解析失败
