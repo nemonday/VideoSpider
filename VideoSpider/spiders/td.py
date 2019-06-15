@@ -114,7 +114,7 @@ class TdSpider(scrapy.Spider):
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
                         # 开始去水印上传
-                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '糖豆', item['title'],item['old_type'])
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '糖豆', item['title'], item['old_type'])
 
         except Exception as f:
             Print.error('糖豆爬虫错误:{}'.format(f))

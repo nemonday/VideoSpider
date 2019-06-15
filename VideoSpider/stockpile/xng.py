@@ -62,48 +62,49 @@ class XngSpider(scrapy.Spider):
                 item['from'] = '小年糕'
                 item['category'] = item['category']
 
+                pprint(item)
                 # 筛选条件
                 if item['view_cnt'] >= item['view_cnt_compare']:
                     img_filename = ''
                     video_size_img = ''
-                    # 通过条件下载文件，提取视频一帧的图片的二进制生成md5名字用于判断视频是否存在
-                    filename = download(str(item['id']), item['download_url'], True)
-                    md5_name = get_md5_name(item['id'], filename)
-                    is_presence = redis_check(md5_name)
-
-                    item['osskey'] = md5_name
-
-                    # 视频不存在执行
-                    if is_presence is True:
-                        # 获取视频封面，已经视频的尺寸
-                        img_filename = download_img(item['thumbnails'], item['osskey'])
-                        video_size = deeimg(item['download_url'])
-                        video_size_img = video_size[2]
-
-                        # 竖屏视频执行：
-                        if video_size[0] < video_size[1]:
-                            # 定义遮挡水印的新文件名字
-                            deeimg_filename = item['osskey'] + '.mp4'
-                            # 遮挡水印
-                            deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
-                            if deeimg_filename:
-                                # 转码成功后，去掉文件 .mp4后缀准备oss上传
-                                os.rename(deeimg_filename, item['osskey'])
-                                # oss上传
-                                oss_upload(item['osskey'], item['osskey'], img_filename)
-
-                                yield item
-
-                        else:
-                            # print('横屏转码')
-                            deeimg_filename = item['osskey'] + '.mp4'
-                            deep_img_video(video_size[0], video_size[1], video_size[1] - 68, 130, 50, 150, filename, deeimg_filename)
-
-                            if deeimg_filename:
-                                os.rename(deeimg_filename, item['osskey'])
-                                oss_upload(item['osskey'], item['osskey'], img_filename)
-
-                                yield item
+                    # # 通过条件下载文件，提取视频一帧的图片的二进制生成md5名字用于判断视频是否存在
+                    # filename = download(str(item['id']), item['download_url'], True)
+                    # md5_name = get_md5_name(item['id'], filename)
+                    # is_presence = redis_check(md5_name)
+                    #
+                    # item['osskey'] = md5_name
+                    #
+                    # # 视频不存在执行
+                    # if is_presence is True:
+                    #     # 获取视频封面，已经视频的尺寸
+                    #     img_filename = download_img(item['thumbnails'], item['osskey'])
+                    #     video_size = deeimg(item['download_url'])
+                    #     video_size_img = video_size[2]
+                    #
+                    #     # 竖屏视频执行：
+                    #     if video_size[0] < video_size[1]:
+                    #         # 定义遮挡水印的新文件名字
+                    #         deeimg_filename = item['osskey'] + '.mp4'
+                    #         # 遮挡水印
+                    #         deep_img_video(video_size[0], video_size[1], video_size[1]-70, 100, 50, 120, filename, deeimg_filename)
+                    #         if deeimg_filename:
+                    #             # 转码成功后，去掉文件 .mp4后缀准备oss上传
+                    #             os.rename(deeimg_filename, item['osskey'])
+                    #             # oss上传
+                    #             oss_upload(item['osskey'], item['osskey'], img_filename)
+                    #
+                    #             yield item
+                    #
+                    #     else:
+                    #         # print('横屏转码')
+                    #         deeimg_filename = item['osskey'] + '.mp4'
+                    #         deep_img_video(video_size[0], video_size[1], video_size[1] - 68, 130, 50, 150, filename, deeimg_filename)
+                    #
+                    #         if deeimg_filename:
+                    #             os.rename(deeimg_filename, item['osskey'])
+                    #             oss_upload(item['osskey'], item['osskey'], img_filename)
+                    #
+                    #             yield item
 
                     # 上传完毕，删除文件
                     if os.path.exists(img_filename):

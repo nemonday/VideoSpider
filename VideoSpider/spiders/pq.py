@@ -30,6 +30,7 @@ class PqSpider(scrapy.Spider):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
 
+        # 构建票圈post请求获取作品信息
         url = 'https://longvideoapi.qingqu.top/longvideoapi/video/distribute/category/videoList'
         proxy = requests.get(PROXY_URL)
         proxies = {

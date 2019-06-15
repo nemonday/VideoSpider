@@ -252,9 +252,6 @@ class IduoliaoTool(object):
 
 
 
-# obj = IduoliaoTool()
-# obj.submit_ranscoding('videoaddtest3')
-
 
 
 

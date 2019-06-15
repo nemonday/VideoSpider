@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 import base64
+import hashlib
 import json
 import re
+from contextlib import closing
 from copy import deepcopy
+from pprint import pprint
+
 import requests
 import scrapy
+
+from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.settings import *
 
 
@@ -12,20 +18,19 @@ class KySpider(scrapy.Spider):
     name = 'ky'
 
     def start_requests(self):
-        while True:
-            time.sleep(120)
-            item = {}
-            for video_url, video_type in ky_spider_dict.items():
-                proxy = requests.get(PROXY_URL)
-                proxies = {
-                    'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
-                item['view_cnt_compare'] = video_type[1]
-                item['cmt_cnt_compare'] = video_type[2]
-                item['category'] = video_type[0]
+        item = {}
+        for video_url, video_type in ky_spider_dict.items():
+            proxy = requests.get(PROXY_URL)
+            proxies = {
+                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+            item['view_cnt_compare'] = video_type[1]
+            item['cmt_cnt_compare'] = video_type[2]
+            item['category'] = video_type[0]
+            item['old_type'] = video_type[4]
 
-                yield scrapy.Request(video_url, headers=video_type[3],
-                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),
-                                                            'item': deepcopy(item)}, dont_filter=True)
+            yield scrapy.Request(video_url, headers=video_type[3],
+                             callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
+
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -57,19 +62,18 @@ class KySpider(scrapy.Spider):
                     item['video_height'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['height']
                     item['video_width'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['width']
 
-                osskey = item['osskey'][0]
-                item['osskey'] = osskey
+                # 构造一个md5
+                md = hashlib.md5()
+                md.update(str(item['url']).encode())
+                item['osskey'] = md.hexdigest()  # 加密结果
 
-                result = check(item['from'], item['id'])
+                # 筛选视频是否合格
+                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                    is_ture = Iduoliao.redis_check(item['osskey'])
+                    if is_ture is True:
+                        # 开始去水印上传
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '开眼视频', item['title'],item['old_type'])
 
-                if (result is None) and (item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']):
-                    match_type = jieba_ping(item)
-                    if not match_type is None:
-                        item['match_type'] = item['category']
-                    else:
-                        item['match_type'] = match_type
-
-                    yield item
 
         except Exception as f:
             print(f)

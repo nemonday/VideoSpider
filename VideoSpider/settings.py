@@ -304,27 +304,27 @@ openeye_headers = {
 }
 ky_spider_dict = {
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1022&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['11', 500, 50, openeye_headers],
+   :['11', 500, 50, openeye_headers, '体育'],
    # 'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1019&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
    # :['17', 500, 50, openeye_headers, ],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1025&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['25', 500, 50, openeye_headers],
+   :['25', 500, 50, openeye_headers, '影视'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=24&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['36', 500, 50, openeye_headers],
+   :['36', 500, 50, openeye_headers, '纪录'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1024&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['30', 500, 50, openeye_headers],
+   :['30', 500, 50, openeye_headers, '生活'],
    'http://baobab.kaiyanapp.co+m/api/v1/tag/videos?start=10&num=10&strategy=date&id=1018&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['29', 500, 50, openeye_headers],
+   :['29', 500, 50, openeye_headers, '音乐'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1020&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['33', 500, 50, openeye_headers],
+   :['33', 500, 50, openeye_headers, '美食'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=1023&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['35', 500, 50, openeye_headers],
+   :['35', 500, 50, openeye_headers, '动漫'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=140&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['23', 500, 50, openeye_headers],
+   :['23', 500, 50, openeye_headers, '搞笑'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=28&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['26', 500, 50, openeye_headers],
+   :['26', 500, 50, openeye_headers, '综艺'],
    'http://baobab.kaiyanapp.com/api/v1/tag/videos?start=10&num=10&strategy=date&id=666&udid=2bb9400efbf0474491f68a714faf59ca094f6b8d&vc=461&vn=5.1&size=1080X2150&deviceModel=Redmi%206%20Pro&first_channel=eyepetizer_baidu_market&last_channel=eyepetizer_baidu_market&system_version_code=27'
-   :['30', 500, 50, openeye_headers],
+   :['30', 500, 50, openeye_headers, '生活'],
 
 }
 
