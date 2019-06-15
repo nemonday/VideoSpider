@@ -138,12 +138,12 @@ class Iduoliao(object):
                         # IduoliaoTool.oss_upload(img_filename, img_filename, UPLOADPATH2, de_suffix=False)
                         pass
 
-                    # 上传完毕，删除文件
-                    if os.path.exists(img_filename):
-                        os.remove(img_filename)
+            # 上传完毕，删除文件
+            if os.path.exists(img_filename):
+                os.remove(img_filename)
 
-                    if os.path.exists(size_filename):
-                        os.remove(size_filename)
+            if os.path.exists(size_filename):
+                os.remove(size_filename)
 
     @staticmethod
     def redis_check(md5_name):
