@@ -1,3 +1,4 @@
+import hashlib
 import json
 
 import requests
@@ -37,7 +38,11 @@ for video in video_datas:
     item['video_width'] = video['w']
     item['from'] = '小年糕祝福'
     item['old_type'] = '父亲节'
+
+    # 构造一个md5
+    md = hashlib.md5()
+    md.update(str(item['url']).encode())
+    item['osskey'] = md.hexdigest()  # 加密结果
     # 筛选条件
-    if item['view_cnt'] >= item['view_cnt_compare']:
-        # 开始去水印上传
-        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '小年糕祝福', item['title'], item['old_type'])
+    # 开始去水印上传
+    Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '小年糕祝福', item['title'], item['old_type'])
