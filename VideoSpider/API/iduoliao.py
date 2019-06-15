@@ -129,7 +129,7 @@ class Iduoliao(object):
                 # 当三种东西准备就绪，调用去水印工具
                 if new_filename and size_filename and img_filename:
                     # 去水印，判断是否成功返回真的视频文件用于oss上传
-                    dewatermark_name = IduoliaoTool.dewatermark(width, height, 120, int(height)-70, 100, 50, new_filename, title,
+                    dewatermark_name = IduoliaoTool.dewatermark(width, height, int(height)-70, 100, 50, 120, new_filename, title,
                                                                 old_type, videofrom)
                     if dewatermark_name:
                         # oss上传视频
