@@ -13,7 +13,7 @@ from VideoSpider.stockpile.ppx import PpxSpider
 from VideoSpider.spiders.td import TdSpider
 from VideoSpider.spiders.uc import UcSpider
 from VideoSpider.spiders.xg import XgSpider
-from VideoSpider.stockpile.xng import XngSpider
+from VideoSpider.spiders.xng import XngSpider
 from VideoSpider.stockpile.xngzf import XngzfSpider
 
 isotimeformat = '%Y-%m-%d'

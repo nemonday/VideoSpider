@@ -115,6 +115,36 @@ class Iduoliao(object):
                         n += 1
                     Print.info('下载视频: {}'.format(filename))
 
+        if videofrom == "小年糕":
+            # 获取视频的帧宽，帧高， 用于去水印定位
+            size_filename, width, height = IduoliaoTool.get_video_size(url)
+            if int(width) > int(height):
+                # 传入视频下载地址，返回新的文件名字
+                new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom,
+                                                           ifdewatermark=True)
+
+                # 下载视频的封面地址
+                img_filename = IduoliaoTool.img_download(img_url, filename)
+
+                # 当三种东西准备就绪，调用去水印工具
+                if new_filename and size_filename and img_filename:
+                    # 去水印，判断是否成功返回真的视频文件用于oss上传
+                    dewatermark_name = IduoliaoTool.dewatermark(width, height, 68, 130, 50, 150, new_filename, title,
+                                                                old_type, videofrom)
+                    if dewatermark_name:
+                        # oss上传视频
+                        # IduoliaoTool.oss_upload(dewatermark_name, dewatermark_name, UPLOADPATH, de_suffix=True)
+                        # oss上传视频封面
+                        # IduoliaoTool.oss_upload(img_filename, img_filename, UPLOADPATH2, de_suffix=False)
+                        pass
+
+                    # 上传完毕，删除文件
+                    if os.path.exists(img_filename):
+                        os.remove(img_filename)
+
+                    if os.path.exists(size_filename):
+                        os.remove(size_filename)
+
     @staticmethod
     def redis_check(md5_name):
         try:
