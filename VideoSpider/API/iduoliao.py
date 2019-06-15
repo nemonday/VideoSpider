@@ -115,7 +115,7 @@ class Iduoliao(object):
                         n += 1
                     Print.info('下载视频: {}'.format(filename))
 
-        if videofrom == "小年糕" or videofrom == "小年糕祝福":
+        if videofrom == "小年糕":
             # 获取视频的帧宽，帧高， 用于去水印定位
             size_filename, width, height = IduoliaoTool.get_video_size(url)
             # if int(width) > int(height):
@@ -144,6 +144,9 @@ class Iduoliao(object):
 
             if os.path.exists(size_filename):
                     os.remove(size_filename)
+
+        if videofrom == "小年糕祝福":
+            IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=False)
 
     @staticmethod
     def redis_check(md5_name):
