@@ -26,7 +26,16 @@ video_datas = json_data['data']['list']
 for video in video_datas:
     item['url'] = video['v_url']
     item['download_url'] = video['v_url']
+    item['like_cnt'] = video['favor']['total']
+    item['cmt_cnt'] = 0
+    item['sha_cnt'] = 0
+    item['view_cnt'] = video['views']
+    item['thumbnails'] = video['url']
     item['title'] = video['title']
+    item['id'] = video['album_id']
+    item['video_height'] = video['vw']
+    item['video_width'] = video['w']
+    item['from'] = '小年糕祝福'
     item['old_type'] = '父亲节'
     # 筛选条件
     if item['view_cnt'] >= item['view_cnt_compare']:
