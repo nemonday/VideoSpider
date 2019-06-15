@@ -19,7 +19,7 @@ xng_zf_headers = {
 
 data = r"""{"uid":"2b213f38-f682-4c3b-8e2d-089c84190684","proj":"ma-topic-blessing","wx_ver":"7.0.1","code_ver":"1.1.0","tag_id":108,"log_params":{"page":"topic","common":{"os":"iOS 12.2","device":"iPhone 6s","weixinver":"7.0.1","srcver":"2.5.2"}},"qs":"imageMogr2/gravity/center/rotate/$/thumbnail/!750x500r/crop/750x500/interlace/1/format/jpg","h_qs":"imageMogr2/gravity/center/rotate/$/thumbnail/!80x80r/crop/80x80/interlace/1/format/jpg","share_width":625,"share_height":500,"token":"12075f07b016d34a27db743df4589c12"}"""
 
-res = requests.post(url, headers=xng_zf_headers, data=item['data'], timeout=30)
+res = requests.post(url, headers=xng_zf_headers, data=data, timeout=30)
 json_data = json.loads(res.text)
 
 video_datas = json_data['data']['list']
