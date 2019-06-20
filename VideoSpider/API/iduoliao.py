@@ -21,7 +21,7 @@ class Iduoliao(object):
         )
 
     @staticmethod
-    def upload(url, img_url, filename, videofrom, title, old_type):
+    def upload(url, img_url, filename, videofrom, title, old_type, width=0, height=0):
         if videofrom == "西瓜视频":
             # 传入视频下载地址，返回新的文件名字
             new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=True)
@@ -149,8 +149,6 @@ class Iduoliao(object):
         if videofrom == "好看视频":
             # 传入视频下载地址，返回新的文件名字
             new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=True)
-            # 获取视频的帧宽，帧高， 用于去水印定位
-            size_filename, width, height = IduoliaoTool.get_video_size(url)
 
             # 当三种东西准备就绪，调用去水印工具
             if new_filename and size_filename :

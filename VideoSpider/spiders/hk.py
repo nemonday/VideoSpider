@@ -76,7 +76,7 @@ class HkSpider(scrapy.Spider):
                 if is_ture is True:
                     # 开始去水印上传
                     Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
-                                    item['old_type'])
+                                    item['old_type'], width=item['width'], height=item['height'])
 
 
 
