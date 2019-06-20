@@ -63,7 +63,9 @@ class IduoliaoTool(object):
     def video_download(filename, download_url, title, old_type, videofrom, ifdewatermark=False):
         # 传入oss名称, 下载地址
         # 视频下载
-        filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}'.format(videofrom, old_type)
+        isotimeformat = '%Y-%m-%d'
+        day = time.strftime(isotimeformat, time.localtime(time.time()))
+        filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, day)
         if not os.path.exists(filename2):
             os.makedirs(filename2)
         try:
@@ -73,11 +75,11 @@ class IduoliaoTool(object):
 
                 # 不需要遮挡水印文件地址
                 if ifdewatermark is False:
-                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + '.mp4'
+                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, title) + '.mp4'
 
                 # 需要遮挡水印文件地址
                 elif ifdewatermark is True:
-                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + 'dewatermark' + '.mp4'
+                    filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, title) + 'dewatermark' + '.mp4'
 
                 with open(filename, "wb") as f:
                     n = 1
