@@ -11,6 +11,7 @@ import requests
 import scrapy
 
 from VideoSpider.API.iduoliao import Iduoliao
+from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
 from random import choice
 
@@ -49,36 +50,36 @@ class HkSpider(scrapy.Spider):
         res = requests.post(url, headers=hk_headers, proxies=self.proxies, data=item['data'])
         json_data = json.loads(res.text)
         video_info = json_data['feed']['data']['list']
+        try:
+            for video in video_info:
+                item['url'] = ''
+                item['download_url'] = video['content']['video_src']
+                item['like_cnt'] = video['content']['praiseNum']
+                item['cmt_cnt'] = video['content']['comment_cnt']
+                item['sha_cnt'] = 0
+                item['view_cnt'] = video['content']['playcnt']
+                item['thumbnails'] = video['content']['thumbnails']
+                item['title'] = video['content']['title']
+                item['id'] = video['content']['vid']
+                item['video_height'] = video['content']['height']
+                item['video_width'] = video['content']['width']
+                item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
+                item['from'] = '好看视频'
+                item['category'] = item['category']
+                # 构造一个md5
+                md = hashlib.md5()
+                md.update(str(item['download_url']).encode())
+                item['osskey'] = md.hexdigest()  # 加密结果
 
-        for video in video_info:
-            item['url'] = ''
-            item['download_url'] = video['content']['video_src']
-            item['like_cnt'] = video['content']['praiseNum']
-            item['cmt_cnt'] = video['content']['comment_cnt']
-            item['sha_cnt'] = 0
-            item['view_cnt'] = video['content']['playcnt']
-            item['thumbnails'] = video['content']['thumbnails']
-            item['title'] = video['content']['title']
-            item['id'] = video['content']['vid']
-            item['video_height'] = video['content']['height']
-            item['video_width'] = video['content']['width']
-            item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
-            item['from'] = '好看视频'
-            item['category'] = item['category']
-            # 构造一个md5
-            md = hashlib.md5()
-            md.update(str(item['url']).encode())
-            item['osskey'] = md.hexdigest()  # 加密结果
-
-            print(item)
-            # 筛选视频是否合格
-            if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
-                is_ture = Iduoliao.redis_check(item['osskey'])
-                if is_ture is True:
-                    # 开始去水印上传
-                    Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
-                                    item['old_type'])
-
+                # 筛选视频是否合格
+                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                    is_ture = Iduoliao.redis_check(item['osskey'])
+                    if is_ture is True:
+                        # 开始去水印上传
+                        Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
+                                        item['old_type'])
+        except Exception as f:
+            Print.error(f)
 
 
 

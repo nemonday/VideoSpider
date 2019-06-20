@@ -26,7 +26,6 @@ class XgSpider(scrapy.Spider):
             'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
         }
         self.proxies = https_proxies['https']
-
         self.opt = webdriver.ChromeOptions()
         # 加入请求头
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
@@ -44,18 +43,6 @@ class XgSpider(scrapy.Spider):
 
         self.broser = webdriver.Chrome(options=self.opt)
         self.wait = WebDriverWait(self.broser, 20, 0.5)
-        self.login_url = 'https://miku.tools/tools/toutiao_video_downloader'
-        # 登陆获取链接的网站
-        self.broser.get(self.login_url)
-        # 判断弹窗是否存在
-        exists = self.is_visible('//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button')
-        # 如果弹窗存在， 就点击close
-        if exists is True:
-            self.broser.find_element_by_xpath(
-                '//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button').click()
-
-        self.url_box = self.wait.until(EC.presence_of_element_located(
-            (By.XPATH, '//input[@placeholder="http://www.365yg.com/a6660790867638373640"]')))
 
     name = 'xg'
 
@@ -113,30 +100,11 @@ class XgSpider(scrapy.Spider):
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['cmt_cnt'] >= item['cmt_cnt_compare']:
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
-                        # 输入要解析的地址
-                        self.url_box.send_keys(item['url'])
-                        # 点击解析
-                        click_button = self.broser.find_element_by_css_selector('[class="nya-btn"]')
-                        click_button.click()
-
-                        # 判断是否出现解析失败
-                        exists = self.is_visible('//*[@id="__layout"]/div/div[1]/div/div[2]/div[2]/button')
+                        self.broser.get(item['download_url'])
+                        exists = self.is_visible('//video')
                         if exists is True:
-                            click_button = self.broser.find_element_by_css_selector('[class="vue-dialog-button"]')
-                            click_button.click()
-                            self.url_box.clear()
-
-                        # 判断是否获取成功
-                        exists = self.is_visible('//*[@id="__layout"]/div/main/div[3]/fieldset[2]/legend/span')
-                        if exists is True:
-                            url = self.broser.find_element_by_xpath(
-                                '//*[@id="__layout"]/div/main/div[3]/fieldset[2]/div/p/a').get_attribute('href')
-
-                            # 开始去水印上传
+                            url = self.broser.find_element_by_xpath('//video').get_attribute("src")
                             print(url)
-                            # Iduoliao.upload(url, item['thumbnails'], item['osskey'], '西瓜视频', item['title'], item['old_type'])
-                        self.url_box.clear()
-
             self.broser.quit()
 
         except Exception as f:
@@ -147,6 +115,5 @@ class XgSpider(scrapy.Spider):
             if exists is True:
                 click_button = self.broser.find_element_by_css_selector('[class="vue-dialog-button"]')
                 click_button.click()
-                self.url_box.clear()
             pass
 
