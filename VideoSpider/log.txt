@@ -238,3 +238,13 @@ from disconnected: received Inspector.detached event
 2019_06_14-17_22_15  INFO: 添加 3ece3ba8df4e60d963c15ec0624284df 到redis当中
 2019_06_14-17_22_16  INFO: 添加 1b76f6e3e68d687c045e0285441a4147 到redis当中
 2019_06_14-17_22_17  INFO: 添加 b57acd254bd5af4324dde4b0970f764e 到redis当中
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_18-10_45_10  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-10_32_38  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-10_32_38  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-10_32_38  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-10_32_38  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.

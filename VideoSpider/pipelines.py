@@ -7,7 +7,7 @@
 
 import pymysql
 from VideoSpider.settings import *
-from VideoSpider.stockpile.hk import HkSpider
+from VideoSpider.spiders.hk import HkSpider
 from VideoSpider.spiders.ky import KySpider
 from VideoSpider.stockpile.ppx import PpxSpider
 from VideoSpider.spiders.td import TdSpider
