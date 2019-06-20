@@ -21,7 +21,7 @@ class Iduoliao(object):
         )
 
     @staticmethod
-    def upload(url, img_url, filename, videofrom, title, old_type, width=0, height=0):
+    def upload(url, img_url, filename, videofrom, title, old_type):
         if videofrom == "西瓜视频":
             # 传入视频下载地址，返回新的文件名字
             new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=True)
@@ -148,13 +148,18 @@ class Iduoliao(object):
 
         if videofrom == "好看视频":
             # 传入视频下载地址，返回新的文件名字
-            new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=True)
+            new_filename = IduoliaoTool.video_download(filename, url, title, old_type, videofrom,
+                                                       ifdewatermark=True)
+            # 获取视频的帧宽，帧高， 用于去水印定位
+            size_filename, width, height = IduoliaoTool.get_video_size(url)
+            # 下载视频的封面地址
+            img_filename = IduoliaoTool.img_download(img_url, filename)
 
             # 当三种东西准备就绪，调用去水印工具
-            if new_filename and size_filename :
+            if new_filename and size_filename and img_filename:
                 # 去水印，判断是否成功返回真的视频文件用于oss上传
-                dewatermark_name = IduoliaoTool.dewatermark(width, height, 10, 150, 50, 160, new_filename, title,
-                                                            old_type, videofrom)
+                dewatermark_name = IduoliaoTool.dewatermark(width, height, 10, 150, 50, 160, new_filename,
+                                                            title, old_type, videofrom)
                 if dewatermark_name:
                     # oss上传视频
                     # IduoliaoTool.oss_upload(dewatermark_name, dewatermark_name, UPLOADPATH, de_suffix=True)
