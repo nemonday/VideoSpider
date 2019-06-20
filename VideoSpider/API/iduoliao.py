@@ -1,5 +1,6 @@
 import os
 import re
+import time
 from contextlib import closing
 import pymysql
 import redis
@@ -52,11 +53,14 @@ class Iduoliao(object):
             synthesis_filename = re.match(r'https://rescdn.yishihui.com/longvideo/(.*)/(.*)/(.*)/(.*)', url).group(4)
             ffmpeg_filename = re.match(r'(.*)\.m3u8', synthesis_filename).group(1) + '.mp4'
 
-            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}'.format(videofrom, old_type)
+            isotimeformat = '%Y-%m-%d'
+            day = time.strftime(isotimeformat, time.localtime(time.time()))
+
+            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, day)
             if not os.path.exists(filename2):
                 os.makedirs(filename2)
 
-            filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + '.mp4'
+            filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, title) + '.mp4'
 
             # 下载视频
             os.system('C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} {}'.format(url, filename))
@@ -94,7 +98,10 @@ class Iduoliao(object):
                         os.remove(size_filename)
 
         if videofrom == "开眼视频":
-            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}'.format(videofrom, old_type)
+            isotimeformat = '%Y-%m-%d'
+            day = time.strftime(isotimeformat, time.localtime(time.time()))
+
+            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, day)
             if not os.path.exists(filename2):
                 os.makedirs(filename2)
 
@@ -103,7 +110,7 @@ class Iduoliao(object):
             with closing(requests.get(url, stream=True, headers=headers)) as r:
                 chunk_size = 1024
                 # content_size = int(r.headers['content-length'])
-                filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, title) + '.mp4'
+                filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, title) + '.mp4'
 
                 with open(filename, "wb") as f:
                     n = 1

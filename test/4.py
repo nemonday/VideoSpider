@@ -1,4 +1,5 @@
 import json
+import time
 
 import requests
 
@@ -10,3 +11,7 @@ proxies = {
 }
 
 print(proxies['https'])
+isotimeformat = '%Y-%m-%d'
+a = time.strftime(isotimeformat, time.localtime(time.time()))
+
+print(a)
