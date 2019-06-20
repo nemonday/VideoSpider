@@ -418,3 +418,286 @@ from disconnected: received Inspector.detached event
 2019_06_20-15_19_44  ERROR: HTTPConnectionPool(host='127.0.0.1', port=59374): Max retries exceeded with url: /session/175536e9a4b52ccf1eb5140ad0b7a5bb/url (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11d7f4b70>: Failed to establish a new connection: [Errno 61] Connection refused'))
 2019_06_20-15_19_46  INFO: 添加 396c7eacc7522924bc02869697b5763c 到redis当中
 2019_06_20-15_19_46  ERROR: HTTPConnectionPool(host='127.0.0.1', port=59374): Max retries exceeded with url: /session/175536e9a4b52ccf1eb5140ad0b7a5bb/url (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11d79a5f8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_25_40  INFO: 添加 1e4732c5e0144725565e4f713a877ab8 到redis当中
+2019_06_20-15_26_01  INFO: 添加 3e37e95d92f2025b0f0febf1dda2e072 到redis当中
+2019_06_20-15_26_01  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121be6358>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_02  INFO: 添加 0e581e90457c10a503998c902001f569 到redis当中
+2019_06_20-15_26_02  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121b9dbe0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_04  INFO: 添加 f9c3e109c3f87e15745f88bbe0ead0cd 到redis当中
+2019_06_20-15_26_04  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121b08f60>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_05  INFO: 添加 7948074859e9fd7fc938243e57f6ce79 到redis当中
+2019_06_20-15_26_05  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121b37390>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_06  INFO: 添加 665d92a3873bf0d6ed08cbf7a948fe64 到redis当中
+2019_06_20-15_26_06  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121ba99b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_07  INFO: 添加 3032dc457ca5e647f5bc8ed308b46c83 到redis当中
+2019_06_20-15_26_07  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121b9de80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_09  INFO: 添加 458d75f1e3a706d89b045626ba67a19f 到redis当中
+2019_06_20-15_26_09  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121c43550>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_10  INFO: 添加 8f567dd6cf34d230173f7f0d4c0fd453 到redis当中
+2019_06_20-15_26_10  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121b9d908>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_26_12  INFO: 添加 d68c0c003b7de786a4b341cea7ecd28b 到redis当中
+2019_06_20-15_26_12  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61164): Max retries exceeded with url: /session/b8ad8376ec3c970110d480025e55339b/element/0.7742619571456604-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x121c43ac8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_28_26  INFO: 添加 1892b7405ea474cb03a3df84288a65fc 到redis当中
+2019_06_20-15_28_37  INFO: 添加 d7548938f7d7793bb00f6313af6ab53f 到redis当中
+2019_06_20-15_28_52  INFO: 添加 d7d0821dc42935b470b78e20eb489724 到redis当中
+2019_06_20-15_29_08  INFO: 添加 cdd314760db293ba5c10b922deb5b620 到redis当中
+2019_06_20-15_29_08  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f150278>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_29_10  INFO: 添加 f9be90fe186175bddae2abe89b0604d2 到redis当中
+2019_06_20-15_29_10  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f197c18>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_29_11  INFO: 添加 7c60ad226631a25f0312b00ed8634ffe 到redis当中
+2019_06_20-15_29_11  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f197748>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_29_13  INFO: 添加 cd72777f4de4e8aab3187dc9d25fb920 到redis当中
+2019_06_20-15_29_13  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f1973c8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_29_14  INFO: 添加 ff151186a59c2370fc03cd64c948c0b8 到redis当中
+2019_06_20-15_29_14  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f0fc828>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_29_15  INFO: 添加 3fe53e37c8b1cd22dbc379c421f695e5 到redis当中
+2019_06_20-15_29_15  ERROR: HTTPConnectionPool(host='127.0.0.1', port=61995): Max retries exceeded with url: /session/5211c288af3950cd06faf18d1ec92198/element/0.7421346615180582-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11f0fccc0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_30_16  INFO: 添加 4cc3bd64e7a4b12421686b35d780e408 到redis当中
+2019_06_20-15_30_32  ERROR: 'video_detail_info'
+2019_06_20-15_30_42  INFO: 添加 302ca40f1aec017e599728fa1bde2627 到redis当中
+2019_06_20-15_30_50  ERROR: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_30_50  INFO: 添加 5e06e8897569a8674632066282e1e2ee 到redis当中
+2019_06_20-15_30_50  ERROR: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_30_51  INFO: 添加 ebb249b8db0f90aa722e761f9bfcfcee 到redis当中
+2019_06_20-15_30_51  ERROR: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_30_52  INFO: 添加 cbbe443cf062e8666e468f1cbaffa055 到redis当中
+2019_06_20-15_30_52  ERROR: Message: no such window: target window already closed
+from unknown error: web view not found
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_32_35  INFO: 添加 f0f045636280b1d518a2428e2738ab69 到redis当中
+2019_06_20-15_32_45  INFO: 添加 8468d0a0c2e516cb6fa842e169fdd7ba 到redis当中
+2019_06_20-15_32_49  ERROR: Message: unknown error: cannot determine loading status
+from unknown error: cannot determine loading status
+from disconnected: received Inspector.detached event
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_32_49  INFO: 添加 42e41d31b668f99a70096582b6f76296 到redis当中
+2019_06_20-15_32_49  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_32_51  INFO: 添加 0d89eb1bd03dde958949538042a4dd13 到redis当中
+2019_06_20-15_32_51  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_32_52  INFO: 添加 54a44e1ff3a23ba7f0a277723d461b3b 到redis当中
+2019_06_20-15_32_52  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_32_53  INFO: 添加 20cab5b44cdbeda26d4450df8b9a5c8d 到redis当中
+2019_06_20-15_32_53  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_33_07  INFO: 添加 bf8cb498751fac29129d4d80455ff362 到redis当中
+2019_06_20-15_34_04  ERROR: ('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))
+2019_06_20-15_34_11  INFO: 添加 88047504345530ca59222997732d4ed5 到redis当中
+2019_06_20-15_35_04  ERROR: Message: unknown error: cannot determine loading status
+from unknown error: cannot determine loading status
+from disconnected: received Inspector.detached event
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_35_04  INFO: 添加 2ee118e3cfb3dd3af90a495389680d2e 到redis当中
+2019_06_20-15_35_04  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_35_05  INFO: 添加 c38f7f2d70039ce3261d83d3237638e6 到redis当中
+2019_06_20-15_35_05  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_35_06  INFO: 添加 3eb59ff92f22dd9289f82966120d201f 到redis当中
+2019_06_20-15_35_06  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_35_07  INFO: 添加 3dec5faa0bf80a6f3e72a228e9b0474d 到redis当中
+2019_06_20-15_35_07  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_36_57  INFO: 添加 4e66aaced3c221cc9635b2a929450149 到redis当中
+2019_06_20-15_37_42  ERROR: Message: unknown error: cannot determine loading status
+from unknown error: cannot determine loading status
+from disconnected: received Inspector.detached event
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_37_43  INFO: 添加 33031704b029e82fa2e254292efe8221 到redis当中
+2019_06_20-15_37_43  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_37_44  INFO: 添加 87f43774f18c1b20e3faab3b7c1f6937 到redis当中
+2019_06_20-15_37_44  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_37_46  INFO: 添加 47a83cad90c8becf7fafd81c6425001c 到redis当中
+2019_06_20-15_37_46  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_37_47  INFO: 添加 95e0713284eb7f4f2253a5d8dab5ad71 到redis当中
+2019_06_20-15_37_47  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_37_48  INFO: 添加 2bc8f91f27c0f4db34f27511663b1783 到redis当中
+2019_06_20-15_37_48  ERROR: Message: no such window: window was already closed
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_20-15_40_38  INFO: 添加 3f6e7f9fedecf827766e23f2ce5b7d01 到redis当中
+2019_06_20-15_40_49  INFO: 添加 f57e0b8d36e2c7215e64e40311104e56 到redis当中
+2019_06_20-15_40_59  INFO: 添加 42f460a2c0df5e17ecec6512e3775e19 到redis当中
+2019_06_20-15_41_15  INFO: 添加 a74b317e36ba5020b3b681512715e367 到redis当中
+2019_06_20-15_41_15  ERROR: HTTPConnectionPool(host='127.0.0.1', port=65301): Max retries exceeded with url: /session/8d2e617fd09a411813dc60ae383f2171/element/0.5116295644080253-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11e98aef0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_41_17  INFO: 添加 d51ec058c5287603e42126282a4bff2f 到redis当中
+2019_06_20-15_41_17  ERROR: HTTPConnectionPool(host='127.0.0.1', port=65301): Max retries exceeded with url: /session/8d2e617fd09a411813dc60ae383f2171/element/0.5116295644080253-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11e98a278>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_41_18  INFO: 添加 c98877cb7d1547f20b7343ee408014b2 到redis当中
+2019_06_20-15_41_18  ERROR: HTTPConnectionPool(host='127.0.0.1', port=65301): Max retries exceeded with url: /session/8d2e617fd09a411813dc60ae383f2171/element/0.5116295644080253-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11e9c4cc0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_41_19  INFO: 添加 237495787b9872f8b0b1dd6ac52a056d 到redis当中
+2019_06_20-15_41_19  ERROR: HTTPConnectionPool(host='127.0.0.1', port=65301): Max retries exceeded with url: /session/8d2e617fd09a411813dc60ae383f2171/element/0.5116295644080253-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11e91c898>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_41_19  ERROR: 'video_detail_info'
+2019_06_20-15_41_22  INFO: 添加 08b2731a30a0e227f59248d50c4e3a99 到redis当中
+2019_06_20-15_41_22  ERROR: HTTPConnectionPool(host='127.0.0.1', port=65301): Max retries exceeded with url: /session/8d2e617fd09a411813dc60ae383f2171/element/0.5116295644080253-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11e91c1d0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_44_23  INFO: 添加 67c441fb777d031dcc045b47a6902ee7 到redis当中
+2019_06_20-15_44_33  INFO: 添加 05db496d5ed755b665c4ff0722336fe4 到redis当中
+2019_06_20-15_44_49  INFO: 添加 603b35488dbd445244457a1e3e9153b0 到redis当中
+2019_06_20-15_45_00  INFO: 添加 a7bf224df4a642baffe63df2240f71e2 到redis当中
+2019_06_20-15_45_00  ERROR: HTTPConnectionPool(host='127.0.0.1', port=50041): Max retries exceeded with url: /session/29ce2d6611ea117591bb8607cd722e2c/element/0.8106203267033891-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x120c7ffd0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_45_02  INFO: 添加 8f74c470e42ca293b3a71a7efeedab89 到redis当中
+2019_06_20-15_45_02  ERROR: HTTPConnectionPool(host='127.0.0.1', port=50041): Max retries exceeded with url: /session/29ce2d6611ea117591bb8607cd722e2c/element/0.8106203267033891-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x120ce3e80>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_45_03  INFO: 添加 123f81a870ac64c32f0c5f4311007ad7 到redis当中
+2019_06_20-15_45_03  ERROR: HTTPConnectionPool(host='127.0.0.1', port=50041): Max retries exceeded with url: /session/29ce2d6611ea117591bb8607cd722e2c/element/0.8106203267033891-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x116a98b00>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_45_03  INFO: 添加 a387e0f38c79ec59941f6a6e7ea184b0 到redis当中
+2019_06_20-15_45_03  ERROR: HTTPConnectionPool(host='127.0.0.1', port=50041): Max retries exceeded with url: /session/29ce2d6611ea117591bb8607cd722e2c/element/0.8106203267033891-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x120c7ff98>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_45_04  INFO: 添加 bfd570b930bee10fc750153a8d6441d3 到redis当中
+2019_06_20-15_45_04  ERROR: HTTPConnectionPool(host='127.0.0.1', port=50041): Max retries exceeded with url: /session/29ce2d6611ea117591bb8607cd722e2c/element/0.8106203267033891-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x120c7f978>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_20-15_47_52  INFO: 添加 b2b3e46201c65e12f49ba2d34b09380f 到redis当中
+2019_06_20-15_48_08  INFO: 添加 e67c360e4cade15ba9af77d844841428 到redis当中
+2019_06_20-15_48_23  INFO: 添加 27e5a75b983736d7e0dcae8b774623f0 到redis当中
+2019_06_20-15_48_40  INFO: 添加 a6947ce72314f05bc2a9cd22e44d1c14 到redis当中
+2019_06_20-15_48_42  INFO: 添加 b8b46aae7faf95a0d4ac0ac0a532bcc3 到redis当中
+2019_06_20-15_48_43  INFO: 添加 4e2f67b91f85d4b5cb55cf6ef1869799 到redis当中
+2019_06_20-15_48_45  INFO: 添加 ce8373c09912bb9305c4124d58aec6ed 到redis当中
+2019_06_20-15_48_45  INFO: 添加 362ef3660c888f948d5523788b10679c 到redis当中
+2019_06_20-15_48_46  INFO: 添加 fe751530403d8ac0d698ef6ba399fcd7 到redis当中
+2019_06_20-15_48_48  INFO: 添加 001e18349bdb10269ba6c0286952b704 到redis当中
+2019_06_20-15_48_49  INFO: 添加 4d18e075e9811b1fddcb5bb235cc44d5 到redis当中
+2019_06_20-15_48_51  INFO: 添加 d37ead5d5d7f9d2ff3cc4a35bd9c1676 到redis当中
+2019_06_20-15_48_52  INFO: 添加 e0c8de0938d60c2c91fd0e07b5cbfdab 到redis当中
+2019_06_20-15_48_53  INFO: 添加 399fa8b47c5db8bed4f69a8779a0c003 到redis当中
+2019_06_20-15_48_55  INFO: 添加 076209887ccdeb7671f7634085e3c52d 到redis当中
+2019_06_20-15_48_56  INFO: 添加 877dd34fe173f4b2ac2c7773afdcd22a 到redis当中
+2019_06_20-15_51_09  INFO: 添加 dcf2b432d77971ae6c9e23dff678e811 到redis当中
+2019_06_20-15_51_24  INFO: 添加 ce00030df1178983472c6f5e84ba0e6d 到redis当中
+2019_06_20-15_51_40  INFO: 添加 8845aae816698114462e7683a132c23e 到redis当中
+2019_06_20-15_52_19  INFO: 添加 569418d11b193cfc98491cd0c243d091 到redis当中
+2019_06_20-15_52_30  INFO: 添加 668903774219a66f9217c1d0b137673f 到redis当中
+2019_06_20-15_52_42  INFO: 添加 62e786dae4751032dae5ca47f278b099 到redis当中
+2019_06_20-15_52_53  INFO: 添加 eb140cdf35ffb115920dd96483f04ad3 到redis当中
+2019_06_20-15_52_54  INFO: 添加 f995fe5a7f8cb0e0f3f630678828ba81 到redis当中
+2019_06_20-15_52_55  INFO: 添加 bb47be72f29eee5414f23f80c172304c 到redis当中
+2019_06_20-15_52_56  INFO: 添加 ba87a1f057d4b8ab7f411451c0bbe05e 到redis当中
+2019_06_20-15_57_35  INFO: 添加 17b55e1e7fa1a7b490eee1cea9a7d4ec 到redis当中
+2019_06_20-15_57_50  INFO: 添加 cfd4be4984970617a1907a5186851020 到redis当中
+2019_06_20-15_58_02  INFO: 添加 724810f6f750935ab25dcf631fd6f781 到redis当中
+2019_06_20-15_58_15  INFO: 添加 6b07e89d0c52de6d86c6787fa5fd4c83 到redis当中
+2019_06_20-15_58_16  INFO: 添加 2d0d24b6f2a21888b8e72529156f0cc5 到redis当中
+2019_06_20-16_02_59  INFO: 添加 166192b9b8fb6c74d01880c1055e52e2 到redis当中
+2019_06_20-16_03_18  INFO: 添加 c326cada7d3df966f0cd7cb9b20d93c3 到redis当中
+2019_06_20-16_03_19  INFO: 添加 efb4e62a8ec342fdde119cddaf37432e 到redis当中
+2019_06_20-16_03_23  INFO: 添加 ade8339b50d719dc8d40cd7c9121dee8 到redis当中
+2019_06_20-16_03_29  INFO: 添加 666487801b71225dea9a319097afde60 到redis当中
+2019_06_20-16_03_30  INFO: 添加 686bf43fa523abd11e648cd4fb369756 到redis当中
+2019_06_20-16_03_33  INFO: 添加 77c3d7227068c7cc3e5c0596f43cbf73 到redis当中
+2019_06_20-16_03_37  INFO: 添加 d99e6269d70707910e26a4de338ff3fe 到redis当中
+2019_06_20-16_03_43  INFO: 添加 398fd7255649d81ea34184bd6ab6b9bd 到redis当中
+2019_06_20-16_03_49  INFO: 添加 8f2acc133ae552bee096e4c7e1554d07 到redis当中
+2019_06_20-16_03_50  INFO: 添加 a1bcd6efaa090eaa6d1294f702ef24d9 到redis当中
+2019_06_20-16_03_52  INFO: 添加 0f3ced7a71a8e1b16dab72c47762dda1 到redis当中
+2019_06_20-16_03_53  INFO: 添加 18f5898a39d4a4a3e146988e1d9c0347 到redis当中
+2019_06_20-16_03_55  INFO: 添加 1027c211e0233613395f3b1c196540b6 到redis当中
+2019_06_20-16_03_57  INFO: 添加 f4e7dfe8f64fcf29317159ad72fe18dc 到redis当中
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_22  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_24  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_24  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_24  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_24  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_24  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_26  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_26  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_26  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_26  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_28  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_30  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_30  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_30  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_34  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_06_36  ERROR: Error 61 connecting to 127.0.0.1:6379. Connection refused.
+2019_06_20-16_07_25  INFO: 添加 b0dcefef24450ac85429d25e4cb2eb83 到redis当中
+2019_06_20-16_07_26  INFO: 添加 eae7da493478000f16955d0d06708ce6 到redis当中
+2019_06_20-16_07_26  INFO: 添加 288b8b0bdcef49c353dc1fca34226e16 到redis当中
+2019_06_20-16_07_26  INFO: 添加 b607d5d39a8b1f4c4f455a0c49aa192e 到redis当中
+2019_06_20-16_07_27  INFO: 添加 fa0137bd33bcee032ecc4c8c6f488fbe 到redis当中
+2019_06_20-16_07_30  INFO: 添加 2d4f205e1774944cab6131dda3e17f56 到redis当中
+2019_06_20-16_10_06  INFO: 添加 40de355f34da79567919ffac7350458d 到redis当中
+2019_06_20-16_10_11  INFO: 添加 2cd35b49bfa9b6fd26ffab7156a1a6a8 到redis当中
+2019_06_20-16_11_21  INFO: 添加 ef874412e9a07129b113810fb08b19b4 到redis当中
+2019_06_20-16_13_23  INFO: 添加 608684a31143ebafddd1a36289e3a387 到redis当中
+2019_06_20-16_13_27  INFO: 添加 4fb63d18432b341cbc93fe57a1622a68 到redis当中
+2019_06_20-16_13_27  INFO: 添加 c035a8380794183b6540433d7608410f 到redis当中
+2019_06_20-16_13_28  INFO: 添加 6d052ce10a5772aad0b7bd4c0cdc04b9 到redis当中
+2019_06_20-16_13_29  INFO: 添加 d392753f6c4af982bf257de590498676 到redis当中
+2019_06_20-16_13_49  INFO: 添加 8a5d88c90238a3e9ef2eb5c4c0cb8927 到redis当中
+2019_06_20-16_14_00  INFO: 添加 dc4e5486c67473c07cabc38ec07b5d09 到redis当中
+2019_06_20-16_14_13  INFO: 添加 45fd667ca0eb7b691adc75c64e0a23b3 到redis当中
+2019_06_20-16_14_29  INFO: 添加 c6f685fc505279584f51380c92c23d49 到redis当中
+2019_06_20-16_14_30  INFO: 添加 a00eb424d0f563df7a2eca98a05c9447 到redis当中
+2019_06_20-16_14_31  INFO: 添加 e4193f81c12e6fb245f12bf4b8b58746 到redis当中

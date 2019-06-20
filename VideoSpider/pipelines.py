@@ -12,7 +12,7 @@ from VideoSpider.spiders.ky import KySpider
 from VideoSpider.stockpile.ppx import PpxSpider
 from VideoSpider.spiders.td import TdSpider
 from VideoSpider.spiders.uc import UcSpider
-from VideoSpider.spiders.xg import XgSpider
+from VideoSpider.stockpile.xg import XgSpider
 from VideoSpider.spiders.xng import XngSpider
 from VideoSpider.spiders.xngzf import XngzfSpider
 

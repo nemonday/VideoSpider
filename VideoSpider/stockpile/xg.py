@@ -33,7 +33,7 @@ class XgSpider(scrapy.Spider):
         # 不加载图片
         self.opt.add_argument('--no-sandbox')
         # 添加代理
-        self.opt.add_argument("--proxy-server={}".format(self.proxies))
+        # self.opt.add_argument("--proxy-server={}".format(self.proxies))
 
         # 无头模式
         # self.opt.add_argument('--headless')
@@ -111,9 +111,5 @@ class XgSpider(scrapy.Spider):
             Print.error(f)
             print('错误所在的行号：', f.__traceback__.tb_lineno)
             # 判断是否出现解析失败
-            exists = self.is_visible('//*[@id="__layout"]/div/div[2]/div/div[2]/div[1]/div[2]')
-            if exists is True:
-                click_button = self.broser.find_element_by_css_selector('[class="vue-dialog-button"]')
-                click_button.click()
             pass
 

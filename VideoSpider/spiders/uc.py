@@ -111,8 +111,8 @@ class UcSpider(scrapy.Spider):
                     self.broser.get(item['url'])
                     try:
                         url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
-
+                        # Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
+                        print(url)
                     except Exception as f:
                         print(f)
                         pass
