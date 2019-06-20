@@ -1,22 +1,25 @@
 # -*- coding: utf-8 -*-
-import base64
 import hashlib
 import json
-import os
 import re
-from contextlib import closing
 from copy import deepcopy
-from pprint import pprint
-# from moviepy.video.io.VideoFileClip import VideoFileClip
 import requests
 import scrapy
-
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
 
 
 class TdSpider(scrapy.Spider):
+    def __init__(self):
+        super(TdSpider, self).__init__()
+        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
+        proxy = requests.get(proxy_url)
+        proxy = json.loads(proxy.text)['data'][0]
+        self.proxies = {
+            'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
+        }
+
     name = 'td'
 
     def start_requests(self):

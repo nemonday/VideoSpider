@@ -1,23 +1,25 @@
 # -*- coding: utf-8 -*-
-import base64
 import hashlib
 import json
-import os
-import re
 import time
 from copy import deepcopy
-from pprint import pprint
 from random import choice
 import requests
 import scrapy
-
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
-from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, \
-    xng_spider_dict, PROXY_URL, xng_headers
+from VideoSpider.settings import xng_spider_dict, xng_headers
 
 
 class XngSpider(scrapy.Spider):
+    def __init__(self):
+        super(XngSpider, self).__init__()
+        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
+        proxy = requests.get(proxy_url)
+        proxy = json.loads(proxy.text)['data'][0]
+        self.proxies = {
+            'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
+        }
     name = 'xng'
 
     def start_requests(self):
@@ -40,10 +42,7 @@ class XngSpider(scrapy.Spider):
         item = response.meta['item']
 
         url = 'https://api.xiaoniangao.cn/trends/get_recommend_trends'
-        proxy = requests.get(PROXY_URL)
-        proxies = {
-            'https': 'https://' + re.search(r'(.*)', proxy.text).group(1)}
-        res = requests.post(url, headers=xng_headers, data=item['data'], timeout=30)
+        res = requests.post(url, headers=xng_headers, proxies=self.proxies, data=item['data'], timeout=30)
         json_data = json.loads(res.text)
         video_datas = json_data['data']['list']
         try:

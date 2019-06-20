@@ -93,6 +93,7 @@ class UcSpider(scrapy.Spider):
                 # 判断视频是否存在
                 is_ture = Iduoliao.redis_check(item['osskey'])
                 if is_ture is True:
+                    time.sleep(3)
                     item['url'] = gzh_cids['url']
                     item['download_url'] = gzh_cids['url']
                     item['like_cnt'] = ''
@@ -111,8 +112,7 @@ class UcSpider(scrapy.Spider):
                     self.broser.get(item['url'])
                     try:
                         url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                        # Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
-                        print(url)
+                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
                     except Exception as f:
                         print(f)
                         pass

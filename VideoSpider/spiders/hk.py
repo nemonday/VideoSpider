@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
-import base64
 import hashlib
 import json
-import os
-import re
 from copy import deepcopy
-from pprint import pprint
-
 import requests
 import scrapy
-
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
-from random import choice
 
 
 class HkSpider(scrapy.Spider):
     def __init__(self):
         super(HkSpider, self).__init__()
-        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=0&city=0&yys=0&port=11&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
+        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
         proxy = json.loads(proxy.text)['data'][0]
         self.proxies = {
@@ -78,6 +71,7 @@ class HkSpider(scrapy.Spider):
                         # 开始去水印上传
                         Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
                                         item['old_type'])
+
         except Exception as f:
             Print.error(f)
 
