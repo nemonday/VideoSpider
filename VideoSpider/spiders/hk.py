@@ -64,7 +64,7 @@ class HkSpider(scrapy.Spider):
                 md.update(str(item['download_url']).encode())
                 item['osskey'] = md.hexdigest()  # 加密结果
 
-                # 筛选视频是否合格
+                # 筛选视频是否合格1
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:

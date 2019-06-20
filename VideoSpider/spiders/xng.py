@@ -24,6 +24,7 @@ class XngSpider(scrapy.Spider):
 
     def start_requests(self):
         item = {}
+
         item['token'] = '8f8135b40677be896a6270ddff99cb71'
         item['uid'] = '9077df59-0135-4ecf-abaa-eae77159673b'
         for video_url, video_type in xng_spider_dict.items():
