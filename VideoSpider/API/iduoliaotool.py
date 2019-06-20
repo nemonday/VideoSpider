@@ -17,8 +17,7 @@ import requests
 from VideoSpider.settings import MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE, ACCESSKEYID, \
     ACCESSKEYSECRET, ENDPOINT, BUCKETNAME
 from urllib.parse import quote
-from aliyunsdkcore.client import AcsClient
-from aliyunsdkmts.request.v20140618 import SubmitJobsRequest
+
 
 
 class Print(object):
@@ -204,53 +203,53 @@ class IduoliaoTool(object):
             Print.error(f)
             return False
 
-    @staticmethod
-    def submit_ranscoding(filename):
-        access_key_id = 'LTAI2aU1LjHOWKZf'
-        access_key_secret = 'fe1L3bkeucrrEFnaJbDC5woepupNAv'
-        mps_region_id = 'cn-hangzhou'
-        pipeline_id = '264990a3db2b4670812fed84e9d12256'
-        template_id = 'fae77e4045aa4fa58185619fcf1d341e'
-        oss_location = 'oss-cn-hangzhou'
-        oss_bucket = 'jiuban-image'
-        oss_input_object = 'video/' + str(filename)
-        oss_output_object = 'video/' + str(filename)
-
-        # 创建AcsClient实例
-        client = AcsClient(access_key_id, access_key_secret, mps_region_id)
-
-        # 创建request，并设置参数
-        request = SubmitJobsRequest.SubmitJobsRequest()
-        request.set_accept_format('json')
-        # # Input
-        job_input = {'Location': oss_location,
-                     'Bucket': oss_bucket,
-                     'Object': quote(oss_input_object)}
-        #
-        request.set_Input(json.dumps(job_input))
-
-        # # Output
-        output = {'OutputObject': quote(oss_output_object)}
-
-        # Ouput->TemplateId
-        output['TemplateId'] = template_id
-        outputs = [output]
-        request.set_Outputs(json.dumps(outputs))
-        request.set_OutputBucket(oss_bucket)
-        request.set_OutputLocation(oss_location)
-
-        # PipelineId
-        request.set_PipelineId(pipeline_id)
-
-        # 发起API请求并显示返回值
-        response_str = client.do_action_with_exception(request)
-        response = json.loads(response_str)
-        if response['JobResultList']['JobResult'][0]['Success']:
-            print(response['JobResultList']['JobResult'][0]['Job']['JobId'])
-            return [True, response['JobResultList']['JobResult'][0]['Job']['JobId']]
-        else:
-            print(response['JobResultList']['JobResult'][0]['Message'])
-            return [False, response['JobResultList']['JobResult'][0]['Message']]
+    # @staticmethod
+    # def submit_ranscoding(filename):
+    #     access_key_id = 'LTAI2aU1LjHOWKZf'
+    #     access_key_secret = 'fe1L3bkeucrrEFnaJbDC5woepupNAv'
+    #     mps_region_id = 'cn-hangzhou'
+    #     pipeline_id = '264990a3db2b4670812fed84e9d12256'
+    #     template_id = 'fae77e4045aa4fa58185619fcf1d341e'
+    #     oss_location = 'oss-cn-hangzhou'
+    #     oss_bucket = 'jiuban-image'
+    #     oss_input_object = 'video/' + str(filename)
+    #     oss_output_object = 'video/' + str(filename)
+    #
+    #     # 创建AcsClient实例
+    #     client = AcsClient(access_key_id, access_key_secret, mps_region_id)
+    #
+    #     # 创建request，并设置参数
+    #     request = SubmitJobsRequest.SubmitJobsRequest()
+    #     request.set_accept_format('json')
+    #     # # Input
+    #     job_input = {'Location': oss_location,
+    #                  'Bucket': oss_bucket,
+    #                  'Object': quote(oss_input_object)}
+    #     #
+    #     request.set_Input(json.dumps(job_input))
+    #
+    #     # # Output
+    #     output = {'OutputObject': quote(oss_output_object)}
+    #
+    #     # Ouput->TemplateId
+    #     output['TemplateId'] = template_id
+    #     outputs = [output]
+    #     request.set_Outputs(json.dumps(outputs))
+    #     request.set_OutputBucket(oss_bucket)
+    #     request.set_OutputLocation(oss_location)
+    #
+    #     # PipelineId
+    #     request.set_PipelineId(pipeline_id)
+    #
+    #     # 发起API请求并显示返回值
+    #     response_str = client.do_action_with_exception(request)
+    #     response = json.loads(response_str)
+    #     if response['JobResultList']['JobResult'][0]['Success']:
+    #         print(response['JobResultList']['JobResult'][0]['Job']['JobId'])
+    #         return [True, response['JobResultList']['JobResult'][0]['Job']['JobId']]
+    #     else:
+    #         print(response['JobResultList']['JobResult'][0]['Message'])
+    #         return [False, response['JobResultList']['JobResult'][0]['Message']]
 
 
 
