@@ -10,7 +10,7 @@ from VideoSpider.settings import *
 
 
 class HkSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(HkSpider, self).__init__()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)

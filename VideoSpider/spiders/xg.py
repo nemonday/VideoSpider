@@ -16,7 +16,7 @@ import selenium.webdriver.support.ui as ui
 
 
 class XgSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(XgSpider, self).__init__()
         try:
             # 获取代理
