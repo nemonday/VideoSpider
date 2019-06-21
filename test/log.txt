@@ -1,3 +1,64 @@
 2019_06_01-15_57_02  INFO: 下载视频: xiguashipin2dewatermark.mp4
 2019_06_01-16_20_01  INFO: 下载视频: xiguashipin2dewatermark.mp4
 2019_06_01-16_25_15  INFO: 下载视频: xiguashipin2dewatermark.mp4
+2019_06_21-10_35_46  INFO: 添加 e7b9c077602a5b7664ac961746e56e0f 到redis当中
+2019_06_21-10_35_57  INFO: 添加 fc05ccecfc65c3022daf2796c10c9845 到redis当中
+2019_06_21-10_36_14  INFO: 添加 6adbafeea7700e2f7a7bd62cda001e91 到redis当中
+2019_06_21-10_38_42  INFO: 添加 8d9eb3e4b682bb06906eee81272f767f 到redis当中
+2019_06_21-10_38_53  INFO: 添加 3b5dcdb2c15b79d27574ccf31991c417 到redis当中
+2019_06_21-10_39_03  INFO: 添加 70b82269860f54529f59d7bf297bbbd0 到redis当中
+2019_06_21-10_39_26  INFO: 添加 f50b248db444ed9413055c8793bf2ee5 到redis当中
+2019_06_21-10_39_47  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="__layout"]/div/main/div[3]/fieldset[2]/div/p/a"}
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_39_47  INFO: 添加 8901a44d42161ad54d166601c6558de9 到redis当中
+2019_06_21-10_39_47  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1082, 232). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_39_57  INFO: 添加 a3dfac7c52fb7e37d18d291c4d88c163 到redis当中
+2019_06_21-10_39_57  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1210d32b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_39_59  INFO: 添加 bc51169617c550be7060584b7a9767e8 到redis当中
+2019_06_21-10_39_59  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1210dbf98>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_39_59  ERROR: 'video_detail_info'
+2019_06_21-10_39_59  INFO: 添加 4e6982571e63b37c7f643864e7f885d5 到redis当中
+2019_06_21-10_39_59  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1211719b0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_40_01  INFO: 添加 b3cdb674b6410f2344e3558bd05e3338 到redis当中
+2019_06_21-10_40_01  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1211710b8>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_40_01  INFO: 添加 688b0f01cf0321113d47ed3db818883f 到redis当中
+2019_06_21-10_40_01  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x1211545c0>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_40_01  INFO: 添加 8c07d22c485ca5bcbdfba0185d35e162 到redis当中
+2019_06_21-10_40_01  ERROR: HTTPConnectionPool(host='127.0.0.1', port=62753): Max retries exceeded with url: /session/26971da19091d283f516a4157eb04910/element/0.07572046718738323-1/value (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x12119db70>: Failed to establish a new connection: [Errno 61] Connection refused'))
+2019_06_21-10_40_32  INFO: 添加 82d6e8fb50b1171dc44aa8cf90e5f6f2 到redis当中
+2019_06_21-10_40_43  INFO: 添加 9419f2b9e809925c3f4b75b53bb351d7 到redis当中
+2019_06_21-10_40_53  ERROR: 'group_id'
+2019_06_21-10_41_05  INFO: 添加 b6a38d68ed65c9469c2e7c7ea6f50e70 到redis当中
+2019_06_21-10_41_26  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="__layout"]/div/main/div[3]/fieldset[2]/div/p/a"}
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_41_26  INFO: 添加 f76b0b63c752cacdbb80e4695d8b91c5 到redis当中
+2019_06_21-10_41_26  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1082, 232). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_41_38  INFO: 添加 8861ed9566baa3fea47f840b8f54635b 到redis当中
+2019_06_21-10_41_59  ERROR: Message: no such element: Unable to locate element: {"method":"xpath","selector":"//*[@id="__layout"]/div/main/div[3]/fieldset[2]/div/p/a"}
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_41_59  INFO: 添加 ce16019e91256682113dad9a9e6dceaf 到redis当中
+2019_06_21-10_41_59  ERROR: Message: element click intercepted: Element <button type="button" class="nya-btn">...</button> is not clickable at point (1082, 232). Other element would receive the click: <div class="v--modal-background-click">...</div>
+  (Session info: chrome=75.0.3770.100)
+  (Driver info: chromedriver=74.0.3729.6 (255758eccf3d244491b8a1317aa76e1ce10d57e9-refs/branch-heads/3729@{#29}),platform=Mac OS X 10.14.5 x86_64)
+
+2019_06_21-10_42_11  INFO: 添加 e6041355fcfe903d74892dddc235eb9e 到redis当中
+2019_06_21-10_42_21  INFO: 添加 d959e9ae2a41b3401fe7ea5d9370ca43 到redis当中
+2019_06_21-10_42_32  INFO: 添加 3359cd419fd7342c4218db947cf590e9 到redis当中
+2019_06_21-10_42_44  INFO: 添加 6dc8a03823aa0bfe7273d5315833663c 到redis当中
+2019_06_21-10_42_55  INFO: 添加 93f1f47bd9730b2619c1846e6b203004 到redis当中
+2019_06_21-10_43_05  INFO: 添加 723fd9f11df38f7203789176c3b524ed 到redis当中
+2019_06_21-10_43_19  INFO: 添加 65d856155363bb4b9e4fff561f75739c 到redis当中
+2019_06_21-10_43_29  INFO: 添加 f8796437aa42c492c8ed7f54bcb966bf 到redis当中
+2019_06_21-10_43_42  INFO: 添加 97faab976dc1bd5d8a9968f8b75625e2 到redis当中

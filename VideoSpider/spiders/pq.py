@@ -65,13 +65,12 @@ class PqSpider(scrapy.Spider):
                 md = hashlib.md5()
                 md.update(str(item['url']).encode())
                 item['osskey'] = md.hexdigest()  # 加密结果
-                print(item)
                 # 筛选视频是否合格
                 if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
                         # 开始去水印上传
-                        # Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
                         pass
         except Exception as f:
             Print.error(f)
