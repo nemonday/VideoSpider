@@ -122,7 +122,7 @@ def xg_video():
         except Exception as f:
             Print.error(f)
             print('错误所在的行号：', f.__traceback__.tb_lineno)
-            # 判断是否出现解析失败
+            # 判断是否出现解析失败1
             try:
                 ui.WebDriverWait(broser, 10).until(EC.visibility_of_element_located(
                     (By.XPATH, '//*[@id="__layout"]/div/div[2]/div/div[2]/div[1]/div[2]')))
