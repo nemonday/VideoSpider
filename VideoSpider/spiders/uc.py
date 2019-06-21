@@ -1,49 +1,35 @@
 # -*- coding: utf-8 -*-
-import base64
 import hashlib
 import json
-import random
 import re
 from copy import deepcopy
-from pprint import pprint
 import requests
 import scrapy
 from VideoSpider.API.iduoliao import Iduoliao
+from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
-
 
 class UcSpider(scrapy.Spider):
-    def __init__(self, **kwargs):
-        super(UcSpider, self).__init__()
-        self.opt = webdriver.ChromeOptions()
-        self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
-        self.opt.add_argument('--disable-dev-shm-usage')
-        self.opt.add_argument('--no-sandbox')
-
-        # display = Display(visible=0, size=(800, 600))
-        # display.start()
-
-        self.broser = webdriver.Chrome(options=self.opt)
-        self.wait = WebDriverWait(self.broser, 20, 0.5)
 
     name = 'uc'
 
     def start_requests(self):
         item ={}
-        proxy = requests.get(PROXY_URL)
+        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
+        proxy = requests.get(proxy_url)
+        proxy = json.loads(proxy.text)['data'][0]
         proxies = {
-            'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
+            'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
+        }
+
         for video_url, video_type in uc_spider_dict.items():
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['old_type'] = video_type[4]
 
             yield scrapy.Request(video_url, headers=video_type[3],
-                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),'item': deepcopy(item)}, dont_filter=True)
+                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),
+                                                            'item': deepcopy(item)}, dont_filter=True)
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
@@ -92,12 +78,11 @@ class UcSpider(scrapy.Spider):
                 # 判断视频是否存在
                 is_ture = Iduoliao.redis_check(item['osskey'])
                 if is_ture is True:
-                    time.sleep(3)
                     item['url'] = gzh_cids['url']
                     item['download_url'] = gzh_cids['url']
-                    item['like_cnt'] = ''
+                    item['like_cnt'] = 0
                     item['cmt_cnt'] = gzh_cids['cmt_cnt']
-                    item['sha_cnt'] = ''
+                    item['sha_cnt'] = 0
                     item['view_cnt'] = gzh_cids['view_cnt']
                     item['thumbnails'] = gzh_cids['thumbnails']
                     item['title'] = gzh_cids['title']
@@ -108,16 +93,8 @@ class UcSpider(scrapy.Spider):
                     item['from'] = 'UC浏览器'
                     item['old_type'] = gzh_cids['old_type']
 
-                    self.broser.get(item['url'])
-                    try:
-                        url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                        Iduoliao.upload(url, item['thumbnails'], item['osskey'], 'UC浏览器', item['title'],item['old_type'])
-                    except Exception as f:
-                        print(f)
-                        pass
-
-            self.broser.quit()
+                    yield item
 
         except Exception as f:
-            pprint('UC浏览器爬虫错误:{}'.format(f))
+            Print.error('UC浏览器爬虫错误:{}'.format(f))
             pass
