@@ -10,7 +10,6 @@ import pymysql
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
 from VideoSpider.spiders.uc import UcSpider
-from VideoSpider.stockpile.xg import XgSpider
 
 isotimeformat = '%Y-%m-%d'
 
@@ -43,7 +42,7 @@ class VideospiderPipeline(object):
         cursor.close()
 
     def process_item(self, item, spider):
-        if spider.name == UcSpider.name or spider.name == XgSpider:
+        if spider.name == UcSpider.name:
             self.insert_mysql(item)
 
 
