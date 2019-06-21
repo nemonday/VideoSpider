@@ -117,8 +117,10 @@ class IduoliaoTool(object):
     @staticmethod
     def dewatermark(width, height, y, w, h, excursion, filename, dewatermarkname,  old_type, videofrom):
         try:
+            isotimeformat = '%Y-%m-%d'
+            day = time.strftime(isotimeformat, time.localtime(time.time()))
             # 分别传入: 视频帧宽，帧高，水印位置定位的：y值，w值，h值，w偏移值，去水印视频，去水印后的视频文件名字
-            dewatermarkname = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, dewatermarkname) + '.mp4'
+            dewatermarkname = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, dewatermarkname) + '.mp4'
             os.system('''C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} -filter_complex "delogo=x={}:y={}:w={}:h={}:show=0" {}'''.
                       format(filename, int(width) - excursion, y, w, h, dewatermarkname))
 
