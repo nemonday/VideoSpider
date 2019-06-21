@@ -23,13 +23,14 @@ class XgDownload(object):
         self.opt.add_argument('--no-sandbox')
         # display = Display(visible=0, size=(800, 600))
         # display.start()
-        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
+        proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=440000&city=440100&yys=100017&port=11&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
         proxy = json.loads(proxy.text)['data'][0]
         self.proxies = {
-            'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
+            'https': 'http://{0}:{1}'.format(proxy['ip'], proxy['port'])
         }
-        self.opt.add_argument('--proxy-server=http://{}'.format(self.proxies['https']))
+        self.opt.add_argument("--proxy-server={}".format(self.proxies['https']))
+
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.opt.add_experimental_option("prefs", self.prefs)
         # self.opt.set_headless
@@ -93,6 +94,7 @@ class XgDownload(object):
                     new_filename = IduoliaoTool.video_download(id, url, title, video_type, video_from, ifdewatermark=False)
                     if new_filename:
                         self.update_mysql(id)
+                    print(url)
             self.broser.quit()
 
         except Exception as f:
@@ -109,8 +111,8 @@ class XgDownload(object):
 
 
 if __name__ == '__main__':
-        obj = XgDownload()
-        obj.run()
+    obj = XgDownload()
+    obj.run()
 
 
 
