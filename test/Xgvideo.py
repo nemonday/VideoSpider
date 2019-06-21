@@ -1,7 +1,10 @@
 import hashlib
 import json
 import re
+import sys
+
 import requests
+import schedule
 from selenium import webdriver
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
@@ -130,7 +133,10 @@ def xg_video():
                 click_button.click()
                 url_box.clear()
             except:
-                pass
+                sys.exit()
 
 
-xg_video()
+schedule.every(10).minutes.do(xg_video)
+
+while True:
+    schedule.run_pending()
