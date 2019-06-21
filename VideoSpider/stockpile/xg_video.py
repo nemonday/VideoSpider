@@ -87,7 +87,7 @@ class XgDownload(object):
                 video_type = info[4]
 
                 self.broser.get(url)
-                is_visible = is_visible('//video')
+                is_visible = self.is_visible('//video')
                 if is_visible is True:
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
                     new_filename = IduoliaoTool.video_download(id, url, title, video_type, video_from, ifdewatermark=False)
