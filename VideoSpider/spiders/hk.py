@@ -69,9 +69,8 @@ class HkSpider(scrapy.Spider):
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
                         # 开始去水印上传
-                        # Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
-                        #                 item['old_type'])
-                        print(item)
+                        Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
+                                        item['old_type'])
         except Exception as f:
             Print.error(f)
 
