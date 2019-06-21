@@ -11,7 +11,7 @@ from VideoSpider.settings import *
 
 
 class TdSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(TdSpider, self).__init__()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
@@ -43,7 +43,7 @@ class TdSpider(scrapy.Spider):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
 
-        # 糖豆搞笑视频
+        # 糖豆搞笑视频1
         if response.url.startswith('https://wx.tangdou.com/api.php?mod=gaoxiao'):
             tangdou_funny_url = 'https://wx.tangdou.com/api.php?mod=gaoxiao&ac=index_new&page={}&appname=gaoxiao&pname=gaoxiao&version=2.1.6&s=&c=&nt=wifi&width=600&height=940&device=Android%205.1.1&model=MIX&sdkv=2.6.2&pr=1.2&lg=zh_CN&wv=7.0.3&wvv=android&fs=16&sbh=25&sw=600&sh=1067&brad=Xiaomi&uuid=oATSP4qll0-cLSfzi-zR41-hlREQ'
             try:

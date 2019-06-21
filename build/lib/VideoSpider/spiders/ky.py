@@ -3,7 +3,6 @@ import base64
 import hashlib
 import json
 import re
-from contextlib import closing
 from copy import deepcopy
 from pprint import pprint
 
@@ -30,7 +29,6 @@ class KySpider(scrapy.Spider):
 
             yield scrapy.Request(video_url, headers=video_type[3],
                              callback=self.parse, meta={'item': deepcopy(item)}, dont_filter=True)
-
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'

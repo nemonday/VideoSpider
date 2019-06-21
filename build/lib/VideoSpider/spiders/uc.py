@@ -14,11 +14,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-import selenium.webdriver.support.ui as ui
 
 
 class UcSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(UcSpider, self).__init__()
         self.opt = webdriver.ChromeOptions()
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
