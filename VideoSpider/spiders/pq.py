@@ -71,7 +71,7 @@ class PqSpider(scrapy.Spider):
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
                         # 开始去水印上传
-                        # Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
                         pass
         except Exception as f:
             Print.error(f)

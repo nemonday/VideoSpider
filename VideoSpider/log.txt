@@ -936,3 +936,5 @@ from disconnected: received Inspector.detached event
 2019_06_20-18_42_22  INFO: 娣诲姞 d0ebc3341077230340c1cd59451ffe8d 鍒皉edis褰撲腑
 2019_06_20-18_42_25  INFO: 娣诲姞 ad8f5488b1e95a7bc4486a7fd87a3b72 鍒皉edis褰撲腑
 2019_06_20-18_42_28  INFO: 娣诲姞 daff26d5ece50f276a1af56f965e7d80 鍒皉edis褰撲腑
+2019_06_20-20_17_47  INFO: 添加 b913d4d8a3c0170031a8de216269d52c 到redis当中
+2019_06_20-20_17_49  INFO: 下载视频: Z:\爬虫储存\爬虫储存1.0\好看视频\影视\2019-06-20\赌霸天下，大结局，高科技防出千，两大赌王临时加赌注，赌命dewatermark.mp4

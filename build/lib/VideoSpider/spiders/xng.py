@@ -12,7 +12,7 @@ from VideoSpider.settings import xng_spider_dict, xng_headers
 
 
 class XngSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(XngSpider, self).__init__()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
@@ -24,6 +24,7 @@ class XngSpider(scrapy.Spider):
 
     def start_requests(self):
         item = {}
+
         item['token'] = '8f8135b40677be896a6270ddff99cb71'
         item['uid'] = '9077df59-0135-4ecf-abaa-eae77159673b'
         for video_url, video_type in xng_spider_dict.items():

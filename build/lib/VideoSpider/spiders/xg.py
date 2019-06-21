@@ -16,7 +16,7 @@ import selenium.webdriver.support.ui as ui
 
 
 class XgSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(XgSpider, self).__init__()
         try:
             # 获取代理
@@ -75,7 +75,6 @@ class XgSpider(scrapy.Spider):
             'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
         }
         proxies = https_proxies['https']
-
         for video_url, video_type in xg_spider_dict.items():
 
             item['view_cnt_compare'] = video_type[1]

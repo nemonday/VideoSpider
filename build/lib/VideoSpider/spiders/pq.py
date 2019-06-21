@@ -12,7 +12,7 @@ from VideoSpider.settings import pq_spider_dict, pq_headers, PROXY_URL
 
 
 class PqSpider(scrapy.Spider):
-    def __init__(self):
+    def __init__(self, **kwargs):
         super(PqSpider, self).__init__()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
@@ -38,7 +38,7 @@ class PqSpider(scrapy.Spider):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
 
-        # 构建票圈post请求获取作品信息
+        # 构建票圈post请求获取作品信息1
         url = 'https://longvideoapi.qingqu.top/longvideoapi/video/distribute/category/videoList'
         res = requests.post(url, headers=pq_headers, data=item['data'], proxies=self.proxies, timeout=30)
         try:
@@ -71,7 +71,7 @@ class PqSpider(scrapy.Spider):
                     is_ture = Iduoliao.redis_check(item['osskey'])
                     if is_ture is True:
                         # 开始去水印上传
-                        # Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
+                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '票圈长视频', item['title'], item['old_type'])
                         pass
         except Exception as f:
             Print.error(f)
