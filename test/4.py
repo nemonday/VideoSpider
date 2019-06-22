@@ -1,4 +1,5 @@
 import json
+import os
 import time
 
 import requests
@@ -16,3 +17,8 @@ isotimeformat = '%Y-%m-%d'
 a = time.strftime(isotimeformat, time.localtime(time.time()))
 
 print(a)
+
+path = "./"
+dirs = os.listdir(path)
+
+print(dirs)

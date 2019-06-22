@@ -98,9 +98,9 @@ class XgDownload(object):
                     # 修改文件名字
                     isotimeformat = '%Y-%m-%d'
                     day = time.strftime(isotimeformat, time.localtime(time.time()))
-                    re_filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(video_from, video_type, day, title) + '.mp4'
-                    os.rename(new_filename, re_filename)
-                    if re_filename:
+                    path = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(video_from, video_type, day)
+                    os.rename(new_filename, path + '\\' + title + '.mp4')
+                    if new_filename is None:
                         self.update_mysql(id)
                     print(url)
             self.broser.quit()
