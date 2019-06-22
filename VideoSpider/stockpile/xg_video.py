@@ -2,12 +2,11 @@ import json
 import os
 import time
 from random import choice
-
 import requests
 from pyvirtualdisplay import Display
 import pymysql
 from selenium import webdriver
-
+import hashlib
 from VideoSpider.API.iduoliaotool import IduoliaoTool, Print
 from VideoSpider.settings import User_Agent_list, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE
 from selenium.webdriver.common.by import By
@@ -87,12 +86,21 @@ class XgDownload(object):
                 video_from = info[3]
                 video_type = info[4]
 
+                md = hashlib.md5()  # 构造一个md5
+                md.update(str(url).encode())
+                md_name= md.hexdigest()  # 加密结果
+
                 self.broser.get(url)
                 is_visible = self.is_visible('//video')
                 if is_visible is True:
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    new_filename = IduoliaoTool.video_download(id, url, title, video_type, video_from, ifdewatermark=False)
-                    if new_filename:
+                    new_filename = IduoliaoTool.video_download(id, url, md_name, video_type, video_from, ifdewatermark=False)
+                    # 修改文件名字
+                    isotimeformat = '%Y-%m-%d'
+                    day = time.strftime(isotimeformat, time.localtime(time.time()))
+                    re_filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(video_from, video_type, day, title) + '.mp4'
+                    os.rename(new_filename, re_filename)
+                    if re_filename:
                         self.update_mysql(id)
                     print(url)
             self.broser.quit()
