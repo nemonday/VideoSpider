@@ -96,6 +96,7 @@ class XgDownload(object):
                         u',.!?[]()%#@&1234567890')}
                     # t = u'中国，中文，标点符号！你好？１２３４５＠＃【】+=-（）'
                     title = title.translate(table)
+                    title = title.replace('?', '')
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
                     new_filename = IduoliaoTool.video_download(id, url, title, video_type, video_from, ifdewatermark=False)
 
