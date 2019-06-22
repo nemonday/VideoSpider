@@ -92,7 +92,7 @@ class XgDownload(object):
                 is_visible = self.is_visible('//video')
                 if is_visible is True:
                     table = {ord(f): ord(t) for f, t in zip(
-                        u'，。！？【】（）％＃＠＆１２３４５６７８９０',
+                        u'，。！？？【】（）％＃＠＆１２３４５６７８９０',
                         u',.!?[]()%#@&1234567890')}
                     # t = u'中国，中文，标点符号！你好？１２３４５＠＃【】+=-（）'
                     title = title.translate(table)
