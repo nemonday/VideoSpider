@@ -87,23 +87,14 @@ class XgDownload(object):
                 video_from = info[3]
                 video_type = info[4]
 
-                md = hashlib.md5()  # 构造一个md5
-                md.update(str(url).encode())
-                md_name= md.hexdigest()  # 加密结果
-
                 self.broser.get(url)
                 is_visible = self.is_visible('//video')
                 if is_visible is True:
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    new_filename = IduoliaoTool.video_download(id, url, md_name, video_type, video_from, ifdewatermark=False)
-                    # 修改文件名字
-                    isotimeformat = '%Y-%m-%d'
-                    day = time.strftime(isotimeformat, time.localtime(time.time()))
-                    path = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(video_from, video_type, day)
-                    os.rename(new_filename, path + '\\' + unicodedata.normalize('NFKC', u''.format(title)) + '.mp4')
-                    if new_filename is None:
+                    new_filename = IduoliaoTool.video_download(id, url, unicodedata.normalize('NFKC', u''.format(title)), video_type, video_from, ifdewatermark=False)
+
+                    if new_filename :
                         self.update_mysql(id)
-                    print(url)
             self.broser.quit()
 
         except Exception as f:
