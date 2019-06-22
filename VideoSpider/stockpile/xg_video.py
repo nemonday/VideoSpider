@@ -1,6 +1,7 @@
 import json
 import os
 import time
+import unicodedata
 from random import choice
 import requests
 from pyvirtualdisplay import Display
@@ -99,7 +100,7 @@ class XgDownload(object):
                     isotimeformat = '%Y-%m-%d'
                     day = time.strftime(isotimeformat, time.localtime(time.time()))
                     path = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(video_from, video_type, day)
-                    os.rename(new_filename, path + '\\' + title + '.mp4')
+                    os.rename(new_filename, path + '\\' + unicodedata.normalize('NFKC', u''.format(title)) + '.mp4')
                     if new_filename is None:
                         self.update_mysql(id)
                     print(url)
