@@ -15,6 +15,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import selenium.webdriver.support.ui as ui
 
+
 class XgDownload(object):
     def __init__(self):
         self.opt = webdriver.ChromeOptions()
@@ -91,7 +92,7 @@ class XgDownload(object):
                 is_visible = self.is_visible('//video')
                 if is_visible is True:
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    new_filename = IduoliaoTool.video_download(id, url, unicodedata.normalize('NFKC', u''.format(title)), video_type, video_from, ifdewatermark=False)
+                    new_filename = IduoliaoTool.video_download(id, url, unicodedata.normalize('NFKC', title), video_type, video_from, ifdewatermark=False)
 
                     if new_filename :
                         self.update_mysql(id)
