@@ -22,6 +22,8 @@ class XgDownload(object):
         self.opt.add_argument('user-agent="{}"'.format(choice(User_Agent_list)))
         self.opt.add_argument('--disable-dev-shm-usage')
         self.opt.add_argument('--no-sandbox')
+        self.opt.add_argument('--headless')
+        self.opt.add_argument('')
         # display = Display(visible=0, size=(800, 600))
         # display.start()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=440000&city=440100&yys=100017&port=11&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
@@ -34,7 +36,6 @@ class XgDownload(object):
 
         self.prefs = {"profile.managed_default_content_settings.images": 2}
         self.opt.add_experimental_option("prefs", self.prefs)
-        # self.opt.set_headless
 
         self.broser = webdriver.Chrome(options=self.opt)
         self.connection = pymysql.connect(
@@ -118,8 +119,10 @@ class XgDownload(object):
 
 
 if __name__ == '__main__':
-    obj = XgDownload()
-    obj.run()
+    while True:
+        time.sleep(300)
+        obj = XgDownload()
+        obj.run()
 
 
 
