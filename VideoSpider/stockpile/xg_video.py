@@ -91,8 +91,13 @@ class XgDownload(object):
                 self.broser.get(url)
                 is_visible = self.is_visible('//video')
                 if is_visible is True:
+                    table = {ord(f): ord(t) for f, t in zip(
+                        u'，。！？【】（）％＃＠＆１２３４５６７８９０',
+                        u',.!?[]()%#@&1234567890')}
+                    # t = u'中国，中文，标点符号！你好？１２３４５＠＃【】+=-（）'
+                    title = title.translate(table)
                     url = self.broser.find_element_by_xpath('//video').get_attribute("src")
-                    new_filename = IduoliaoTool.video_download(id, url, unicodedata.normalize('NFKC', title), video_type, video_from, ifdewatermark=False)
+                    new_filename = IduoliaoTool.video_download(id, url, title, video_type, video_from, ifdewatermark=False)
 
                     if new_filename :
                         self.update_mysql(id)
