@@ -1,18 +1,13 @@
 import json
-import os
 import time
-import unicodedata
 from random import choice
 import requests
-from pyvirtualdisplay import Display
 import pymysql
 from selenium import webdriver
-import hashlib
 from VideoSpider.API.iduoliaotool import IduoliaoTool, Print
 from VideoSpider.settings import User_Agent_list, MYSQL_HOST, MYSQL_PORT, MYSQL_USERNAME, MYSQL_PASSWORK, MYSQL_DATABASE
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 import selenium.webdriver.support.ui as ui
 
 
@@ -23,7 +18,6 @@ class XgDownload(object):
         self.opt.add_argument('--disable-dev-shm-usage')
         self.opt.add_argument('--no-sandbox')
         self.opt.add_argument('--headless')
-        self.opt.add_argument('')
         # display = Display(visible=0, size=(800, 600))
         # display.start()
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=440000&city=440100&yys=100017&port=11&time=1&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
@@ -120,7 +114,7 @@ class XgDownload(object):
 
 if __name__ == '__main__':
     while True:
-        time.sleep(300)
+        time.sleep(60)
         obj = XgDownload()
         obj.run()
 

@@ -1,16 +1,33 @@
+import json
 from pprint import pprint
 
-import requests
-import re
+from aliyunsdkcore import client
+from aliyunsdkmts.request.v20140618 import AddWaterMarkTemplateRequest
+from aliyunsdkcore import client
+from aliyunsdkmts.request.v20140618 import SearchTemplateRequest
+from getwater import wather
 
-url = 'http://toutiao.com/group/6697877526292726279/'
+clt = client.AcsClient('LTAI2aU1LjHOWKZf','fe1L3bkeucrrEFnaJbDC5woepupNAv' ,'cn-hangzhou', True, 3, None)
+# request = AddWaterMarkTemplateRequest.AddWaterMarkTemplateRequest()
+# request.set_accept_format('json')
+# request.set_Name('water2')
+# request.set_Config('{"Width":"10","Height":"30","Dx":"10","Dy":"5","ReferPos":"TopRight","Type":"Image"}')
+# result = clt.do_action(request)
+# print(result)
+# wather(result)
 
-# https://www.ixigua.com/i6697877526292726279/
 
-rep = re.search(r'http://toutiao.com/group/(.*)/', url).group(1)
-url = 'https://www.ixigua.com/i' + rep + '/'
+# clt = client.AcsClient(access_key ,secret_key ,region_id, True, 3, None, port)
+# request = SearchTemplateRequest.SearchTemplateRequest()
+# request.set_accept_format('json')
+# request.set_State('All')
+# result = clt.do_action(request)
+# pprint(json.loads(result))
 
-print(url)
-
-
-
+from aliyunsdkcore import client
+from aliyunsdkmts.request.v20140618 import SearchWaterMarkTemplateRequest
+# clt = client.AcsClient(access_key ,secret_key ,region_id, True, 3, No ne, port)
+request = SearchWaterMarkTemplateRequest.SearchWaterMarkTemplateRequest()
+request.set_accept_format('xml')
+result = clt.do_action(request)
+print(result)
