@@ -3,6 +3,7 @@ import base64
 import hashlib
 import json
 import re
+import time
 from copy import deepcopy
 from pprint import pprint
 
@@ -12,6 +13,8 @@ import scrapy
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.settings import *
 
+from settings import openeye_headers, ky_spider_dict
+
 
 class KySpider(scrapy.Spider):
     name = 'ky'
@@ -19,9 +22,6 @@ class KySpider(scrapy.Spider):
     def start_requests(self):
         item = {}
         for video_url, video_type in ky_spider_dict.items():
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
             item['view_cnt_compare'] = video_type[1]
             item['cmt_cnt_compare'] = video_type[2]
             item['category'] = video_type[0]
@@ -34,58 +34,47 @@ class KySpider(scrapy.Spider):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
         json_data = json.loads(response.text)
-        try:
-            for i in range(10):
-                time.sleep(3)
-                item['like_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['collectionCount']
-                item['cmt_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['replyCount']
-                item['sha_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['shareCount']
-                item['view_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['playCount']
-                item['thumbnails'] = json_data['itemList'][i]['data']['content']['data']['cover']['detail']
-                item['title'] = json_data['itemList'][i]['data']['content']['data']['title']
-                item['id'] = json_data['itemList'][i]['data']['content']['data']['id']
-                item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
-                item['from'] = '开眼视频'
-                item['category'] = item['category']
-                item['osskey'] = base64.b64encode((str(json_data['itemList'][i]['data']['content']['data']['id']) + 'ky').encode('utf-8')).decode('utf-8'),
+        for i in range(10):
+            time.sleep(3)
+            item['like_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['collectionCount']
+            item['cmt_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['replyCount']
+            item['sha_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['shareCount']
+            item['view_cnt'] = json_data['itemList'][i]['data']['content']['data']['consumption']['playCount']
+            item['thumbnails'] = json_data['itemList'][i]['data']['content']['data']['cover']['detail']
+            item['title'] = json_data['itemList'][i]['data']['content']['data']['title']
+            item['id'] = json_data['itemList'][i]['data']['content']['data']['id']
+            item['spider_time'] = time.strftime(isotimeformat, time.localtime(time.time()))
+            item['from'] = '开眼视频'
+            item['category'] = item['category']
+            item['osskey'] = base64.b64encode((str(json_data['itemList'][i]['data']['content']['data']['id']) + 'ky').encode('utf-8')).decode('utf-8'),
 
-                try:
-                    item['url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['url']
-                    item['download_url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['url']
-                    item['video_height'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['height']
-                    item['video_width'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['width']
-                except:
-                    item['url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['url']
-                    item['download_url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['url']
-                    item['video_height'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['height']
-                    item['video_width'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['width']
+            try:
+                item['url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['url']
+                item['download_url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['url']
+                item['video_height'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['height']
+                item['video_width'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][2]['width']
+            except:
+                item['url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['url']
+                item['download_url'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['url']
+                item['video_height'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['height']
+                item['video_width'] = json_data['itemList'][i]['data']['content']['data']['playInfo'][0]['width']
 
-                # 构造一个md5
-                md = hashlib.md5()
-                md.update(str(item['url']).encode())
-                item['osskey'] = md.hexdigest()  # 加密结果
+            # 构造一个md5
+            md = hashlib.md5()
+            md.update(str(item['url']).encode())
+            item['osskey'] = md.hexdigest()  # 加密结果
 
-                # 筛选视频是否合格
-                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
-                    is_ture = Iduoliao.redis_check(item['osskey'])
-                    if is_ture is True:
-                        # 开始去水印上传
-                        Iduoliao.upload(item['url'], item['thumbnails'], item['osskey'], '开眼视频', item['title'],item['old_type'])
+            # 筛选视频是否合格
+            if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                pprint(item)
 
 
-        except Exception as f:
-            print(f)
-            pass
 
         page = json_data['nextPageUrl']
         if page:
-            proxy = requests.get(PROXY_URL)
-            proxies = {
-                'https': 'http://' + re.search(r'(.*)', proxy.text).group(1)}
 
-            print(page)
             yield scrapy.Request(json_data['nextPageUrl'], headers=openeye_headers,
-                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),
+                                 callback=self.parse, meta={
                                                             'item': deepcopy(item)}, dont_filter=True)
         else:
             pass

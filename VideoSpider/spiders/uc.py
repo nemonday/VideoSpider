@@ -3,17 +3,31 @@ import hashlib
 import json
 import re
 from copy import deepcopy
+from pprint import pprint
+
 import requests
 import scrapy
+
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+from Model import Work, Url
+from settings import *
+
 
 class UcSpider(scrapy.Spider):
 
     name = 'uc'
 
     def start_requests(self):
+        engine = create_engine("mysql+pymysql://root:pythonman@127.0.0.1/UC?charset=utf8")
+        # 创建会话
+        session = sessionmaker(engine)
+        mySession = session()
+
         item ={}
         proxy_url = 'http://http.tiqu.alicdns.com/getip3?num=1&type=2&pro=&city=0&yys=0&port=11&time=2&ts=0&ys=0&cs=0&lb=1&sb=0&pb=4&mr=1&regions='
         proxy = requests.get(proxy_url)
@@ -22,18 +36,23 @@ class UcSpider(scrapy.Spider):
             'https': 'https://{0}:{1}'.format(proxy['ip'], proxy['port'])
         }
 
-        for video_url, video_type in uc_spider_dict.items():
-            item['view_cnt_compare'] = video_type[1]
-            item['cmt_cnt_compare'] = video_type[2]
-            item['old_type'] = video_type[4]
-
-            yield scrapy.Request(video_url, headers=video_type[3],
-                                 callback=self.parse, meta={'proxy': ''.format(proxies['https']),
-                                                            'item': deepcopy(item)}, dont_filter=True)
+        result = mySession.query(Url).filter_by(status=0).all()
+        for video in result:
+            url = video.url.replace('&xss_enc=31', '')
+            id= video.id
+            item['view_cnt_compare'] = 1
+            item['cmt_cnt_compare'] = 1
+            item['id'] = id
+            yield scrapy.Request(url, headers=uc_headers,
+                                 callback=self.parse, meta={
+                                                            'proxy': ''.format(proxies['https']),
+                                                            'item': deepcopy(item)}, dont_filter=True
+                                 )
 
     def parse(self, response):
         isotimeformat = '%Y-%m-%d'
         item = response.meta['item']
+
         try:
             # UC浏览器
             json_data = json.loads(response.text)
@@ -64,37 +83,49 @@ class UcSpider(scrapy.Spider):
                 'from': 'UC浏览器',
                 'spider_time': time.strftime(isotimeformat, time.localtime(time.time())),
             }
-                for id in ids if json_data['data']['articles'][id['id']]['videos'][0]['view_cnt'] > item['view_cnt_compare']
-                                 or json_data['data']['articles'][id['id']]['cmt_cnt'] > item['cmt_cnt_compare']
+                for id in ids if json_data['data']['articles'][id['id']]['videos'][0]['view_cnt']
             ]
 
             item['video_datas'] = video_datas
+            self.engine = create_engine("mysql+pymysql://root:pythonman@127.0.0.1/UC?charset=utf8")
+
+            # 创建会话
+            self.session = sessionmaker(self.engine)
+            self.mySession = self.session()
 
             for gzh_cids in item['video_datas']:
+                work = {}
+                work['url'] = gzh_cids['url']
+                work['thumbnails'] = gzh_cids['thumbnails']
+                work['title'] = gzh_cids['title']
+                work['work_id'] = int(gzh_cids['id'])
+                work['video_height'] = gzh_cids['video_height']
+                work['video_width'] = gzh_cids['video_width']
                 md = hashlib.md5()  # 构造一个md5
-                md.update(str(gzh_cids['url']).encode())
-                item['osskey'] = md.hexdigest()
+                md.update(str(work['thumbnails']).encode())
+                url_md5 = md.hexdigest()  # 加密结果
+                work['url_md5'] = url_md5
+                # if work['video_width'] >= 1000:
+                result = self.mySession.query(Work).filter_by(url_md5=work['url_md5']).first()
+                if result is None:
+                    print('添加视频：{}'.format(work['title']))
+                    work = Work(url=work['url'], thumbnails=work['thumbnails'],
+                                title=work['title'], url_md5=work['url_md5'],
+                                video_height=work['video_height'], video_width=work['video_width'], status=0)
 
-                # 判断视频是否存在
-                is_ture = Iduoliao.redis_check(item['osskey'])
-                if is_ture is True:
-                    item['url'] = gzh_cids['url']
-                    item['download_url'] = gzh_cids['url']
-                    item['like_cnt'] = 0
-                    item['cmt_cnt'] = gzh_cids['cmt_cnt']
-                    item['sha_cnt'] = 0
-                    item['view_cnt'] = gzh_cids['view_cnt']
-                    item['thumbnails'] = gzh_cids['thumbnails']
-                    item['title'] = gzh_cids['title']
-                    item['id'] = gzh_cids['id']
-                    item['video_height'] = gzh_cids['video_height']
-                    item['video_width'] = gzh_cids['video_width']
-                    item['spider_time'] = gzh_cids['spider_time']
-                    item['from'] = 'UC浏览器'
-                    item['old_type'] = gzh_cids['old_type']
+                    self.mySession.add(work)
+                    self.mySession.commit()
 
-                    yield item
+                else:
+                    pprint('视频已存在')
+
+                self.mySession.query(Url).filter(Url.id == item['id']).update({"status": "1"})
+                self.mySession.commit()
+
+                self.mySession.query(Url).filter(Url.id < 1000000).update({"status": "1"})
+                self.mySession.commit()
 
         except Exception as f:
             Print.error('UC浏览器爬虫错误:{}'.format(f))
+
             pass

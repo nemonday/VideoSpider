@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 import hashlib
 import json
+import time
 from copy import deepcopy
+from pprint import pprint
+
 import requests
 import scrapy
 from VideoSpider.API.iduoliao import Iduoliao
 from VideoSpider.API.iduoliaotool import Print
 from VideoSpider.settings import *
+
+from settings import hk_headers, hk_spider_dict
 
 
 class HkSpider(scrapy.Spider):
@@ -64,13 +69,15 @@ class HkSpider(scrapy.Spider):
                 md.update(str(item['download_url']).encode())
                 item['osskey'] = md.hexdigest()  # 加密结果
 
+
+                pprint(item)
                 # 筛选视频是否合格1
-                if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
-                    is_ture = Iduoliao.redis_check(item['osskey'])
-                    if is_ture is True:
-                        # 开始去水印上传
-                        Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
-                                        item['old_type'])
+                # if item['view_cnt'] >= item['view_cnt_compare'] or item['sha_cnt'] >= item['cmt_cnt_compare']:
+                #     is_ture = Iduoliao.redis_check(item['osskey'])
+                #     if is_ture is True:
+                #         # 开始去水印上传
+                #         Iduoliao.upload(item['download_url'], item['thumbnails'], item['osskey'], '好看视频', item['title'],
+                #                         item['old_type'])
         except Exception as f:
             Print.error(f)
 

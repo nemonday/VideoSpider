@@ -56,14 +56,14 @@ class Iduoliao(object):
             isotimeformat = '%Y-%m-%d'
             day = time.strftime(isotimeformat, time.localtime(time.time()))
 
-            filename2 = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}'.format(videofrom, old_type, day)
+            filename2 = './{}/{}/{}'.format(videofrom, old_type, day)
             if not os.path.exists(filename2):
                 os.makedirs(filename2)
 
-            filename = 'Z:\\爬虫储存\\爬虫储存1.0\\{}\\{}\\{}\\{}'.format(videofrom, old_type, day, title) + '.mp4'
+            filename = './{}/{}/{}/{}'.format(videofrom, old_type, day, title) + '.mp4'
 
             # 下载视频
-            os.system('C:\\Users\\nemo\\Desktop\\VideoSpider\\deeimg2\\bin\\ffmpeg -i {} {}'.format(url, filename))
+            os.system('ffmpeg -i {} {}'.format(url, filename))
 
         if videofrom == "UC浏览器":
             IduoliaoTool.video_download(filename, url, title, old_type, videofrom, ifdewatermark=False)

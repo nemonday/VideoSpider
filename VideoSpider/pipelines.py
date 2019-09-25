@@ -4,45 +4,35 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+from pprint import pprint
 
-import pymysql
-
-from VideoSpider.API.iduoliaotool import Print
-from VideoSpider.settings import *
-from VideoSpider.spiders.uc import UcSpider
-
-isotimeformat = '%Y-%m-%d'
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from VideoSpider.Model import Work
+import hashlib
 
 
 class VideospiderPipeline(object):
     def __init__(self):
-        self.connection = pymysql.connect(
-            host=MYSQL_HOST,
-            port=MYSQL_PORT,
-            user=MYSQL_USERNAME,
-            password=MYSQL_PASSWORK,
-            db=MYSQL_DATABASE,
-            charset='utf8'
-        )
+        # 数据库位置
+        self.engine = create_engine("mysql+pymysql://root:pythonman@127.0.0.1/UC?charset=utf8")
 
-    def insert_mysql(self, item):
-        cursor = self.connection.cursor()
-        try:
-            sql = "INSERT INTO tb_spider_video(vid, video_from, play_volume, comment_volume, title, osskey, url, share_volume, like_volume, video_type) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % \
-                  (item['id'], item['from'], item['view_cnt'], item['cmt_cnt'], item['title'], item['osskey'], item['url'], item['sha_cnt'], item['like_cnt'], item['old_type'])
-
-            cursor.execute(sql)
-            self.connection.commit()
-            Print.info('添加id {} 到数据库'.format(item['id']))
-        except Exception as f:
-            print('添加错误')
-            print(f)
-            self.connection.rollback()
-
-        cursor.close()
+        # 创建会话
+        self.session = sessionmaker(self.engine)
+        self.mySession = self.session()
 
     def process_item(self, item, spider):
-        if spider.name == UcSpider.name:
-            self.insert_mysql(item)
+        if spider.name == 'uc':
+            result = self.mySession.query(Work).filter_by(url_md5=item['url_md5']).first()
+            if result is None:
+                print('添加视频：{}'.format(item['title']))
+                work = Work(url=item['url'], thumbnails=item['thumbnails'],
+                            title=item['title'],url_md5=item['url_md5'],
+                            video_height=item['video_height'], video_width=item['video_width'], status=0)
+
+                self.mySession.add(work)
+                self.mySession.commit()
+
+
 
 
